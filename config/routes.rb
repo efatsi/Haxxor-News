@@ -1,9 +1,10 @@
 HaxxorNews::Application.routes.draw do
 
 
-  match 'home' => 'home#home', :as => :home
+  resources :articles
+
 	# Change root path
-	root :to => 'home#home'
+	root :to => 'articles#index'
 	
 	resources :users
 	resources :sessions

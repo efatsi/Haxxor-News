@@ -1,0 +1,45 @@
+<div class="span12">
+
+	<div class="navbar">
+	  <div class="navbar-inner">
+	    <div class="container">
+	      <a class="btn btn-navbar" data-toggle="collapse" data-target=".collapse">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </a>
+	      <div class="nav-collapse">
+	        <ul class="nav">
+	          <li><%= link_to "Home", articles_path %></li>
+	        </ul>	
+					<% if logged_in? %>
+						<p class="ident pull-right">
+							Welcome, <%= link_to current_user.proper_name, user_path(current_user) %> | 
+							<%= link_to "Logout", logout_path %>
+						</p>
+					<% else %>
+						<%= link_to 'Login', login_path %>
+					<% end %>
+							        					
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<p id="notice"><%= notice %></p>
+
+	<table class="table table-striped">
+		<thead>
+		</thead>
+		<tbody>
+			<% @articles.each do |a| %>
+			  <tr>
+			    <td><h4><%= link_to a.title, article_path(a) %> <%= "(" + a.link + ")" %></h4><br />
+				<%= a.points.to_s + " points by " + a.show_user + ", posted " + a.date.to_time.strftime("%b %d, %Y") + " | 0 comments"%></td>
+			  </tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+</br>

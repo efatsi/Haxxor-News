@@ -1,27 +1,100 @@
 @import "twitter/bootstrap/bootstrap";
-@import "twitter/bootstrap/responsive";
 
-body {
-	padding-top: 60px; 
-	font-size: 12px;
-	select.date { width: 90px; }
-	select.time { width: 90px; }
-	input.text { width: 90px; }
+body { 
+	padding-top: 20px; 
+	/*font-size: 14px;*/
+	background-color: #004080;
 } 
 
+#wrapper { 
+	/*background-color: #004080;*/
+	background-color: #ffffff;
+}
 
-.btn-login {
-	float:right;
+.well {
+	line-height: 1.5;
+	background-color: #E8FFFF;
+}
+
+.well li {
+	font-size: 130%;
+	line-height: 1.5;
+}
+
+.table th.centered, .table td.centered {
+    text-align: center;
+}
+
+select.date { width: 90px; }
+
+#footer {
+	margin-top: 15px;
+	margin-bottom: 15px;
+  padding-top: 0px;
+	background-color:#004080;
+	color: #ffffff;
+	text-align: center;
+}
+
+.well li {
+	font-size: 95%;
+}
+
+#footer a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#footer a:hover {
+	color: #D0F7FF;
+	text-decoration: underline;
+}
+
+.navbar-inner {
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.ident {
+	padding-top: 10px;
+}
+
+.table-striped tbody tr:nth-child(2n+1) td, .table-striped tbody tr:nth-child(2n+1) th {
+	background-color: #EEEEEE;
 }
 
 
-
-.btn-center {
-	width:106px;
+#copy {
+	font-size: 85%;
+	text-align: center;
 }
 
-.well{
-	background-color: #EEEEEE
+// Setting up min_task divs
+.min_task {
+	background-color: #d1ecfb;
+	/*width: 400px;*/
+	padding: 2px 2px 2px 5px;
+	border: 1px solid blue;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	select { width: 185px; }
+	input { width: 180px; }
+}
+
+// Cutting back the spacing on simple_form...
+.form-horizontal .min_task .control-label {
+    float: left;
+    padding-top: 3px;
+    text-align: right;
+    width: 60px;
+		font-size: 90%;
+}
+.form-horizontal .min_task .controls {
+    margin-left: 70px;
+		width: 160px;
 }
 
 
@@ -40,4 +113,12 @@ body {
 // See http://twitter.github.com/bootstrap/less.html for their names and documentation
 //
 // Example:
-// @linkColor: #ff0000;
+
+@navbarBackground: @grayLighter;
+@navbarBackgroundHighlight: @white;
+@navbarLinkBackgroundHover: lighten(@navbarBackground, 15%);
+@navbarHeight: 30px;
+@navbarLinkColor: @linkColor;
+@navbarLinkColorHover: lighten(@linkColor, 15%);
+@tableBackgroundAccent: #E8FFFF;
+@tableBackgroundHover: #f5f5f5;

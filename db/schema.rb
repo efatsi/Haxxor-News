@@ -11,16 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613145607) do
+ActiveRecord::Schema.define(:version => 20120613201704) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
     t.string   "link"
-    t.datetime "date",       :default => '2012-06-13 20:05:57'
+    t.datetime "date",       :default => '2012-06-13 21:13:46'
     t.integer  "user_id"
     t.integer  "points",     :default => 20
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
+  end
+
+  create_table "comments", :force => true do |t|
+    t.text     "content"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.datetime "date"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "users", :force => true do |t|

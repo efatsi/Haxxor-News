@@ -8,12 +8,18 @@
 </head>
 <body>
 	<div class="well">
-        <%= link_to "Home", articles_path %> | 
-	    <%= link_to "submit", new_article_path %>
+        <b><%= link_to "Haxxor News", articles_path %></b>
+	    <% if logged_in? %>
+			 | <%= link_to "welcome", welcome_path %>
+			 | <%= link_to "submit", new_article_path %>
+		<% else %>
+		 | <%= link_to "submit", s_login_path %>
+		<% end %>
+		
         	
 		<p class="ident pull-right">
 			<% if logged_in? %>
-					Welcome, <%= current_user.username %> | <%= link_to "Logout", logout_path %>
+				<%= current_user.username %> | <%= link_to "Logout", logout_path %>
 			<% else %>
 				<%= link_to 'Login', login_path %> | <%= link_to 'Signup', new_user_path %>
 			<% end %>

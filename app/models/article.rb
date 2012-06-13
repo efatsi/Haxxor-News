@@ -7,6 +7,7 @@ class Article < ActiveRecord::Base
   # Validations
   validates_presence_of :title, :link, :user_id, :date
   
+  # Methods
   
   def show_user
     u = self.get_user
@@ -16,5 +17,9 @@ class Article < ActiveRecord::Base
   def get_user
     User.find(self.user_id)
   end
+  
+  def self.search(search, page)
+  	paginate :per_page => 20, :page => page, :conditions => ['title || link like ?', "%#{search}%"]
+	end
   
 end

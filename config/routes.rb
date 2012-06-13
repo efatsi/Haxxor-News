@@ -12,6 +12,8 @@ HaxxorNews::Application.routes.draw do
 	match 'signup' => 'users#new', :as => :signup
 	match 'logout' => 'sessions#destroy', :as => :logout
 	match 'login' => 'sessions#new', :as => :login
+	match 's_login' => 'sessions#snew', :as => :s_login
+	match 'welcome' => 'users#welcome', :as => :welcome
 	
 
 end

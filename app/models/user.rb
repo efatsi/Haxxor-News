@@ -9,12 +9,19 @@ class User < ActiveRecord::Base
 	# Validations
 	validates_presence_of :username, :password, :password_confirmation, :role
 	
+	# Methods
+	
 	def self.authenticate(username, password)
 		find_by_username(username).try(:authenticate, password)
 	end
 		
 	def self.find_by_username(username)
 		where(:username => username).first
+	end
+	
+	def role?(authorized_role)
+		return false if role.nil?
+		role.to_sym == authorized_role
 	end
 	
   ROLES = [['User', 'user'],['Administrator', 'admin']]

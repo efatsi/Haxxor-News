@@ -15,7 +15,7 @@ namespace :db do
     # Step 0: clear any old data in the db
     [User, Article].each(&:delete_all)
     
-    # Step 1a: Add Eli as admin and user
+    # Step 1: Add Eli as admin and user
     ef = User.new
     ef.username = "efatsi"
     ef.role = "admin"
@@ -23,8 +23,16 @@ namespace :db do
     ef.password_confirmation = "secret"
     ef.save!
     
+    # Step 2: Add Amelia as user
+    af = User.new
+    af.username = "afatsi"
+    af.role = "user"
+    af.password = "secret"
+    af.password_confirmation = "secret"
+    af.save!
+    
     # Step 4: Add some articles to the system
-    Article.populate 10 do |article|
+    Article.populate 50 do |article|
       # get some fake data using the Faker gem
       article.title = Faker::Name.name
       article.link = Faker::Internet.domain_name

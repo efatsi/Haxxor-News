@@ -4,10 +4,18 @@
 		<tbody>
 			<% @articles.each do |a| %>
 			  <tr>
-			    <td><h4><%= link_to a.title, article_path(a) %> <%= "(" + a.link + ")" %></h4><br />
+			    <td><h4><%= link_to a.title, article_path(a) %> <%= "(" + a.link + ")" %></h4>
 				<%= a.points.to_s + " points by " + a.show_user + ", posted " + a.date.to_time.strftime("%b %d, %Y") + " | 0 comments"%></td>
 			  </tr>
 			<% end %>
 		</tbody>
 	</table>
+	<%= will_paginate @articles %>
+	
+	<%= form_tag articles_path, :method => 'get' do %>
+		<p>
+			<%= text_field_tag :search, params[:search] %>
+			<%= submit_tag "Search", :name => nil %>
+		</p>
+	<% end %>
 </br>

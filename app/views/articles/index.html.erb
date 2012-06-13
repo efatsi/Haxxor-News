@@ -4,8 +4,9 @@
 		<tbody>
 			<% @articles.each do |a| %>
 			  <tr>
-			    <td><h4><%= link_to a.title, article_path(a) %> <%= "(" + a.link + ")" %></h4>
-				<%= a.points.to_s + " points by " + a.show_user + ", posted " + a.date.to_time.strftime("%b %d, %Y") + " | 0 comments"%></td>
+			    <td><h4><%= link_to a.title, "http://" + a.link %> <%= "(" + a.link + ")" %></h4>
+				<%= a.points.to_s + " points by " + a.show_user + ", posted " + a.date.to_time.strftime("%b %d, %Y") + " | " %>
+				<%= link_to "0 comments", article_path(a) %></td>
 			  </tr>
 			<% end %>
 		</tbody>

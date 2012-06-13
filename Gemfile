@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.5'
-gem 'sqlite3'
 gem 'bootstrap-will_paginate'
 gem 'nifty-generators'
 gem 'simple_form'
@@ -12,6 +11,13 @@ gem 'jquery-rails'
 gem "bcrypt-ruby", :require => "bcrypt"
 gem 'geokit'
 gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
+
+group :production do
+  gem 'pg'
+end
+group :development, :test do
+  gem 'sqlite3'
+end
 
 # Gems used only in development
 group :development do

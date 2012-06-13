@@ -13,7 +13,7 @@
 
     <%= f.input :title %><br />
     <%= f.input :link %><br />
-    <%= f.association :user, :collection => [[User.first.username, User.first.id]], :include_blank => false %><br />
+    <%= f.association :user, :collection => [[current_user.username, current_user.id]], :include_blank => false %><br />
   <div class="actions">
     <%= f.submit %>
   </div>

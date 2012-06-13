@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20120613145607) do
   create_table "articles", :force => true do |t|
     t.string   "title"
     t.string   "link"
-    t.datetime "date",       :default => '2012-06-13 17:47:28'
+    t.datetime "date",       :default => '2012-06-13 20:05:57'
     t.integer  "user_id"
     t.integer  "points",     :default => 20
     t.datetime "created_at",                                    :null => false

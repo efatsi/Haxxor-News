@@ -1,20 +1,20 @@
 class User < ActiveRecord::Base
   
   has_secure_password
-  attr_accessible :user_name, :password, :password_confirmation, :role
+  attr_accessible :username, :password, :password_confirmation, :role
   
   # Relationships
   has_many :articles
 	
 	# Validations
-	validates_presence_of :user_name, :password, :password_confirmation, :role
+	validates_presence_of :username, :password, :password_confirmation, :role
 	
-	def self.authenticate(user_name, password)
-		find_by_user_name(user_name).try(:authenticate, password)
+	def self.authenticate(username, password)
+		find_by_username(username).try(:authenticate, password)
 	end
 		
-	def self.find_by_user_name(user_name)
-		where(:user_name => user_name).first
+	def self.find_by_username(username)
+		where(:username => username).first
 	end
 	
   ROLES = [['User', 'user'],['Administrator', 'admin']]

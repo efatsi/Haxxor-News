@@ -10,7 +10,7 @@ class Article < ActiveRecord::Base
   
   def show_user
     u = self.get_user
-    u.user_name
+    u.username
   end
   
   def get_user

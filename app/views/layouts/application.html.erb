@@ -11,13 +11,13 @@
         <%= link_to "Home", articles_path %> | 
 	    <%= link_to "submit", new_article_path %>
         	
-		<% if logged_in? %>
-			<p class="ident pull-right">
-				Welcome, <%= current_user.user_name %> | <%= link_to "Logout", logout_path %>
-			</p>
-		<% else %>
-			<%= link_to 'Login', login_path %>
-		<% end %>
+		<p class="ident pull-right">
+			<% if logged_in? %>
+					Welcome, <%= current_user.username %> | <%= link_to "Logout", logout_path %>
+			<% else %>
+				<%= link_to 'Login', login_path %>
+			<% end %>
+		</p>
 	</div>
 	<p id="notice"><%= notice %></p>
 	<%= yield %>

@@ -17,7 +17,7 @@ namespace :db do
     
     # Step 1a: Add Eli as admin and user
     ef = User.new
-    ef.user_name = "efatsi"
+    ef.username = "efatsi"
     ef.role = "admin"
     ef.password = "secret"
     ef.password_confirmation = "secret"

@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
     	session[:user_id] = @user.id
-      redirect_to(home_path, :notice => 'User was successfully created.')
+      redirect_to(articles_path, :notice => 'User was successfully created.')
     else
       render :action => "new"
     end

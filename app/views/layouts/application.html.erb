@@ -15,11 +15,18 @@
 			<% if logged_in? %>
 					Welcome, <%= current_user.username %> | <%= link_to "Logout", logout_path %>
 			<% else %>
-				<%= link_to 'Login', login_path %>
+				<%= link_to 'Login', login_path %> | <%= link_to 'Signup', new_user_path %>
 			<% end %>
 		</p>
 	</div>
-	<p id="notice"><%= notice %></p>
+
+	<% flash.each do |name, msg| %>
+		<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+			<a class="close" data-dismiss="alert">&times;</a>
+			<%= msg %>
+		</div>
+    <% end %>
+
 	<%= yield %>
 </body>
 </html>

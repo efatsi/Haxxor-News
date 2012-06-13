@@ -16,4 +16,11 @@ class User < ActiveRecord::Base
 	
   ROLES = [['User', 'user'],['Administrator', 'admin']]
   
+  
+  # in any controllers you want, add
+  #     before_filter :check_login, :except => [:index, :show]
+    
+  
+  
+  
 end

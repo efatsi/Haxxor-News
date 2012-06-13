@@ -3,9 +3,9 @@ class CreateArticles < ActiveRecord::Migration
     create_table :articles do |t|
       t.string :title
       t.string :link
-      t.datetime :date
+      t.datetime :date, :default => Time.now
       t.integer :user_id
-      t.integer :points
+      t.integer :points, :default => 20
 
       t.timestamps
     end

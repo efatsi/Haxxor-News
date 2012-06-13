@@ -16,17 +16,15 @@ ActiveRecord::Schema.define(:version => 20120613145607) do
   create_table "articles", :force => true do |t|
     t.string   "title"
     t.string   "link"
-    t.datetime "date"
+    t.datetime "date",       :default => '2012-06-13 16:54:22'
     t.integer  "user_id"
-    t.integer  "points"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "points",     :default => 20
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
+    t.string   "user_name"
     t.string   "role"
     t.string   "password_digest"
     t.datetime "created_at",      :null => false

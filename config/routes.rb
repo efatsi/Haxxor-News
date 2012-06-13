@@ -1,6 +1,8 @@
 HaxxorNews::Application.routes.draw do
 
 
+  resources :comments
+
   resources :articles
 
 	# Change root path

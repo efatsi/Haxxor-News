@@ -18,5 +18,5 @@ User.create!(id: 1, username: "efatsi", role: "admin", password: "secret", passw
 User.create!(id: 2, username: "afatsi", role: "user", password: "secret", password_confirmation: "secret")
 
 50.times do |article|
-  Article.create!(title: Faker::Name.name, link: Faker::Internet.domain_name, date: 2.years.ago..1.week.ago, user_id: 1, points: rand(100).to_i)
+  Article.create!(title: Faker::Name.name, link: Faker::Internet.domain_name, date: 2.years.ago..1.week.ago.to_time, user_id: 1, points: rand(100).to_i)
 end

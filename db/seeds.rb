@@ -9,7 +9,7 @@
 # Docs at: http://faker.rubyforge.org/rdoc/
 require 'faker'
 
-Sessions.destroy_all
+
 User.delete_all
 Article.delete_all
 

@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
   attr_accessible :username, :password, :password_confirmation, :role
   
   # Relationships
-  has_many :articles
+  has_many :articles, :dependent => :destroy
 	
 	# Validations
 	validates_presence_of :username, :password, :password_confirmation, :role
+	validates_uniqueness_of :username
 	
 	# Methods
 	

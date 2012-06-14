@@ -1,5 +1,5 @@
 class Article < ActiveRecord::Base
-  attr_accessible :date, :link, :points, :title, :user_id
+  attr_accessible :link, :points, :title, :user_id
   
   # Relationships
   belongs_to :user

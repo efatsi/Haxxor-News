@@ -11,8 +11,11 @@
     </div>
   <% end %>
 	<p>
-    <%= f.input :username %><br />
+	<h3><%= "#{@user.username}: Update Information" %></h3><br /><br />
+    <%= f.input :about %><br />
+	<%= f.input :email %><br />
     <%= f.input :password %><br />
-    <%= f.input :password_confirmation %><br />
-  <p><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
+	<%= f.input :password_confirmation %><br />
+  <p><%= f.submit (@user.new_record? ? "Sign up" : "Update"), :class => 'btn' %>
+     <%= link_to 'Cancel', articles_path, :class => 'btn' %></p>
 <% end %>

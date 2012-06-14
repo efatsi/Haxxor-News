@@ -15,9 +15,16 @@ class Ability
   		can :manage, Article do |a|
   		  user.id == a.user_id
 		  end
+  		can :read, User
+  		cannot :index, User
+  		can :update, User do |u|
+  		  user == u
+  		end
+		  
  
 		else 
 		 	can :read, Article
+  		can :read, User
 		end
 		
   end

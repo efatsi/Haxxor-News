@@ -1,21 +1,15 @@
-<p id="notice"><%= notice %></p>
+<h4><%= @user.username %></h4><br />
+Created: <%= @user.created_at.strftime("%b %d, %Y") %><br />
+About:
+<% if @user.about %>
+	<%= @user.about %>
+<% end %><br />
+Email:
+<% if @user.email %>
+	<%= @user.email %>
+<% end %><br /><br />
 
 
-<p>
-  <b>Username:</b>
-  <%= @user.username %>
-</p>
+<%= link_to "Submissions" %><br />
+<%= link_to "Comments (I'll get these two later)" %>
 
-<p>
-  <b>id:</b>
-  <%= @user.id %>
-</p>
-
-<p>
-  <b>Role:</b>
-  <%= @user.role %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

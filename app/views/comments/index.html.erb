@@ -18,7 +18,7 @@
     <td><%= comment.commentable_id %></td>
     <td><%= comment.commentable_type %></td>
     <td><%= comment.user_id %></td>
-    <td><%= comment.date %></td>
+    <td><%= comment.created_at.strftime("%b &d, %Y") %></td>
     <td><%= link_to 'Show', comment %></td>
     <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
     <td><%= link_to 'Destroy', comment, confirm: 'Are you sure?', method: :delete %></td>

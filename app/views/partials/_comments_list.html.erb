@@ -1,0 +1,9 @@
+<div id="comments">
+<% for comment in @comments %>
+  <div class="comment">
+    <%= comment.content %><br>	
+		by <strong><%= "Comment's User (deal with it later)" %></strong>
+	  <em>on <%= comment.created_at.strftime('%b %d, %Y at %H:%M') %></em>
+  </div>
+<% end %>
+</div>

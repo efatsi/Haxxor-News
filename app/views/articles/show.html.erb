@@ -11,18 +11,21 @@
 
 <p>
   <b>Date added:</b>
-  <%= @article.date %>
+  <%= @article.created_at.strftime("%b %d, %Y") %>
 </p>
 
 <p>
   <b>User:</b>
-  <%= @article.user_id %>
+  <%= @article.show_user %>
 </p>
 
 <p>
   <b>Points:</b>
   <%= @article.points %>
 </p>
+
+<%= render "partials/comments_list"%><br />
+<%= render "partials/comments_form"%>
 
 
 <%= link_to 'Edit', edit_article_path(@article) %> |

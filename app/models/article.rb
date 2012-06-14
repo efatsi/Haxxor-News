@@ -3,9 +3,10 @@ class Article < ActiveRecord::Base
   
   # Relationships
   belongs_to :user
+  has_many :comments, :as => :commentable
   
   # Validations
-  validates_presence_of :title, :link, :user_id, :date
+  validates_presence_of :title, :link, :user_id
   
   # Methods
   

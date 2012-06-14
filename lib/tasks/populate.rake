@@ -36,7 +36,6 @@ namespace :db do
       # get some fake data using the Faker gem
       article.title = Faker::Name.name
       article.link = Faker::Internet.domain_name
-      article.date = 2.years.ago..1.week.ago
       article.user_id = ef.id
       article.points = rand(100).to_i
       article.created_at = Time.now

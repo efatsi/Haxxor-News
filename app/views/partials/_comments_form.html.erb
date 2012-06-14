@@ -1,21 +1,18 @@
 <p class="supertiny">&nbsp;</p>
-<h3>Add a Comment</h3>
-
-<%= form_for [@commentable, Comment.new], :html => { :class => 'form-horizontal' } do |f| %>
-  <fieldset>
-    <legend><%= controller.action_name.capitalize %> Comment</legend>
-
-    <div class="control-group">
-      <%= f.label :content, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_area :content, :class => 'text_area', :rows => 4 %>
-      </div>
-    </div>
+<% if logged_in? %>
+	<h3>Add a Comment</h3>
+	<%= simple_form_for [@commentable, Comment.new], :html => { :class => 'form-horizontal' } do |f| %>
+		<fieldset>
+			<%= f.input :content %>
+		    <%= f.association :user, :collection => [[current_user.username, current_user.id]], :include_blank => false %><br />
 
 
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', comments_path, :class => 'btn' %>
-    </div>
-  </fieldset>
+	    <div class="form-actions">
+	      <%= f.submit nil, :class => 'btn btn-primary' %>
+	      <%= link_to 'Cancel', comments_path, :class => 'btn' %>
+	    </div>
+	  </fieldset>
+	<% end %>
+<% else %>
+	To add comments, you must <%= link_to "log in", login_path %><br />
 <% end %>

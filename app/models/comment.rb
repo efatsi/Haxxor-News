@@ -7,7 +7,18 @@ class Comment < ActiveRecord::Base
   has_many :comments, :as => :commentable
   
   # Validations
-  validates_presence_of :content#, :user
+  validates_presence_of :content, :user
+  
+  # Methods
+  
+  def get_user
+    User.find(self.user_id)
+  end
+  
+  def show_user
+    u = self.get_user
+    u.username    
+  end
 
 
 end

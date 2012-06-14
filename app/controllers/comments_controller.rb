@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
     @commentable = find_commentable
     @comment = @commentable.comments.build(params[:comment])
     if @comment.save
-      flash[:notice] = "Successfully created comment."
+      # flash[:notice] = "Successfully created comment."
       commenting_on = @comment.commentable_type.pluralize
       id = @comment.commentable_id
       eval "redirect_to #{@comment.commentable_type.downcase}_path(:id=>#{id})"
@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(params[:comment])
-      flash[:notice] = "Successfully updated comment."
+      # flash[:notice] = "Successfully updated comment."
       redirect_to @comment
     else
       render :action => 'edit'
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-    flash[:notice] = "Successfully destroyed comment."
+    # flash[:notice] = "Successfully destroyed comment."
     redirect_to comments_url
   end
     

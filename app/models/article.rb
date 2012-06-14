@@ -10,13 +10,13 @@ class Article < ActiveRecord::Base
   
   # Methods
   
+  def get_user
+    User.find(self.user_id)
+  end
+  
   def show_user
     u = self.get_user
     u.username
-  end
-  
-  def get_user
-    User.find(self.user_id)
   end
   
   def self.search(search, page)

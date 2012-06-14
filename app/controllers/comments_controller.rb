@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   
+  load_and_authorize_resource
+  
   def index
     @commentable = find_commentable
     @comments = @commentable.comments# if !@commentable.nil?

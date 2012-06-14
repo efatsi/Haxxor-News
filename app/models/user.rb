@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 	validates_uniqueness_of :username
 	
 	# Methods
-	
+  
 	def self.authenticate(username, password)
 		find_by_username(username).try(:authenticate, password)
 	end

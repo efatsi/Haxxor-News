@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_filter :check_login, :except => [:new, :create]
 
+  load_and_authorize_resource
+  
 	def new
     @user = User.new
   end

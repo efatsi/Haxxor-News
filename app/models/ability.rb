@@ -7,11 +7,19 @@ class Ability
 		
 		if user.role? :admin
 			can :manage, :all
-		elsif user.role? :user
-  		can :manage, :all
-		else
+			
+		elsif user.role? :user  
+  		can :create, Comment
+  		can :create, Article
+  		can :read, Article
+  		can :manage, Article do |a|
+  		  user.id == a.user_id
+		  end
+ 
+		else 
 		 	can :read, Article
 		end
+		
   end
   
 end

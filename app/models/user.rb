@@ -15,10 +15,7 @@ class User < ActiveRecord::Base
 	def self.authenticate(username, password)
 		find_by_username(username).try(:authenticate, password)
 	end
-		
-	def self.find_by_username(username)
-		where(:username => username).first
-	end
+
 	
 	def role?(authorized_role)
 		return false if role.nil?

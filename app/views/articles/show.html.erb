@@ -1,6 +1,6 @@
 <p>
   	<h4><%= link_to @article.title, "http://" + @article.link %> <%= "(" + @article.link + ")" %></h4>
-	<%= @article.points.to_s + " points by " %> <%= link_to @article.show_user, user_path(@article.get_user) %> <%=", posted " + @article.created_at.strftime("%b %d, %Y") %>
+	<%= @article.points.to_s + " points by " %> <%= link_to @article.username, user_path(@article.user) %> <%=", posted " + @article.created_at.strftime("%b %d, %Y") %>
 </p>
 
 <p>

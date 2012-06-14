@@ -5,7 +5,7 @@
 			<% @articles.each do |a| %>
 			  <tr>
 			    <td><h4><%= link_to a.title, "http://" + a.link %> <%= "(" + a.link + ")" %></h4>
-				<%= a.points.to_s + " points by " %> <%= link_to a.show_user, user_path(a.get_user) %> <%=", posted " + a.created_at.strftime("%b %d, %Y") + " | " %>
+				<%= a.points.to_s + " points by " %> <%= link_to a.username, user_path(a.user) %> <%=", posted " + a.created_at.strftime("%b %d, %Y") + " | " %>
 				<%= link_to "#{a.comments.length} comments", article_path(a) %></td>
 			  </tr>
 			<% end %>

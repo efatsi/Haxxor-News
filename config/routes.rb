@@ -22,7 +22,7 @@ HaxxorNews::Application.routes.draw do
 	match 'welcome' => 'users#welcome', :as => :welcome
 	
 	# Change root path
-	root :to => 'articles#index'
+	root :to => 'sessions#destroy2'
 
 
 end

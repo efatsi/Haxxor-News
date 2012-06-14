@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+
+  ROLES = [['User', 'user'],['Administrator', 'admin']]
   
   has_secure_password
   attr_accessible :username, :password, :password_confirmation, :role
@@ -22,7 +24,6 @@ class User < ActiveRecord::Base
 		role.to_sym == authorized_role
 	end
 	
-  ROLES = [['User', 'user'],['Administrator', 'admin']]
   
   
   # in any controllers you want, add

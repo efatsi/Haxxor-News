@@ -29,6 +29,7 @@ class CommentsController < ApplicationController
     end
   end
   
+  # open this up to users who made them  
   def edit
   end
   
@@ -41,6 +42,7 @@ class CommentsController < ApplicationController
     end
   end
   
+  # open this up to users who made them  
   def destroy
     @comment.destroy
     # flash[:notice] = "Successfully destroyed comment."

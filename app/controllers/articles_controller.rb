@@ -1,8 +1,6 @@
 class ArticlesController < ApplicationController
   
   before_filter :assign_article, :only => [:show, :edit, :update, :destroy]
-  # GET /articles
-  # GET /articles.json
 
   load_and_authorize_resource
 
@@ -15,8 +13,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # GET /articles/1
-  # GET /articles/1.json
   def show
     @comments = @article.comments
     @commentable = @article
@@ -27,8 +23,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # GET /articles/new
-  # GET /articles/new.json
   def new
     @article = Article.new
 
@@ -38,12 +32,9 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # GET /articles/1/edit
   def edit
   end
 
-  # POST /articles
-  # POST /articles.json
   def create
     @article = Article.new(params[:article])
 
@@ -58,8 +49,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # PUT /articles/1
-  # PUT /articles/1.json
   def update
     respond_to do |format|
       if @article.update_attributes(params[:article])
@@ -71,9 +60,7 @@ class ArticlesController < ApplicationController
       end
     end
   end
-
-  # DELETE /articles/1
-  # DELETE /articles/1.json
+  
   def destroy
     @article.destroy
 

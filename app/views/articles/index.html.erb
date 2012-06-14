@@ -1,0 +1,22 @@
+	<table class="table table-striped">
+		<thead>
+		</thead>
+		<tbody>
+			<% @articles.each do |a| %>
+			  <tr>
+			    <td><h4><%= link_to a.title, "http://" + a.link %> <%= "(" + a.link + ")" %></h4>
+				<%= a.points.to_s + " points by " %> <%= link_to a.show_user, user_path(a.get_user) %> <%=", posted " + a.date.to_time.strftime("%b %d, %Y") + " | " %>
+				<%= link_to "0 comments", article_path(a) %></td>
+			  </tr>
+			<% end %>
+		</tbody>
+	</table>
+	<%= will_paginate @articles %>
+	
+	<%= form_tag articles_path, :method => 'get' do %>
+		<p>
+			<%= text_field_tag :search, params[:search] %>
+			<%= submit_tag "Search", :name => nil %>
+		</p>
+	<% end %>
+</br>

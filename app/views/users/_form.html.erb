@@ -1,0 +1,19 @@
+<%= simple_form_for @user do |f| %>
+	<% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this band from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<p>
+    <%= f.input :username %><br />
+    <%= f.input :password %><br />
+    <%= f.input :password_confirmation %><br />
+    <%= f.input :role, :collection => User::ROLES %><br />
+  <p><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
+<% end %>

@@ -12,4 +12,19 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require_tree .
+
+
+// Flash fade
+	$(function() {
+	   $('.alert-success').fadeIn('normal', function() {
+	      $(this).delay(2700).fadeOut();
+	   });
+	});
+	
+	$(function() {
+	   $('.alert-error').fadeIn('normal', function() {
+	      $(this).delay(2700).fadeOut();
+	   });
+	});

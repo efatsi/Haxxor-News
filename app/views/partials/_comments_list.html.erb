@@ -5,7 +5,7 @@
 			<div class="comment">
 				<%= comment.content %><br />
 				by <strong><%= link_to comment.username, user_path(comment.user) %></strong>
-				<em>on <%= comment.created_at.strftime('%b %d, %Y at %H:%M') %></em><br />	
+				<em>on <%= comment.created_at.to_s(:mdyt) %></em><br />	
 			</div>
 		</div>
 	</div>

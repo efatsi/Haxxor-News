@@ -1,13 +1,5 @@
 <h4><%= @user.username %></h4><br />
-Created: <%= @user.created_at.strftime("%b %d, %Y") %><br />
-About:
-<% if @user.about %>
-	<%= @user.about %>
-<% end %><br />
-Email:
-<% if @user.email %>
-	<%= @user.email %>
-<% end %><br /><br />
+Created: <%= @user.created_at.to_s(:mdy) %><br />
 
 
 <%= link_to "Submissions" %><br />

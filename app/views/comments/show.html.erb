@@ -20,7 +20,7 @@
 
 <p>
   <b>Date:</b>
-  <%= @comment.created_at.strftime("%b %d, %Y") %>
+  <%= @comment.created_at.to_s(:mdy) %>
 </p>
 
 

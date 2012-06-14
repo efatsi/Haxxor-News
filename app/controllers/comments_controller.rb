@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   
+  before_filter :assign_comment, :only => [:show, :edit, :update, :destroy]
+  
   load_and_authorize_resource
   
   def index
@@ -8,7 +10,6 @@ class CommentsController < ApplicationController
   end
   
   def show
-    @comment = Comment.find(params[:id])
   end
   
   def new
@@ -29,11 +30,9 @@ class CommentsController < ApplicationController
   end
   
   def edit
-    @comment = Comment.find(params[:id])
   end
   
   def update
-    @comment = Comment.find(params[:id])
     if @comment.update_attributes(params[:comment])
       # flash[:notice] = "Successfully updated comment."
       redirect_to @comment
@@ -43,12 +42,15 @@ class CommentsController < ApplicationController
   end
   
   def destroy
-    @comment = Comment.find(params[:id])
     @comment.destroy
     # flash[:notice] = "Successfully destroyed comment."
     redirect_to comments_url
   end
     
+  def assign_comment
+    @comment = Comment.find(params[:id])
+  end
+  
   private
   def find_commentable
     params.each do |name, value|

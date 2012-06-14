@@ -16,6 +16,7 @@ class Ability
   		  user.id == a.user_id
 		  end
   		can :read, User
+  		can :welcome, User
   		cannot :index, User
   		can :update, User do |u|
   		  user == u

@@ -1,7 +1,8 @@
-<h4><%= @user.username %></h4><br />
-Created: <%= @user.created_at.to_s(:mdy) %><br />
+<h3><%= @user.username %></h3><br />
+Created: <%= @user.created_at.to_s(:mdy) %><br /><br />
 
 
 <%= link_to "Submissions" %><br />
-<%= link_to "Comments (I'll get these two later)" %>
+<%= link_to "Comments (I'll get these two later)" %><br /><br />
+<%= link_to "Edit Information", edit_user_path, :class => 'btn' %>
 

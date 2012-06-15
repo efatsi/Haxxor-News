@@ -5,8 +5,8 @@
 			<% @articles.each do |a| %>
 			  <tr>
 			    <td><h4><%= link_to a.title, "http://" + a.link %> <%= "(" + a.link + ")" %></h4>
-				<%= a.points.to_s + " points by " %> <%= link_to a.show_user, user_path(a.get_user) %> <%=", posted " + a.date.to_time.strftime("%b %d, %Y") + " | " %>
-				<%= link_to "0 comments", article_path(a) %></td>
+				<%= a.points.to_s + " points by " %> <%= link_to a.username, user_path(a.user) %> <%=", posted " + a.created_at.to_s(:mdy) + " | " %>
+				<%= link_to "#{a.comment_count} comments", article_path(a) %></td>
 			  </tr>
 			<% end %>
 		</tbody>

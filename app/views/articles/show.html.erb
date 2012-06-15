@@ -1,29 +1,9 @@
-
 <p>
-  <b>Title:</b>
-  <%= @article.title %>
+  	<h4><%= link_to @article.title, "http://" + @article.link %> <%= "(" + @article.link + ")" %></h4>
+	<%= @article.points.to_s + " points by " %> <%= link_to @article.username, user_path(@article.user) %> <%="posted " + @article.created_at.to_s(:mdy) %>
 </p>
+	
+<%= render "partials/comments_form"%>
+<%= render "partials/comments_list", :object => @comments %><br />
 
-<p>
-  <b>Link:</b>
-  <%= @article.link %>
-</p>
-
-<p>
-  <b>Date added:</b>
-  <%= @article.date %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @article.user_id %>
-</p>
-
-<p>
-  <b>Points:</b>
-  <%= @article.points %>
-</p>
-
-
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+<%= link_to 'All Articles', articles_path %>

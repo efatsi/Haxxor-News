@@ -1,84 +1,71 @@
-
 class CommentsController < ApplicationController
-  # GET /comments
-  # GET /comments.json
+  
+  before_filter :assign_comment, :only => [:show, :edit, :update, :destroy]
+  
+  load_and_authorize_resource
+  
   def index
-    @comments = Comment.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @comments }
+    @commentable = find_commentable
+    if !@commentable.nil?
+      @comments = @commentable.comments 
+    else
+      @comments = Comment.all
     end
   end
-
-  # GET /comments/1
-  # GET /comments/1.json
+  
   def show
-    @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @comment }
-    end
+    @comments = @comment.comments
+    @commentable = @comment
   end
-
-  # GET /comments/new
-  # GET /comments/new.json
+  
   def new
     @comment = Comment.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @comment }
-    end
   end
-
-  # GET /comments/1/edit
-  def edit
-    @comment = Comment.find(params[:id])
-  end
-
-  # POST /comments
-  # POST /comments.json
+  
   def create
-    @comment = Comment.new(params[:comment])
-
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
-        format.json { render json: @comment, status: :created, location: @comment }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    @commentable = find_commentable
+    @comment = @commentable.comments.build(params[:comment])
+    if @comment.save
+      # flash[:notice] = "Successfully created comment."
+      commenting_on = @comment.commentable_type.pluralize
+      id = @comment.commentable_id
+      eval "redirect_to #{@comment.commentable_type.downcase}_path(:id=>#{id})"
+    else
+      render :action => 'new'
     end
   end
-
-  # PUT /comments/1
-  # PUT /comments/1.json
+  
+  # open this up to users who made them  
+  def edit
+  end
+  
   def update
+    if @comment.update_attributes(params[:comment])
+      # flash[:notice] = "Successfully updated comment."
+      redirect_to @comment
+    else
+      render :action => 'edit'
+    end
+  end
+  
+  # open this up to users who made them  
+  def destroy
+    @comment.destroy
+    # flash[:notice] = "Successfully destroyed comment."
+    redirect_to comments_url
+  end
+    
+  def assign_comment
     @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+  end
+  
+  private
+  def find_commentable
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
       end
     end
-  end
-
-  # DELETE /comments/1
-  # DELETE /comments/1.json
-  def destroy
-    @comment = Comment.find(params[:id])
-    @comment.destroy
-
-    respond_to do |format|
-      format.html { redirect_to comments_url }
-      format.json { head :no_content }
-    end
-  end
+    nil
+  end  
 end

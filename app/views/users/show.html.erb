@@ -1,21 +1,10 @@
-<p id="notice"><%= notice %></p>
+<h3><%= @user.username %></h3><br />
+Created: <%= @user.created_at.to_s(:mdy) %><br /><br />
 
 
-<p>
-  <b>Username:</b>
-  <%= @user.username %>
-</p>
+<%= link_to "Submissions" %><br />
+<%= link_to "Comments (I'll get these two later)" %><br /><br />
+<% if can? :update, @user %>
+	<%= link_to "Edit Information", edit_user_path, :class => 'btn' %>
+<% end %>
 
-<p>
-  <b>id:</b>
-  <%= @user.id %>
-</p>
-
-<p>
-  <b>Role:</b>
-  <%= @user.role %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

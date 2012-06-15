@@ -1,25 +1,37 @@
 class Article < ActiveRecord::Base
+  
+  delegate :username, :to => :user
+  
+  # before_validation :fill_user
   attr_accessible :link, :points, :title, :user_id
   
   # Relationships
   belongs_to :user
+  has_many :comments, :as => :commentable
   
   # Validations
-  validates_presence_of :title, :link, :user_id, :date
+  validates_presence_of :title, :link, :user_id
   
   # Methods
   
-  def show_user
-    u = self.get_user
-    u.username
-  end
-  
-  def get_user
-    User.find(self.user_id)
-  end
+  # This did not work :(
+  # def fill_user
+  #   curr_user = User.find(session[:user_id])
+  #   self.user_id = curr_user.id
+  # end
   
   def self.search(search, page)
   	paginate :per_page => 20, :page => page, :conditions => ['title || link like ?', "%#{search}%"]
 	end
+	
+	# This method is in comments as well, would like to condense this
+	def comment_count
+	  count = comments.length
+	  comments.each do |c|
+	    count += c.comment_count
+	  end
+	  count
+  end
+	
   
 end

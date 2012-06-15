@@ -1,9 +1,8 @@
-<div id="comments">
-	<div class="span6">
-		<div class="comment">
-			<strong><%= link_to @comment.username, user_path(@comment.user) %></strong>
-			<em>on <%= @comment.created_at.to_s(:mdyt) %> | <%= link_to "parent", @comment.parent_path %></em><br />
-			<%= @comment.content %><br />
-		</div>
-	</div>
-</div>
+<p>
+	<strong><%= link_to @comment.username, user_path(@comment.user) %></strong>
+	<em>on <%= @comment.created_at.to_s(:mdyt) %> | <%= link_to "parent", @comment.parent_path %></em><br />
+	<%= @comment.content %><br />
+</p>
+
+<%= render "partials/comments_form"%>
+<%= render "partials/comments_list"%><br />

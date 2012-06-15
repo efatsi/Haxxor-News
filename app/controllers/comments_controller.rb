@@ -14,6 +14,8 @@ class CommentsController < ApplicationController
   end
   
   def show
+    @comments = @comment.comments
+    @commentable = @comment
   end
   
   def new

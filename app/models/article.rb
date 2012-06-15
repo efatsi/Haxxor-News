@@ -13,6 +13,8 @@ class Article < ActiveRecord::Base
   validates_presence_of :title, :link, :user_id
   
   # Methods
+  
+  # This did not work :(
   # def fill_user
   #   curr_user = User.find(session[:user_id])
   #   self.user_id = curr_user.id
@@ -21,5 +23,14 @@ class Article < ActiveRecord::Base
   def self.search(search, page)
   	paginate :per_page => 20, :page => page, :conditions => ['title || link like ?', "%#{search}%"]
 	end
+	
+	def comment_count
+	  count = comments.length
+	  comments.each do |c|
+	    count += c.comment_count
+	  end
+	  count
+  end
+	
   
 end

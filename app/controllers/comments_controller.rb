@@ -1,6 +1,9 @@
 class CommentsController < ApplicationController
   
-  before_filter :assign_comment, :only => [:show, :edit, :update, :destroy]
+  before_filter :assign_comment, :only => [:show, :destroy]
+  def assign_comment
+    @comment = Comment.find(params[:id])
+  end
   
   load_and_authorize_resource
   
@@ -18,10 +21,6 @@ class CommentsController < ApplicationController
     @commentable = @comment
   end
   
-  def new
-    @comment = Comment.new
-  end
-  
   def create
     @commentable = find_commentable
     @comment = @commentable.comments.build(params[:comment])
@@ -36,27 +35,10 @@ class CommentsController < ApplicationController
   end
   
   # open this up to users who made them  
-  def edit
-  end
-  
-  def update
-    if @comment.update_attributes(params[:comment])
-      # flash[:notice] = "Successfully updated comment."
-      redirect_to @comment
-    else
-      render :action => 'edit'
-    end
-  end
-  
-  # open this up to users who made them  
   def destroy
     @comment.destroy
     # flash[:notice] = "Successfully destroyed comment."
     redirect_to comments_url
-  end
-    
-  def assign_comment
-    @comment = Comment.find(params[:id])
   end
   
   private
@@ -68,4 +50,5 @@ class CommentsController < ApplicationController
     end
     nil
   end  
+  
 end

@@ -13,6 +13,11 @@ class Comment < ActiveRecord::Base
   validates_presence_of :content, :user
   
   # Methods
-
+  
+  def parent_path
+    parent_type = commentable_type.downcase + "s"
+    parent_id = commentable_id.to_s
+    "/" + parent_type + "/" + parent_id
+  end
 
 end

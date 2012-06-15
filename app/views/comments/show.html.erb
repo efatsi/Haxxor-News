@@ -1,28 +1,9 @@
-<p>
-  <b>Content:</b>
-  <%= @comment.content %>
-</p>
-
-<p>
-  <b>Commentable:</b>
-  <%= @comment.commentable_id %>
-</p>
-
-<p>
-  <b>Commentable type:</b>
-  <%= @comment.commentable_type %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @comment.user_id %>
-</p>
-
-<p>
-  <b>Date:</b>
-  <%= @comment.created_at.to_s(:mdy) %>
-</p>
-
-
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<div id="comments">
+	<div class="span6">
+		<div class="comment">
+			<strong><%= link_to @comment.username, user_path(@comment.user) %></strong>
+			<em>on <%= @comment.created_at.to_s(:mdyt) %> | <%= link_to "parent", @comment.parent_path %></em><br />
+			<%= @comment.content %><br />
+		</div>
+	</div>
+</div>

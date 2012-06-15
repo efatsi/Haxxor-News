@@ -3,9 +3,9 @@
 	<div class="span6">
 		<div class="well">
 			<div class="comment">
+				<strong><%= link_to comment.username, user_path(comment.user) %></strong>
+				<em>on <%= comment.created_at.to_s(:mdyt) %></em><br />
 				<%= comment.content %><br />
-				by <strong><%= link_to comment.username, user_path(comment.user) %></strong>
-				<em>on <%= comment.created_at.to_s(:mdyt) %></em><br />	
 			</div>
 		</div>
 	</div>

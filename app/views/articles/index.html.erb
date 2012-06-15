@@ -4,7 +4,7 @@
 		<tbody>
 			<% @articles.each do |a| %>
 			  <tr>
-			    <td><h4><%= link_to a.title, "http://" + a.link %> <%= "(" + a.link + ")" %></h4>
+			    <td><h4><%= link_to a.title, a.link %> <%= "(" + a.short_link + ")" %></h4>
 				<%= a.points.to_s + " points by " %> <%= link_to a.username, user_path(a.user) %> <%=", posted " + a.created_at.to_s(:mdy) + " | " %>
 				<%= link_to "#{a.comment_count} comments", article_path(a) %></td>
 			  </tr>

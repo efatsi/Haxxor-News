@@ -24,6 +24,7 @@ class Article < ActiveRecord::Base
   	paginate :per_page => 20, :page => page, :conditions => ['title || link like ?', "%#{search}%"]
 	end
 	
+	# This method is in comments as well, would like to condense this
 	def comment_count
 	  count = comments.length
 	  comments.each do |c|

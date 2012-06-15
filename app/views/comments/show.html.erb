@@ -5,4 +5,6 @@
 </p>
 
 <%= render "partials/comments_form"%>
-<%= render "partials/comments_list"%><br />
+<%= render "partials/comments_list", :object => @comments %><br />
+
+<%= link_to 'All Articles', articles_path %>

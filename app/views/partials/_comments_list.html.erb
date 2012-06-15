@@ -1,13 +1,16 @@
 <div id="comments">
-<% for comment in @comments %>
-	<div class="span6">
-		<div class="well">
-			<div class="comment">
-				<strong><%= link_to comment.username, user_path(comment.user) %></strong>
-				<em>on <%= comment.created_at.to_s(:mdyt) %> | <%= link_to "link", comment_path(comment) %></em><br />
-				<%= comment.content %><br />
-			</div>
+<% for comment in object %>
+	<div class="well">
+		<div class="comment">
+			<strong><%= link_to comment.username, user_path(comment.user) %></strong>
+			<em>on <%= comment.created_at.to_s(:mdyt) %> | <%= link_to "link", comment_path(comment) %></em><br />
+			<%= comment.content %><br /><br />
+			<%= link_to "reply", comment_path(comment) %><br /><br />
+			<% if comment.comments.length != 0 %>
+				<%= render "partials/comments_list", :object => comment.comments %>
+			<% end %>
 		</div>
 	</div>
 <% end %>
 </div>
+

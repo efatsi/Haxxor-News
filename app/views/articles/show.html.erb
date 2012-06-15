@@ -1,9 +1,9 @@
 <p>
   	<h4><%= link_to @article.title, "http://" + @article.link %> <%= "(" + @article.link + ")" %></h4>
-	<%= @article.points.to_s + " points by " %> <%= link_to @article.username, user_path(@article.user) %> <%=", posted " + @article.created_at.to_s(:mdy) %>
+	<%= @article.points.to_s + " points by " %> <%= link_to @article.username, user_path(@article.user) %> <%="posted " + @article.created_at.to_s(:mdy) %>
 </p>
 	
 <%= render "partials/comments_form"%>
-<%= render "partials/comments_list"%><br />
+<%= render "partials/comments_list", :object => @comments %><br />
 
-<%= link_to 'Back', articles_path %>
+<%= link_to 'All Articles', articles_path %>

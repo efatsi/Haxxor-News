@@ -23,13 +23,5 @@ class User < ActiveRecord::Base
 		return false if role.nil?
 		role.to_sym == authorized_role
 	end
-	
-  
-  
-  # in any controllers you want, add
-  #     before_filter :check_login, :except => [:index, :show]
-    
-  
-  
   
 end

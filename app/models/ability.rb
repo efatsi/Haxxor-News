@@ -10,22 +10,24 @@ class Ability
 			
 		elsif user.role? :user  
   		can :create, Comment
+  		can :show, Comment
+  		
   		can :create, Article
   		can :read, Article
   		can :manage, Article do |a|
   		  user.id == a.user_id
 		  end
-  		can :read, User
+		  
+  		can :show, User
   		can :welcome, User
-  		cannot :index, User
   		can :update, User do |u|
   		  user == u
   		end
-		  
  
 		else 
 		 	can :read, Article
-  		can :read, User
+  		can :show, User
+  		can :show, Comment
 		end
 		
   end

@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
   def create
     if User.authenticate(params[:username], params[:password])
     	session[:user_id] = User.find_by_username(params[:username]).id
-  	  redirect_to articles_path, notice: 'Logged In!'
+    	flash[:notice] = "Logged In!"
+  	  redirect_back_or_default(articles_path)
     else
     	flash.now.alert = "Email or password is invalid."
       render :action => "new"

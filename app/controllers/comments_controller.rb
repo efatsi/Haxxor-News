@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
   
   def create
     @commentable = find_commentable
-    @comment = @commentable.comments.build(params[:comment])
+    @comment = @commentable.comments.build(params[:comment].merge(:user_id => current_user.id))
     if @comment.save
       # flash[:notice] = "Successfully created comment."
       commenting_on = @comment.commentable_type.pluralize

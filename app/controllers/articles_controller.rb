@@ -36,7 +36,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(params[:article])
+    @article = current_user.articles.build(params[:article])
 
     respond_to do |format|
       if @article.save

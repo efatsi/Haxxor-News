@@ -6,14 +6,7 @@ gem 'simple_form'
 gem 'cancan'
 gem 'jquery-rails'
 gem "bcrypt-ruby", :require => "bcrypt"
-
-group :production do
-  gem 'pg'
-end
-group :development, :test do
-  gem 'sqlite3'
-  gem 'populator3'
-end
+gem 'pg'
 
 
 gem 'faker'
@@ -36,5 +29,6 @@ end
  gem 'sass-twitter-bootstrap-rails', '~> 1.0'
  gem 'uglifier', '>= 1.0.3'
 
-
-gem 'thin'
+group :production do
+  gem 'thin'
+end

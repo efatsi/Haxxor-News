@@ -18,8 +18,11 @@ class Article < ActiveRecord::Base
   
   # Methods
   def self.search(search, page)
-  	paginate :per_page => 20, :page => page, :conditions => ['title || link like ?', "%#{search}%"]
+    user_ids = User.find(:all, :conditions => ['username like ?', "%#{search}%"]).collect { |user| user.id }
+	  paginate :per_page => 20, :page => page, :conditions => ['title || link like ? or user_id IN (?)', "%#{search}%", user_ids]
 	end
+	
+	
 	
 	# This method is in comments as well, would like to condense this
 	def comment_count

@@ -22,19 +22,9 @@ class Article < ActiveRecord::Base
 	  paginate :per_page => 20, :page => page, :conditions => ['title || link like ? or user_id IN (?)', "%#{search}%", user_ids]
 	end
 	
-	
 	def update_count
-	  self.comment_count = self.count_comments
+	  self.comment_count += 1
 	  self.save!
-  end
-	
-	# This method is in comments as well, would like to condense this
-	def count_comments
-	  count = comments.length
-	  comments.each do |c|
-	    count += c.count_comments
-	  end
-	  count
   end
   
   def adjust_link

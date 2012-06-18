@@ -14,16 +14,9 @@ class Comment < ActiveRecord::Base
   
   # Methods
   def update_count
-    parent = self.get_parent
-    parent.update_count
-  end
-  
-	def count_comments
-	  count = comments.length
-	  comments.each do |c|
-	    count += c.count_comments
-	  end
-	  count
+    self.comment_count += 1
+    self.save!
+    self.get_parent.update_count
   end
   
 end

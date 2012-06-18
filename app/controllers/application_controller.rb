@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
   
-  helper_method :current_user, :logged_in?, :check_login, :store_location, :redirect_back_or_default
+  helper_method :current_user, :logged_in?, :require_user, :store_location, :redirect_back_or_default
 
   ## Only to be used with CanCan ###
   rescue_from CanCan::AccessDenied do |exception|

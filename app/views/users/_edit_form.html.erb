@@ -13,10 +13,5 @@
 	<p>
     <%= f.input :about %><br />
 	<%= f.input :email %><br />
-	<% if request.url.include?("edit") %>
-		<%= f.submit (@user.new_record? ? "Sign up" : "Update Info"), :class => 'btn' %>
-		<%= link_to 'Cancel', articles_path, :class => 'btn' %>
-	<% else %>
-		<%= f.submit (@user.new_record? ? "Sign up" : "Update Info"), :class => 'btn' %>
-	<% end %>
+	<%= f.submit (@user.new_record? ? "Sign up" : "Update Info"), :class => 'btn' %>
 <% end %>

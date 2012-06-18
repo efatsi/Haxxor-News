@@ -31,7 +31,7 @@
 		</div>
     <% end %>
 	<div class="well">	
-		<%= session[:return_to] %>	
+		<% logger.debug "#{session[:return_to]}" %>	
 		<%= yield %>
 	</div>
 </body>

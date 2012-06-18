@@ -6,7 +6,8 @@ class ArticlesController < ApplicationController
   load_and_authorize_resource
 
   def index
-  	@articles = Article.search(params[:search], params[:page])		
+  	@articles = Article.search(params[:search], params[:page])
+  	session[:return_to] = nil		
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +16,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    session[:return_to] = request.url unless logged_in?
     @comments = @article.comments
     @commentable = @article
     
@@ -70,6 +72,7 @@ class ArticlesController < ApplicationController
     end
   end
   
+  private
   def assign_article
     @article = Article.find(params[:id])
   end

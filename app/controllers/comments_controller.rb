@@ -1,47 +1,51 @@
 class CommentsController < ApplicationController
   
   before_filter :assign_comment, :only => [:show, :destroy]
-  def assign_comment
-    @comment = Comment.find(params[:id])
-  end
+  before_filter :assign_commentable, :only => [:index, :create]
+
   
   load_and_authorize_resource
   
   def index
-    @commentable = find_commentable
-    if !@commentable.nil?
-      @comments = @commentable.comments 
-    else
+    if @commentable.nil?
       @comments = Comment.all
+    else  
+      @comments = @commentable.comments
     end
   end
   
   def show
+    session[:return_to] = request.url unless logged_in?
     @comments = @comment.comments
     @commentable = @comment
   end
   
   def create
-    @commentable = find_commentable
     @comment = @commentable.comments.build(params[:comment].merge(:user_id => current_user.id))
     if @comment.save
-      # flash[:notice] = "Successfully created comment."
       commenting_on = @comment.commentable_type.pluralize
       id = @comment.commentable_id
-      eval "redirect_to #{@comment.commentable_type.downcase}_path(:id=>#{id})"
+      redirect_to :back
     else
       render :action => 'new'
     end
   end
   
-  # open this up to users who made them  
+  # open this up to users who made them eventually
   def destroy
     @comment.destroy
-    # flash[:notice] = "Successfully destroyed comment."
     redirect_to comments_url
   end
   
   private
+  def assign_comment
+    @comment = Comment.find(params[:id])
+  end
+  
+  def assign_commentable
+    @commentable = find_commentable
+  end
+  
   def find_commentable
     params.each do |name, value|
       if name =~ /(.+)_id$/

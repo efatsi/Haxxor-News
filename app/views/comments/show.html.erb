@@ -1,10 +1,10 @@
 <p>
 	<strong><%= link_to @comment.username, user_path(@comment.user) %></strong>
-	<em>on <%= @comment.created_at.to_s(:mdyt) %> | <%= link_to "parent", @comment.parent_path %></em><br />
+	<em>on <%= @comment.created_at.to_s(:mdyt) %> | <%= link_to "parent", @comment.commentable %></em><br />
 	<%= @comment.content %><br />
 </p>
 
-<%= render "partials/comments_form"%>
-<%= render "partials/comments_list", :object => @comments %><br />
+<%= render "comments/form"%>
+<%= render "comments/list", :object => @comments %><br />
 
 <%= link_to 'All Articles', articles_path %>

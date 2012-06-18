@@ -7,7 +7,7 @@
 			<%= comment.content %><br /><br />
 			<%= link_to "reply", comment_path(comment) %><br /><br />
 			<% if comment.comments.length != 0 %>
-				<%= render "partials/comments_list", :object => comment.comments %>
+				<%= render "comments/list", :object => comment.comments %>
 			<% end %>
 		</div>
 	</div>

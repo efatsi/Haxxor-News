@@ -3,7 +3,7 @@
 	<%= @article.points.to_s + " points by " %> <%= link_to @article.username, user_path(@article.user) %> <%="posted " + @article.created_at.to_s(:mdy) %>
 </p>
 	
-<%= render "partials/comments_form"%>
-<%= render "partials/comments_list", :object => @comments %><br />
+<%= render "comments/form"%>
+<%= render "comments/list", :object => @comments %><br />
 
 <%= link_to 'All Articles', articles_path %>

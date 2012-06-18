@@ -9,12 +9,12 @@
 # Docs at: http://faker.rubyforge.org/rdoc/
 require 'faker'
 
-
+# User.delete_all
 Article.delete_all
 Comment.delete_all
 
-User.create!(username: "efatsi", role: "admin", password: "secret", password_confirmation: "secret")
-User.create!(username: "amelia", role: "user", password: "secret", password_confirmation: "secret")
+# User.create!(username: "efatsi", role: "admin", password: "secret", password_confirmation: "secret")
+# User.create!(username: "amelia", role: "user", password: "secret", password_confirmation: "secret")
 
 50.times do |article|
   if rand < 0.5
@@ -24,8 +24,17 @@ User.create!(username: "amelia", role: "user", password: "secret", password_conf
   end    
 end
 
-Comment.create!(content: "Comment 1", commentable_id: Article.first.id, commentable_type: "Article", user_id: User.first.id)
-Comment.create!(content: "Comment 1.1", commentable_id: Comment.first.id, commentable_type: "Comment", user_id: User.first.id)
-Comment.create!(content: "Comment 1.2", commentable_id: Comment.first.id, commentable_type: "Comment", user_id: User.last.id)
-Comment.create!(content: "Comment 1.1.1", commentable_id: (Comment.first.id + 1), commentable_type: "Comment", user_id: User.first.id)
-Comment.create!(content: "Comment 2", commentable_id: Article.first.id, commentable_type: "Article", user_id: User.last.id)
+Article.all.each do |a|
+  if rand < 0.3
+    c = Comment.create!(content: "Comment 1", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
+    Comment.create!(content: "Comment 1.1", commentable_id: c.id, commentable_type: "Comment", user_id: User.last.id)
+    Comment.create!(content: "Comment 1.2", commentable_id: c.id, commentable_type: "Comment", user_id: User.last.id)
+    Comment.create!(content: "Comment 1.1.1", commentable_id: (c.id + 1), commentable_type: "Comment", user_id: User.first.id)
+    Comment.create!(content: "Comment 2", commentable_id: a.id, commentable_type: "Article", user_id: User.last.id) 
+    a.update_count
+  elsif rand < 0.8
+    Comment.create!(content: "Lonely Comment", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
+    Comment.create!(content: "Lonely Comment's Buddy!", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
+    a.update_count
+  end
+end

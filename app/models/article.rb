@@ -23,12 +23,16 @@ class Article < ActiveRecord::Base
 	end
 	
 	
+	def update_count
+	  self.comment_count = self.count_comments
+	  self.save!
+  end
 	
 	# This method is in comments as well, would like to condense this
-	def comment_count
+	def count_comments
 	  count = comments.length
 	  comments.each do |c|
-	    count += c.comment_count
+	    count += c.count_comments
 	  end
 	  count
   end

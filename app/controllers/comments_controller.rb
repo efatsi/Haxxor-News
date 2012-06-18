@@ -22,8 +22,6 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(params[:comment].merge(:user_id => current_user.id))
     if @comment.save
-      commenting_on = @comment.commentable_type.pluralize
-      id = @comment.commentable_id
       redirect_to :back
     else
       render :action => 'new'

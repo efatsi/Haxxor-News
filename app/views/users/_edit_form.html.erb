@@ -1,17 +1,7 @@
 <%= simple_form_for @user do |f| %>
-	<% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this band from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-	<p>
     <%= f.input :about %><br />
 	<%= f.input :email %><br />
-	<%= f.submit (@user.new_record? ? "Sign up" : "Update Info"), :class => 'btn' %>
+  	<div class="actions">
+		<%= f.submit (@user.new_record? ? "Sign up" : "Update Info"), :class => 'btn' %>
+	</div>
 <% end %>

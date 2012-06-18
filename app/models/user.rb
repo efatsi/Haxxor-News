@@ -3,13 +3,13 @@ class User < ActiveRecord::Base
   ROLES = [['User', 'user'],['Administrator', 'admin']]
   
   has_secure_password
-  attr_accessible :username, :password, :password_confirmation, :role
+  attr_accessible :username, :password, :password_confirmation, :role, :about, :email
   
   # Relationships
   has_many :articles, :dependent => :destroy
 	
 	# Validations
-	validates_presence_of :username, :password, :password_confirmation, :role
+	validates_presence_of :username, :password, :password_confirmation, :role, :on => :create
 	validates_uniqueness_of :username
 	
 	# Methods

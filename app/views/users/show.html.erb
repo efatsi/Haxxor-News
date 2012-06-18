@@ -1,6 +1,17 @@
 <h3><%= @user.username %></h3><br />
-Created: <%= @user.created_at.to_s(:mdy) %><br /><br />
+Created: <%= @user.created_at.to_s(:mdy) %><br />
 
+<% if @user == current_user %>
+	<%= render 'edit_form' %>
+<% else %>
+	<% unless @user.about.nil? || @user.about.empty? %>
+		About: <%= @user.about %><br />
+	<% end %>
+	<% unless @user.email.nil? || @user.email.empty? %>
+		Email: <%= @user.email.empty? %><br />
+	<% end %>
+<% end %>
+<br />
 
 <%= link_to "Submissions" %><br />
 <%= link_to "Comments (I'll get these two later)" %><br /><br />

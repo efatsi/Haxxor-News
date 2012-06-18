@@ -18,10 +18,5 @@ class SessionsController < ApplicationController
   	session[:user_id] = nil
   	redirect_to articles_path, notice: "Logged out!"
   end
-  
-  def destroy2
-  	session[:user_id] = nil
-  	redirect_to articles_path
-  end
 	
 end

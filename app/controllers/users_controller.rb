@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :check_login, :except => [:new, :create]
+  
+  before_filter :require_user, :except => [:new, :create]
 
   load_and_authorize_resource
   

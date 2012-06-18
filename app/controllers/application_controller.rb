@@ -8,14 +8,18 @@ class ApplicationController < ActionController::Base
   def logged_in?
   	current_user
   end
-
-  def check_login
-  	redirect_to login_url, alert: "You need to log in to view this page." if current_user.nil?
+  
+  def require_user
+    unless current_user
+      store_location
+      redirect_to login_path, alert: "You need to log in to view this page."
+      return false
+    end
   end
   
   def store_location
-    if request.request_method == :get and !request.xhr?
-      session[:return_to] = request.request_uri
+    if request.get? and !request.xhr?
+      session[:return_to] = request.url
     end
   end
   

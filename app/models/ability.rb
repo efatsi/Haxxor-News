@@ -18,6 +18,7 @@ class Ability
   		  user.id == a.user_id
 		  end
 		  
+		 	can :create, User
   		can :show, User
   		can :welcome, User
   		can :update, User do |u|

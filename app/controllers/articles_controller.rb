@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   
   before_filter :assign_article, :only => [:show, :edit, :update, :destroy]
+  before_filter :require_user, :except => [:index, :show]
 
   load_and_authorize_resource
 

@@ -21,8 +21,6 @@ HaxxorNews::Application.routes.draw do
 	match 'welcome' => 'users#welcome', :as => :welcome
 	
 	# Change root path
-	# This does auto-logout (good and bad)
-  # root :to => 'sessions#destroy2'
 	# This does normal load
 	root :to => 'articles#index'
 

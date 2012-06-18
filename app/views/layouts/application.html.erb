@@ -12,7 +12,7 @@
 	    <% if logged_in? %>
 			 | <%= link_to "welcome", welcome_path %>
 		<% end %>
-		 | <%= link_to "submit", login_path, session[:return_to] => new_article_path %>
+		 | <%= link_to "submit", new_article_path %>
 		
         	
 		<p class="ident pull-right">
@@ -30,7 +30,8 @@
 			<%= msg %>
 		</div>
     <% end %>
-	<div class="well">		
+	<div class="well">	
+		<%= session[:return_to] %>	
 		<%= yield %>
 	</div>
 </body>

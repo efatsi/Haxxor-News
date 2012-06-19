@@ -1,13 +1,15 @@
 class SessionsController < ApplicationController
+  
+  skip_before_filter :store_location
 
 	def new
   end
   
   def create
-    user = User.find_by_username(params[:username])
-    if user && user.authenticate(params[:password])
-    	session[:user_id] = user.id
-  	  redirect_to articles_path, notice: 'Logged In!'
+    if User.authenticate(params[:username], params[:password])
+    	session[:user_id] = User.find_by_username(params[:username]).id
+    	flash[:notice] = "Logged In!"
+  	  redirect_back_or_default(articles_path)
     else
     	flash.now.alert = "Email or password is invalid."
       render :action => "new"

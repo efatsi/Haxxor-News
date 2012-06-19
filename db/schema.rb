@@ -16,11 +16,10 @@ ActiveRecord::Schema.define(:version => 20120613201704) do
   create_table "articles", :force => true do |t|
     t.string   "title"
     t.string   "link"
-    t.datetime "date",       :default => '2012-06-14 02:50:48'
     t.integer  "user_id"
     t.integer  "points",     :default => 20
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "comments", :force => true do |t|
@@ -28,17 +27,18 @@ ActiveRecord::Schema.define(:version => 20120613201704) do
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "user_id"
-    t.datetime "date"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "role"
+    t.string   "role",            :default => "user"
+    t.string   "about"
+    t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
 end

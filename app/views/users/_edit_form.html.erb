@@ -1,0 +1,7 @@
+<%= simple_form_for @user do |f| %>
+    <%= f.input :about %><br />
+	<%= f.input :email %><br />
+  	<div class="actions">
+		<%= f.submit (@user.new_record? ? "Sign up" : "Update Info"), :class => 'btn' %>
+	</div>
+<% end %>

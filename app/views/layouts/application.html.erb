@@ -11,15 +11,13 @@
         <b><%= link_to "Haxxor News", articles_path %></b>
 	    <% if logged_in? %>
 			 | <%= link_to "welcome", welcome_path %>
-			 | <%= link_to "submit", new_article_path %>
-		<% else %>
-		 | <%= link_to "submit", s_login_path %>
 		<% end %>
+		 | <%= link_to "submit", new_article_path %>
 		
         	
 		<p class="ident pull-right">
 			<% if logged_in? %>
-				<%= current_user.username %> | <%= link_to "Logout", logout_path %>
+				<%= link_to current_user.username, user_path(current_user) %> | <%= link_to "Logout", logout_path %>
 			<% else %>
 				<%= link_to 'Login', login_path %> | <%= link_to 'Signup', new_user_path %>
 			<% end %>
@@ -32,7 +30,9 @@
 			<%= msg %>
 		</div>
     <% end %>
-
-	<%= yield %>
+	<div class="well">	
+		<% logger.debug session[:return_to].to_s %>	
+		<%= yield %>
+	</div>
 </body>
 </html>

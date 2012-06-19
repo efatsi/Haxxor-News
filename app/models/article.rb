@@ -1,5 +1,7 @@
 class Article < ActiveRecord::Base
   
+  URI_REGEX = /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]+*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
+  
   delegate :username, :to => :user
   
   before_validation :adjust_link
@@ -12,10 +14,9 @@ class Article < ActiveRecord::Base
   
   # Validations
   validates_presence_of :title, :link, :user_id
-  validates_format_of :link, :with => /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]+*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
+  validates_format_of :link, :with => URI_REGEX
   
   # Methods
-  
   def self.search(search, page)
   	paginate :per_page => 20, :page => page, :conditions => ['title || link like ?', "%#{search}%"]
 	end
@@ -30,7 +31,7 @@ class Article < ActiveRecord::Base
   end
   
   def adjust_link
-    if self.link.match(/^(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]+*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?$/).nil? and !self.link.nil?
+    if self.link.match(URI_REGEX).nil? and !self.link.nil?
       self.link = "http://" + self.link
     end    
   end
@@ -38,5 +39,8 @@ class Article < ActiveRecord::Base
 	def short_link
 	  link.gsub(/\Ahttps?:\/\/(www.)?/, '').gsub(/\/.*/, '')
   end
+  
+  # Scopes
+  scope :chronological, :order => 'created_at DESC'
   
 end

@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
   load_and_authorize_resource
 
   def index
-  	@articles = Article.search(params[:search], params[:page])
+  	@articles = Article.chronological.search(params[:search], params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

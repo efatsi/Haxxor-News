@@ -4,20 +4,16 @@ class CommentsController < ApplicationController
   
   # before_filter :assign_comment, :only => [:show, :destroy]
   before_filter :assign_commentable, :only => [:index, :create]
+  before_filter :assign_comment_collection, :only => [:index, :show]
 
   
   load_and_authorize_resource
   
   def index
-    if @commentable.nil?
-      @comments = Comment.all
-    else  
-      @comments = @commentable.comments
-    end
+    @comments = Comment.all if @commentable.nil?
   end
   
   def show
-    @comments = @comment.comments
     @commentable = @comment
   end
   
@@ -45,6 +41,10 @@ class CommentsController < ApplicationController
   
   def assign_commentable
     @commentable = find_commentable
+  end
+  
+  def assign_comment_collection
+    @comments = @commentable.comments.rev_chronological
   end
   
   def find_commentable

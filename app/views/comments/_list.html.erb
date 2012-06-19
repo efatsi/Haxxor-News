@@ -5,7 +5,7 @@
 		<%= comment.content %><br /><br />
 		<%= link_to "reply", comment_path(comment) %><br /><br />
 		<% if comment.comments.length != 0 %>
-			<%= render "comments/list", :object => comment.comments %>
+			<%= render "comments/list", :object => comment.comments.rev_chronological %>
 		<% end %>
 	</div>
 <% end %>

@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
 
   include HaxxorNews::Voting
   
-  before_filter :assign_comment, :only => [:show, :destroy]
+  # before_filter :assign_comment, :only => [:show, :destroy]
   before_filter :assign_commentable, :only => [:index, :create]
 
   

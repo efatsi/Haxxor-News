@@ -1,0 +1,7 @@
+<% comment = object %>
+<% if logged_in? %>
+	<%= button_to "^", upvote_comment_path(comment) %><%= button_to "v", downvote_comment_path(comment) %> 
+<% end %>
+<strong><%= link_to comment.username, user_path(comment.user) %></strong>
+on <%= comment.created_at.to_s(:mdyt) %> | <%= comment.points.to_s + " points" %>
+

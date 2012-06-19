@@ -1,7 +1,5 @@
-<p>
-	<strong><%= link_to @comment.username, user_path(@comment.user) %></strong>
-	<em>on <%= @comment.created_at.to_s(:mdyt) %> | <%= link_to "parent", @comment.commentable %><br />
-</p>
+<%= render "comments/comment_head", :object => @comment %> | <%= link_to "parent", @comment.commentable %><br />
+<%= @comment.content %>
 
 <%= render "comments/form"%>
 <%= render "comments/list", :object => @comments %><br />

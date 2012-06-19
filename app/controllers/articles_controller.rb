@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   
   include HaxxorNews::Voting
   
-  before_filter :assign_article, :except => [:index, :new, :create]
+  # before_filter :assign_article, :except => [:index, :new, :create]
   before_filter :require_user, :except => [:index, :show]
 
   load_and_authorize_resource

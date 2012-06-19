@@ -16,7 +16,7 @@ class Comment < ActiveRecord::Base
   def update_count
     self.comment_count += 1
     self.save!
-    self.get_parent.update_count
+    self.commentable.update_count
   end
   
 end

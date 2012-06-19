@@ -38,10 +38,6 @@ class Article < ActiveRecord::Base
   end
   
   # Scopes
-<<<<<<< HEAD
   scope :chronological, :order => 'created_at DESC'
-=======
-  scope :chronological, :order => 'created_at DESC' 
->>>>>>> chrono scope added for articles
   
 end

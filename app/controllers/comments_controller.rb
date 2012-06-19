@@ -22,6 +22,8 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(params[:comment].merge(:user_id => current_user.id))
     if @comment.save
+      parent = @comment.commentable
+      parent.update_count
       redirect_to :back
     else
       render :action => 'new'

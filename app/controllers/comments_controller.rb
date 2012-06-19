@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+
+  include HaxxorNews::Voting
   
   before_filter :assign_comment, :only => [:show, :destroy]
   before_filter :assign_commentable, :only => [:index, :create]
@@ -34,18 +36,6 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     redirect_to comments_url
-  end
-  
-  def upvote
-  	@comment.points += 1
-  	@comment.save
-  	redirect_to :back
-  end
-  
-  def downvote
-  	@comment.points -= 1
-  	@comment.save
-  	redirect_to :back
   end
   
   private

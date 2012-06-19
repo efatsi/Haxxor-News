@@ -12,7 +12,7 @@ class Article < ActiveRecord::Base
   
   # Validations
   validates_presence_of :title, :link, :user_id
-  validates_format_of :link, :with => /^(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]+*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?$/
+  validates_format_of :link, :with => /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]+*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
   
   # Methods
   

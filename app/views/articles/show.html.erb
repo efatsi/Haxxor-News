@@ -1,5 +1,9 @@
 <p>
-  	<h4><%= link_to @article.title, @article.link %> <%= "(" + @article.short_link + ")" %></h4>
+  	<h4>
+	<% if logged_in? %>
+		<%= button_to "^", upvote_article_path(@article) %><%= button_to "v", downvote_article_path(@article) %> 
+	<% end %>
+	<%= link_to @article.title, @article.link %> <%= "(" + @article.short_link + ")" %></h4>
 	<%= @article.points.to_s + " points by " %> <%= link_to @article.username, user_path(@article.user) %> <%="posted " + @article.created_at.to_s(:mdy) %>
 </p>
 	

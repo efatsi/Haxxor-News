@@ -2,8 +2,11 @@
 <% for comment in object %>
 	<div class="well">
 		<div class="comment">
+			<% if logged_in? %>
+				<%= button_to "^", upvote_comment_path(comment) %><%= button_to "v", downvote_comment_path(comment) %> 
+			<% end %>
 			<strong><%= link_to comment.username, user_path(comment.user) %></strong>
-			<em>on <%= comment.created_at.to_s(:mdyt) %> | <%= link_to "link", comment_path(comment) %></em><br />
+			<em>on <%= comment.created_at.to_s(:mdyt) %> | <%= comment.points.to_s + " points" %> | <%= link_to "link", comment_path(comment) %></em><br />
 			<%= comment.content %><br /><br />
 			<%= link_to "reply", comment_path(comment) %><br /><br />
 			<% if comment.comments.length != 0 %>

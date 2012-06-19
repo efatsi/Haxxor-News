@@ -25,16 +25,16 @@ Comment.delete_all
 end
 
 Article.all.each do |a|
-  # if rand < 0.3
+  if rand < 0.3
     c = Comment.create!(content: "Comment 1", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
     Comment.create!(content: "Comment 1.1", commentable_id: c.id, commentable_type: "Comment", user_id: User.last.id)
     Comment.create!(content: "Comment 1.2", commentable_id: c.id, commentable_type: "Comment", user_id: User.last.id)
     Comment.create!(content: "Comment 1.1.1", commentable_id: (c.id + 1), commentable_type: "Comment", user_id: User.first.id)
     Comment.create!(content: "Comment 2", commentable_id: a.id, commentable_type: "Article", user_id: User.last.id)
-  # elsif rand < 0.8
-  #    Comment.create!(content: "Lonely Comment", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
-  #    Comment.create!(content: "Lonely Comment's Buddy!", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
-  #  end
+  elsif rand < 0.8
+    Comment.create!(content: "Lonely Comment", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
+    Comment.create!(content: "Lonely Comment's Buddy!", commentable_id: a.id, commentable_type: "Article", user_id: User.first.id)
+  end
 end
 
 Comment.all.each do |c|

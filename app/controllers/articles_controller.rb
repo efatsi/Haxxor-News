@@ -17,7 +17,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @comments = @article.comments
+    @comments = @article.comments.rev_chronological
     @commentable = @article
     
     respond_to do |format|

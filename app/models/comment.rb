@@ -19,4 +19,6 @@ class Comment < ActiveRecord::Base
     self.commentable.update_count
   end
   
+  # Scope
+  scope :rev_chronological, :order => 'created_at ASC'
 end

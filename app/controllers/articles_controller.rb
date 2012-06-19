@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
   
+  include HaxxorNews::Voting
+  
   before_filter :assign_article, :except => [:index, :new, :create]
   before_filter :require_user, :except => [:index, :show]
 
@@ -68,18 +70,6 @@ class ArticlesController < ApplicationController
       format.html { redirect_to articles_url }
       format.json { head :no_content }
     end
-  end
-  
-  def upvote
-  	@article.points += 1
-  	@article.save
-  	redirect_to :back
-  end
-  
-  def downvote
-  	@article.points -= 1
-  	@article.save
-  	redirect_to :back
   end
   
   private

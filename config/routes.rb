@@ -6,9 +6,14 @@ HaxxorNews::Application.routes.draw do
   
 	resources :articles do
     resources :comments
-  end
+  	post :upvote, :on => :member
+  	post :downvote, :on => :member
+	end
+	
   resources :comments do
     resources :comments
+  	post :upvote, :on => :member
+  	post :downvote, :on => :member
   end
 
 	resources :users

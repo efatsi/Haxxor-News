@@ -36,6 +36,18 @@ class CommentsController < ApplicationController
     redirect_to comments_url
   end
   
+  def upvote
+  	@comment.points += 1
+  	@comment.save
+  	redirect_to :back
+  end
+  
+  def downvote
+  	@comment.points -= 1
+  	@comment.save
+  	redirect_to :back
+  end
+  
   private
   def assign_comment
     @comment = Comment.find(params[:id])

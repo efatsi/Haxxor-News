@@ -15,7 +15,6 @@ class CommentsController < ApplicationController
   end
   
   def show
-    session[:return_to] = request.url unless logged_in?
     @comments = @comment.comments
     @commentable = @comment
   end

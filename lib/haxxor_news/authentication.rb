@@ -5,6 +5,7 @@ module HaxxorNews
      
     included do
       helper_method :current_user, :logged_in?
+      before_filter :store_location
     end
     
     private  
@@ -16,7 +17,7 @@ module HaxxorNews
     end
     def require_user
       unless current_user
-        store_location
+        # store_location
         redirect_to login_path, alert: "You need to log in to view this page."
         return false
       end
@@ -30,7 +31,6 @@ module HaxxorNews
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil
     end
-       
   end
 end
 

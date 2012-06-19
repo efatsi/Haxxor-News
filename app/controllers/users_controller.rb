@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   
   before_filter :require_user, :except => [:new, :create]
+  skip_before_filter :store_location, :only => [:new, :create]
 
   load_and_authorize_resource
   

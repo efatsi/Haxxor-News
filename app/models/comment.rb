@@ -5,9 +5,10 @@ class Comment < ActiveRecord::Base
   attr_accessible :commentable_id, :commentable_type, :content, :user_id
   
   # Relationships
-  belongs_to :commentable, :polymorphic => true, :dependent => :destroy
+  belongs_to :commentable, :polymorphic => true
   belongs_to :user
-  has_many :comments, :as => :commentable
+  has_many :comments, :as => :commentable, :dependent => :destroy
+  has_many :votes, :as => :votable, :dependent => :destroy
   
   # Validations
   validates_presence_of :content, :user

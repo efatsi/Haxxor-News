@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   
   # Relationships
   has_many :articles, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :votes, :dependent => :destroy
 	
 	# Validations
 	validates_presence_of :password, :password_confirmation, :role, :on => :create

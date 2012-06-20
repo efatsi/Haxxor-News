@@ -35,7 +35,7 @@ class CommentsController < ApplicationController
   # open this up to users who made them eventually
   def destroy
     @comment.destroy
-    redirect_to comments_url
+    redirect_to :back
   end
   
   private

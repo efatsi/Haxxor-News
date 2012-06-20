@@ -1,8 +1,6 @@
 <% for comment in object %>
 	<div class="well">
-		<%= render "comments/comment_head", :object => comment %>
-		<%= " | "%><%= link_to "link", comment_path(comment) %><br />
-		<%= comment.content %><br /><br />
+		<%= render "comments/comment_head", :object => [comment, :link] %>
 		<%= link_to "reply", comment_path(comment) %><br /><br />
 		<% if comment.comments.length != 0 %>
 			<%= render "comments/list", :object => comment.comments.rev_chronological %>

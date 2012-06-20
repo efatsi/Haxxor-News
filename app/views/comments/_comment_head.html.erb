@@ -1,7 +1,12 @@
-<% comment = object %>
+<% comment = object[0] %>
 <% if logged_in? %>
 	<%= button_to "^", upvote_comment_path(comment) %><%= button_to "v", downvote_comment_path(comment) %> 
 <% end %>
 <strong><%= link_to comment.username, user_path(comment.user) %></strong>
-on <%= comment.created_at.to_s(:mdyt) %> | <%= comment.points.to_s + " points" %>
-
+on <%= comment.created_at.to_s(:mdyt) %><%= " | "%><%= comment.points.to_s + " points" %><%= " | "%>
+<% if object[1] ==  :link %>
+	<%= link_to "link", comment_path(comment) %><br />
+<% elsif object[1] == :parent %>
+	<%= link_to "parent", @comment.commentable %><br />
+<% end %>
+<%= comment.content %><br /><br />

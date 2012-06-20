@@ -12,9 +12,9 @@ require 'faker'
 Article.delete_all
 Comment.delete_all
 
-User.delete_all
-User.create!(username: "efatsi", role: "admin", password: "secret", password_confirmation: "secret")
-User.create!(username: "amelia", role: "user", password: "secret", password_confirmation: "secret")
+# User.delete_all
+# User.create!(username: "efatsi", role: "admin", password: "secret", password_confirmation: "secret")
+# User.create!(username: "amelia", role: "user", password: "secret", password_confirmation: "secret")
 
 50.times do |article|
   if rand < 0.5

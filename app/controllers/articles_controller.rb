@@ -6,8 +6,12 @@ class ArticlesController < ApplicationController
   load_and_authorize_resource
 
   def index
-  	@articles = Article.chronological.search(params[:search], params[:page])
-
+    if params[:by_user]
+      @articles = Article.where(:user_id => params[:by_user]).chronological.search(params[:search], params[:page])
+    else
+      @articles = Article.chronological.search(params[:search], params[:page])
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @articles }

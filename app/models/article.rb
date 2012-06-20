@@ -39,5 +39,6 @@ class Article < ActiveRecord::Base
   
   # Scopes
   scope :chronological, :order => 'created_at DESC'
+  # scope :by_user, where('user_id = ?', params[:by_user])
   
 end

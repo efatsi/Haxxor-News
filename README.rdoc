@@ -1,17 +1,18 @@
-Haxxor News
+=Haxxor News
 
-General Overview: Haxxor News is an app which allows users to post links to articles or other web pages, and opens up the floor for discussion on these article links. A user can comment on an article link, or on another comment as well. Comments are organized in a visual hierarchy indenting in further as the depth of the comment increases. A user can also upvote or downvote any article or comment.
+==General Overview: 
+Haxxor News is an app which allows users to post links to articles or other web pages, and opens up the floor for discussion on these article links. A user can comment on an article link, or on another comment as well. Comments are organized in a visual hierarchy indenting in further as the depth of the comment increases. A user can also upvote or downvote any article or comment.
 
 =Abilities:
 ==Admin: 
-*Godlike powers - can do anything.
+-	Godlike powers - can do anything.
 
 ==User: 
-*Allowed to submit article links
-*Can comment on other articles and comments
-*Can upvote/downvote articles and comments
-*Can update their user information.
+-	Allowed to submit article links
+-	Can comment on other articles and comments
+-	Can upvote/downvote articles and comments
+-	Can update their user information.
 
 ==Visitor: 
-*Allowed to view article links and any discussion that has taken place
-*Can create an account to become a user.
+-	Allowed to view article links and any discussion that has taken place
+-	Can create an account to become a user.

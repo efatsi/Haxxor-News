@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
 		find_by_username(username).try(:authenticate, password)
 	end
 
+  def voted_on(votable)
+    voted_list = Vote.find(:all, :conditions => ['user_id = ? and votable_type = ?', 1, votable.class.to_s]).collect { |vote| vote.votable_id }
+    voted_list.include?(votable.id)
+  end
 	
 	def role?(authorized_role)
 		return false if role.nil?

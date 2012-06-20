@@ -1,5 +1,5 @@
 <% comment = object[0] %>
-<% if logged_in? %>
+<% if logged_in? && !current_user.voted_on(comment) %>
 	<%= button_to "^", upvote_comment_path(comment) %><%= button_to "v", downvote_comment_path(comment) %> 
 <% end %>
 <strong><%= link_to comment.username, user_path(comment.user) %></strong>

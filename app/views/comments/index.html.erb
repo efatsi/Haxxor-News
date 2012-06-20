@@ -1,31 +1,20 @@
-<h1>Listing comments</h1>
-
-<table>
-  <tr>
-    <th>Content</th>
-    <th>Commentable</th>
-    <th>Commentable type</th>
-    <th>User</th>
-    <th>Date</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @comments.each do |comment| %>
-  <tr>
-    <td><%= comment.content %></td>
-    <td><%= comment.commentable_id %></td>
-    <td><%= comment.commentable_type %></td>
-    <td><%= comment.user_id %></td>
-    <td><%= comment.created_at.to_s(:mdy) %></td>
-    <td><%= link_to 'Show', comment %></td>
-    <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Destroy', comment, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<% if params[:by_user] %>
+	<h3>Comments from <%= User.find(params[:by_user]).username %></h3><br />
+<% else %>
+	<h3>All Comments</h3>
 <% end %>
+
+<table class="table table-striped">
+	<% @comments.each do |comment| %>
+	<tr>
+	<td>
+		<strong><%= link_to comment.username, user_path(comment.user) %></strong>
+		on <%= comment.created_at.to_s(:mdyt) %> | <%= link_to "link", comment_path(comment) %>
+		 | <%= link_to "parent", comment.commentable %><br />
+		<%= comment.content %><br /><br />
+		<%= render "comments/list", :object => comment.comments %><br />
+	</td>
+	</tr>
+	<% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Comment', new_comment_path %>
+<%= will_paginate @comments %>

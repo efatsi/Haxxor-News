@@ -14,4 +14,4 @@ Created: <%= @user.created_at.to_s(:mdy) %><br />
 <br />
 
 <%= link_to "Submissions", articles_path(:by_user => @user) %><br />
-<%= link_to "Comments (I'll get these two later)" %><br /><br />
+<%= link_to "Comments", comments_path(:by_user => @user) %><br /><br />

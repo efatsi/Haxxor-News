@@ -19,4 +19,10 @@ class Comment < ActiveRecord::Base
     self.commentable.update_count
   end
   
+  # Scopes
+  scope :chronological, :order => 'created_at DESC'
+  scope :by_user, (lambda do |user_id| 
+    {:conditions => ['user_id = ?', user_id]}
+  end)
+  
 end

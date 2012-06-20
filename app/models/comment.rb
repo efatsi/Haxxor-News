@@ -13,13 +13,10 @@ class Comment < ActiveRecord::Base
   validates_presence_of :content, :user
   
   # Methods
-
-	def comment_count
-	  count = comments.length
-	  comments.each do |c|
-	    count += c.comment_count
-	  end
-	  count
+  def update_count
+    self.comment_count += 1
+    self.save!
+    self.commentable.update_count
   end
   
 end

@@ -39,6 +39,7 @@ class Article < ActiveRecord::Base
   
   # Scopes
   scope :chronological, :order => 'created_at DESC'
-  # scope :by_user, where('user_id = ?', params[:by_user])
-  
+  scope :by_user, (lambda do |user_id| 
+    {:conditions => ['user_id = ?', user_id]}
+  end)
 end

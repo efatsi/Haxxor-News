@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
 
   def index
     if params[:by_user]
-      @articles = Article.where(:user_id => params[:by_user]).chronological.search(params[:search], params[:page])
+      @articles = Article.by_user(params[:by_user]).chronological.search(params[:search], params[:page])
     else
       @articles = Article.chronological.search(params[:search], params[:page])
     end

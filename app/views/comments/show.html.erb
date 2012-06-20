@@ -1,6 +1,4 @@
-<%= render "comments/comment_head", :object => @comment %> | <%= link_to "parent", @comment.commentable %><br />
-<%= @comment.content %>
-
+<%= render "comments/comment_head", :object => [@comment, :parent] %>
 <%= render "comments/form"%>
 <%= render "comments/list", :object => @comments %><br />
 

@@ -8,20 +8,23 @@ module HaxxorNews
     end
     
     def upvote
-      @object.points += 1
-      @object.save
-      redirect_to :back
+      vote("up")
     end
     
     def downvote
-      @object.points -= 1
+      vote("down")   
+    end
+    
+    def vote(direction)
+      @object.points += (direction == "up" ? 1 : -1)
       @object.save
-      redirect_to :back      
+      Vote.create(:user_id => current_user.id, :votable_type => @class_type, :votable_id => params[:id], :direction => direction)
+      redirect_to :back
     end
     
     def assign_object
-      class_type = controller_name.classify.constantize
-      @object = class_type.find(params[:id])
+      @class_type = controller_name.classify
+      @object = @class_type.constantize.find(params[:id])
     end
     
   end

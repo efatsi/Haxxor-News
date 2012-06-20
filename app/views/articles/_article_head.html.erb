@@ -7,3 +7,6 @@
 <%= article.points.to_s + " points by " %> <%= link_to article.username, user_path(article.user) %> <%="posted " + article.created_at.to_s(:mdy) %>
 <%= " | " %>
 <%= link_to pluralize(article.comment_count, "comment"), article_path(article) %>
+<% if logged_in? && article.user_id == current_user.id %>
+	<%= " | "%><%= link_to "edit", edit_article_path(article)%><%= " | " %><%= link_to "delete", article_path(article), :method => :delete, :confirm => "Are you sure you want to delete this article?" %>
+<% end %><br />

@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 	end
 
   def voted_on(votable)
-    voted_on_indexes = Vote.find(:all, :conditions => ['user_id = ? and votable_type = ?', 1, votable.class.to_s]).collect { |vote| vote.votable_id }
+    voted_on_indexes = Vote.find(:all, :conditions => ['user_id = ? and votable_type = ?', self.id, votable.class.to_s]).collect { |vote| vote.votable_id }
     voted_on_indexes.include?(votable.id)
   end
 	

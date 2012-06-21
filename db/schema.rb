@@ -23,13 +23,6 @@ ActiveRecord::Schema.define(:version => 20120621210023) do
     t.datetime "updated_at",                    :null => false
   end
 
-  create_table "choices", :force => true do |t|
-    t.datetime "date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "scope"
-  end
-
   create_table "comments", :force => true do |t|
     t.text     "content"
     t.integer  "comment_count",    :default => 1

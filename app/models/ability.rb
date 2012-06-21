@@ -20,8 +20,11 @@ class Ability
 		  
 		 	can :create, User
   		can :read, User
-  		can :welcome, User
+  		can :welcome, User # can read the welcome screen
   		can :update, User do |u|
+  		  user == u
+  		end
+    	can :change_password, User do |u|
   		  user == u
   		end
  

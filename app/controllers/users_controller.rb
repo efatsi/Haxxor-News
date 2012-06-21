@@ -40,6 +40,25 @@ class UsersController < ApplicationController
     end
   end
   
+  def change_password 
+    @user = User.find(params[:id]) 
+    if request.post? 
+      if User.authenticate(@user.username, params[:password][:old_password]) == @user 
+        @user.password = params[:password][:new_password] 
+        @user.password_confirmation = params[:password][:new_password_confirmation] 
+        if @user.save  
+          redirect_to @user, :alert => 'Your password has been changed'
+        elsif params[:password][:new_password] != params[:password][:new_password_confirmation]
+          redirect_to change_password_path, :alert => 'New password and confirmation were not the same'
+        else 
+          redirect_to change_password_path, :alert => 'Unable to change your password' 
+        end 
+      else 
+        redirect_to change_password_path, :alert => 'Old password not corrent' 
+      end 
+    end 
+  end
+  
   def destroy
     @user = User.find(params[:id])
     @user.destroy

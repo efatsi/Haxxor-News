@@ -5,12 +5,12 @@ class Ability
   
 		user ||= User.new # guest user (not logged in)
 		
-		if user.role? :admin
+		if user.role?(:admin)
 			can :manage, :all
 			
-		elsif user.role? :user  
+		elsif user.role?(:member) && !user.id.nil?
   		can :create, Comment
-  		can :show, Comment
+  		can :read, Comment
   		
   		can :create, Article
   		can :read, Article
@@ -19,7 +19,7 @@ class Ability
 		  end
 		  
 		 	can :create, User
-  		can :show, User
+  		can :read, User
   		can :welcome, User
   		can :update, User do |u|
   		  user == u
@@ -27,8 +27,9 @@ class Ability
  
 		else 
 		 	can :read, Article
-  		can :show, User
-  		can :show, Comment
+		  can :create, User
+  		can :read, User
+  		can :read, Comment
 		end
 		
   end

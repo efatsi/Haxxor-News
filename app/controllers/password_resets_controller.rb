@@ -1,5 +1,7 @@
-
 class PasswordResetsController < ApplicationController
+  
+  skip_before_filter :store_location
+  
   def new
   end
   

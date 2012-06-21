@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   
-  before_filter :require_user, :except => [:new, :create]
-  skip_before_filter :store_location, :only => [:new, :create]
+  skip_before_filter :store_location, :only => [:new, :create, :update]
 
   load_and_authorize_resource
   
@@ -25,7 +24,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
     	session[:user_id] = @user.id
-      redirect_to(articles_path, :notice => 'User was successfully created.')
+    	cookies[:auth_token] = @user.auth_token
+      redirect_to(@user, :notice => 'Welcome to Haxxor News, we recommend you fill in the following information. i.e. email for password retrieval.')
     else
       render :action => "new"
     end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
-      redirect_to(@user, :notice => 'User was successfully updated.')
+      redirect_to(@user, :notice => "You've successfully updated your information!")
     else
       render :action => "edit"
     end

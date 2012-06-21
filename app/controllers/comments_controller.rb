@@ -3,7 +3,6 @@ class CommentsController < ApplicationController
   before_filter :assign_comment, :only => [:show, :destroy]
   before_filter :assign_commentable, :only => [:index, :create]
 
-  
   load_and_authorize_resource
   
   def index

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  ROLES = [['User', 'user'],['Administrator', 'admin']]
+  ROLES = [['Member', 'member'],['Administrator', 'admin']]
   before_create { generate_token(:auth_token) }
   
   

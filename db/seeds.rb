@@ -14,7 +14,7 @@ Comment.delete_all
 
 # User.delete_all
 # User.create!(username: "efatsi", role: "admin", password: "secret", password_confirmation: "secret")
-# User.create!(username: "amelia", role: "user", password: "secret", password_confirmation: "secret")
+# User.create!(username: "amelia", role: "member", password: "secret", password_confirmation: "secret")
 
 def random_date
   years_back = 3

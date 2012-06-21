@@ -4,6 +4,8 @@ class ArticlesController < ApplicationController
   
   # before_filter :assign_article, :except => [:index, :new, :create]
   before_filter :require_user, :except => [:index, :show]
+  skip_before_filter :store_location, :only => [:new, :edit, :update, :destroy]
+  
 
   load_and_authorize_resource
 
@@ -73,8 +75,8 @@ class ArticlesController < ApplicationController
   end
   
   private
-  def assign_article
-    @article = Article.find(params[:id])
-  end
+  # def assign_article
+  #   @article = Article.find(params[:id])
+  # end
   
 end

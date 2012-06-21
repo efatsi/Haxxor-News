@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   before_filter :require_user, :except => [:new, :create]
-  skip_before_filter :store_location, :only => [:new, :create]
+  skip_before_filter :store_location, :only => [:new, :create, :edit, :update, :destroy]
 
   load_and_authorize_resource
   
@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
   end
   
   def index
@@ -18,7 +17,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
   end
   
   def create
@@ -32,7 +30,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = current_user
     if @user.update_attributes(params[:user])
       redirect_to(@user, :notice => 'User was successfully updated.')
     else
@@ -41,7 +38,6 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
 
     respond_to do |format|

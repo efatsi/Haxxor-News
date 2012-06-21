@@ -1,3 +1,14 @@
+<%= form_tag articles_path, :method => 'get' do %>
+	<p>
+		<%= text_field_tag :search, params[:search] %>
+		<%= submit_tag "Search", :name => nil %>
+	</p>
+<% end %>
+See top rated posts from 
+<%= link_to "Today", articles_path(:this_day => "", :by_rating => "") %> |
+<%= link_to "This Month", articles_path(:this_month => "", :by_rating => "") %> |
+<%= link_to "This Year", articles_path(:this_year => "", :by_rating => "") %> |
+<%= link_to "Alltime", articles_path(:by_rating => "") %><br />
 <table class="table table-striped">
 	<thead>
 	</thead>
@@ -16,11 +27,4 @@
 	</tbody>
 </table>
 <%= will_paginate @articles %>
-
-<%= form_tag articles_path, :method => 'get' do %>
-	<p>
-		<%= text_field_tag :search, params[:search] %>
-		<%= submit_tag "Search", :name => nil %>
-	</p>
-<% end %>
 </br>

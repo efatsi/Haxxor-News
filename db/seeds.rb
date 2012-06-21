@@ -16,11 +16,24 @@ Comment.delete_all
 # User.create!(username: "efatsi", role: "admin", password: "secret", password_confirmation: "secret")
 # User.create!(username: "amelia", role: "user", password: "secret", password_confirmation: "secret")
 
+def random_date
+  years_back = 3
+  year = Time.now.year - (rand * (years_back)).floor
+  month = (rand * 12).ceil
+  day = (rand * 31).ceil
+  date = Time.local(year, month, day)
+  if date > Time.now
+    random_date
+  else
+    date
+  end
+end
+
 50.times do |article|
   if rand < 0.5
-    Article.create!(title: Faker::Name.name, link: "github.com/efatsi/Haxxor-News/pull/4/files", user_id: User.first.id, points: rand(100).to_i)
+    Article.create!(title: Faker::Name.name, link: "github.com/efatsi/Haxxor-News/pull/4/files", user_id: User.first.id, points: rand(100).to_i, created_at: random_date)
   else
-    Article.create!(title: Faker::Name.name, link: "github.com/efatsi/Haxxor-News/pull/4/files", user_id: User.last.id, points: rand(100).to_i)
+    Article.create!(title: Faker::Name.name, link: "github.com/efatsi/Haxxor-News/pull/4/files", user_id: User.last.id, points: rand(100).to_i, created_at: random_date)
   end    
 end
 

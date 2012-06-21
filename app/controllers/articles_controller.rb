@@ -6,11 +6,24 @@ class ArticlesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if params[:by_user]
-      @articles = Article.by_user(params[:by_user]).chronological.search(params[:search], params[:page])
+    
+    if params[:by_rating]
+      articles = Article.by_rating 
     else
-      @articles = Article.chronological.search(params[:search], params[:page])
+      articles = Article.chronological
+    end      
+    
+    articles = articles.by_user(params[:by_user]) if params[:by_user]
+    
+    if params[:this_day]  
+      articles = articles.this_day
+    elsif params[:this_month]  
+      articles = articles.this_month
+    elsif params[:this_year]  
+      articles = articles.this_year
     end
+    
+    @articles = articles.search(params[:search], params[:page])
     
     respond_to do |format|
       format.html # index.html.erb

@@ -6,7 +6,7 @@ class Article < ActiveRecord::Base
   
   before_validation :adjust_link
   
-  attr_accessible :link, :points, :title, :user_id
+  attr_accessible :link, :points, :title, :user_id, :created_at
   
   # Relationships
   belongs_to :user
@@ -38,8 +38,11 @@ class Article < ActiveRecord::Base
   end
   
   # Scopes
-  scope :chronological, :order => 'created_at DESC'
-  scope :by_user, (lambda do |user_id| 
-    {:conditions => ['user_id = ?', user_id]}
-  end)
+  scope :chronological, order('created_at DESC')
+  scope :by_user, lambda { |user_id| where("user_id = ?", user_id) }
+  scope :by_rating, order('points DESC, created_at DESC')
+  scope :this_day, where('created_at > ?', Time.now - 1*60*60*24)
+  scope :this_month, where('created_at > ?', Time.now - 1*60*60*24*31)
+  scope :this_year, where('created_at > ?', Time.now - 1*60*60*24*366)
+  
 end

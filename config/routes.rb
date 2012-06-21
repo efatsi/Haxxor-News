@@ -1,8 +1,5 @@
 HaxxorNews::Application.routes.draw do
 
-
-  get "password_resets/new"
-
   resources :articles
   resources :comments
   
@@ -15,6 +12,11 @@ HaxxorNews::Application.routes.draw do
 
 	resources :users
 	resources :sessions
+	
+	resources :password_resets
+  resources :users do
+    get "reset_password", on: :member
+  end
 
 	match 'user/edit' => 'users#edit', :as => :edit_current_user
 	match 'signup' => 'users#new', :as => :signup

@@ -1,6 +1,8 @@
 HaxxorNews::Application.routes.draw do
 
 
+  get "password_resets/new"
+
   resources :articles
   resources :comments
   

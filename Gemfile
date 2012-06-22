@@ -21,6 +21,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'tconsole', '1.1.1'
+  gem 'launchy'
 end
 
 gem 'sass-rails',   '~> 3.2.3'

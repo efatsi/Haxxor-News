@@ -1,6 +1,5 @@
 HaxxorNews::Application.routes.draw do
 
-
   resources :articles
   resources :comments
   
@@ -13,12 +12,19 @@ HaxxorNews::Application.routes.draw do
 
 	resources :users
 	resources :sessions
+	
+	resources :password_resets
+  resources :users do
+    get "reset_password", on: :member
+  end
 
-	match 'user/edit' => 'users#edit', :as => :edit_current_user
+
 	match 'signup' => 'users#new', :as => :signup
 	match 'logout' => 'sessions#destroy', :as => :logout
 	match 'login' => 'sessions#new', :as => :login
 	match 'welcome' => 'users#welcome', :as => :welcome
+	match 'article/pick_date' => 'articles#pick_date', :as => :pick_date
+	match 'user/:id/change_password' => 'users#change_password', :as => :change_password
 	
 	# Change root path
 	# This does normal load

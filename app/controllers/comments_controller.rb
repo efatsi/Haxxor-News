@@ -3,12 +3,16 @@ class CommentsController < ApplicationController
   before_filter :assign_comment, :only => [:show, :destroy]
   before_filter :assign_commentable, :only => [:index, :create]
 
-  
   load_and_authorize_resource
   
   def index
+
     if @commentable.nil?
-      @comments = Comment.all
+      if params[:by_user]
+        @comments = Comment.by_user(params[:by_user]).chronological.paginate(:page => params[:page], :per_page => 10)
+      else
+        @comments = Comment.chronological.paginate(:page => params[:page], :per_page => 20)
+      end
     else  
       @comments = @commentable.comments
     end

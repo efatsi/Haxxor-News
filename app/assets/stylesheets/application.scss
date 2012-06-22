@@ -1,1 +1,17 @@
 @import "twitter/bootstrap";
+
+$white: #ffffff;
+$black: #000000;
+$darkblue: #339bb9;
+$darkestblue: #257085;
+$red: #ff0000;
+$blue-gradient: linear-gradient(top, $red, $white);
+
+.btn-primary {
+  // background-color: $red;
+  // border-color: $red;
+  // &:hover, &:active, &.active, &.disabled, &[disabled] {
+  //   background-color: $white;
+  // }
+  // color: #131313;
+}

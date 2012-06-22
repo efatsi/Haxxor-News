@@ -14,6 +14,7 @@ class Ability
   		
   		can :create, Article
   		can :read, Article
+		 	can :pick_date, Article
   		can :manage, Article do |a|
   		  user.id == a.user_id
 		  end
@@ -30,6 +31,7 @@ class Ability
  
 		else 
 		 	can :read, Article
+		 	can :pick_date, Article
 		  can :create, User
   		can :read, User
   		can :read, Comment

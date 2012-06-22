@@ -1,15 +1,32 @@
 <%= form_tag articles_path, :method => 'get' do %>
-	<p>
-		<%= text_field_tag :search, params[:search] %>
-		<%= submit_tag "Search", :name => nil %>
-	</p>
+	<%= text_field_tag :search, params[:search] %>
+	<%= submit_tag "Search", :name => nil %>
 <% end %>
-See top rated posts from 
-<%= link_to "Today", articles_path(:this_day => "", :by_rating => "") %> |
-<%= link_to "This Month", articles_path(:this_month => "", :by_rating => "") %> |
-<%= link_to "This Year", articles_path(:this_year => "", :by_rating => "") %> |
-<%= link_to "Alltime", articles_path(:by_rating => "") %> |
-<%= link_to "Choose Time", pick_date_path %><br />
+
+<div class="btn-group">
+  	<button class="btn">See Posts From</button>
+  	<button class="btn dropdown-toggle" data-toggle="dropdown">
+    	<span class="caret"></span>
+  	</button>
+  	<ul class="dropdown-menu">
+	    <li><%= link_to "Today", articles_path(:this_day => "") %></li>
+		<li><%= link_to "This Month", articles_path(:this_month => "") %></li>
+		<li><%= link_to "This Year", articles_path(:this_year => "") %></li>
+		<li><%= link_to "Forever", articles_path %></li>
+		<li><%= link_to "Choose Time", pick_date_path %></li>
+  	</ul>
+</div>
+<div class="btn-group">
+  	<button class="btn">Arrange Posts By</button>
+  	<button class="btn dropdown-toggle" data-toggle="dropdown">
+    	<span class="caret"></span>
+  	</button>
+  	<ul class="dropdown-menu">
+  		<li><%= link_to "Time", articles_path(:chronological => "") %></li>
+		<li><%= link_to "Rating", articles_path(:by_rating => "") %></li>
+  	</ul>
+</div><br /><br /><br />
+
 <table class="table table-striped">
 	<thead>
 	</thead>

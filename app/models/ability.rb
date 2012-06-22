@@ -31,6 +31,7 @@ class Ability
  
 		else 
 		 	can :read, Article
+		 	can :create, User
   		can :show, User
   		can :show, Comment
 		end

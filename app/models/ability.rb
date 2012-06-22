@@ -8,7 +8,7 @@ class Ability
 		if user.role? :admin
 			can :manage, :all
 			
-		elsif user.role? :user  
+		elsif user.role?(:member) && !user.id.nil?
   		can :create, Comment
   		can :show, Comment
   		can :upvote, Comment
@@ -32,8 +32,8 @@ class Ability
 		else 
 		 	can :read, Article
 		 	can :create, User
-  		can :show, User
-  		can :show, Comment
+  		can :read, User
+  		can :read, Comment
 		end
 		
   end

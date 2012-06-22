@@ -47,14 +47,14 @@ class UsersController < ApplicationController
         @user.password = params[:password][:new_password] 
         @user.password_confirmation = params[:password][:new_password_confirmation] 
         if @user.save  
-          redirect_to @user, :alert => 'Your password has been changed'
+          redirect_to @user, :notice => 'Your password has been changed.'
         elsif params[:password][:new_password] != params[:password][:new_password_confirmation]
-          redirect_to change_password_path, :alert => 'New password and confirmation were not the same'
+          redirect_to change_password_path, :alert => 'New password and confirmation were not the same.'
         else 
-          redirect_to change_password_path, :alert => 'Unable to change your password' 
+          redirect_to change_password_path, :alert => 'Unable to change your password.' 
         end 
       else 
-        redirect_to change_password_path, :alert => 'Old password not corrent' 
+        redirect_to change_password_path, :alert => 'Old password incorrect.' 
       end 
     end 
   end

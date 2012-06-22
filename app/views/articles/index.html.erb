@@ -8,7 +8,8 @@ See top rated posts from
 <%= link_to "Today", articles_path(:this_day => "", :by_rating => "") %> |
 <%= link_to "This Month", articles_path(:this_month => "", :by_rating => "") %> |
 <%= link_to "This Year", articles_path(:this_year => "", :by_rating => "") %> |
-<%= link_to "Alltime", articles_path(:by_rating => "") %><br />
+<%= link_to "Alltime", articles_path(:by_rating => "") %> |
+<%= link_to "Choose Time", pick_date_path %><br />
 <table class="table table-striped">
 	<thead>
 	</thead>

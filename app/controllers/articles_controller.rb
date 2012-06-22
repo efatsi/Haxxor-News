@@ -13,8 +13,10 @@ class ArticlesController < ApplicationController
       articles = Article.chronological
     end      
     
-    articles = articles.by_user(params[:by_user]) if params[:by_user]
-    
+    if params[:by_user]
+      articles = articles.by_user(params[:by_user])
+    end 
+
     if params[:this_day]  
       articles = articles.this_day
     elsif params[:this_month]  
@@ -23,8 +25,15 @@ class ArticlesController < ApplicationController
       articles = articles.this_year
     end
     
-    @articles = articles.search(params[:search], params[:page])
+    if params[:day]  
+      articles = articles.day(params[:day].to_i, params[:month], params[:year])
+    elsif params[:month]  
+      articles = articles.month(params[:month].to_i, params[:year])
+    elsif params[:year]  
+      articles = articles.year(params[:year].to_i)
+    end
     
+    @articles = articles.search(params[:search], params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @articles }
@@ -64,6 +73,28 @@ class ArticlesController < ApplicationController
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def pick_date
+    # Fill in blanks if any exist (won't affect scope chosen in later if/else section)
+    year = ( params[:year].blank? ? Time.now.year : params[:year] )
+    month = ( params[:month].blank? ? Time.now.month : params[:month] )
+    day = ( params[:day].blank? ? Time.now.day : params[:day] )
+  
+    if request.post?
+      if Time.local(year, month, day) > Time.now
+        redirect_to pick_date_path, :alert => "You must select a time the past"
+      elsif params[:day].present?
+        redirect_to root_url(:day => day, :month => month, :year => year)
+      elsif params[:month].present?
+        redirect_to root_url(:month => month, :year => year)
+      elsif params[:year].present?
+        redirect_to root_url(:year => year)
+      else
+        redirect_to root_url
+      end
+    end
+    
   end
 
   def update

@@ -18,10 +18,12 @@ HaxxorNews::Application.routes.draw do
     get "reset_password", on: :member
   end
 
-	match 'signup' => 'users#new'
-	match 'logout' => 'sessions#destroy'
-	match 'login' => 'sessions#new'
-	match 'welcome' => 'users#welcome'
+
+	match 'signup' => 'users#new', :as => :signup
+	match 'logout' => 'sessions#destroy', :as => :logout
+	match 'login' => 'sessions#new', :as => :login
+	match 'welcome' => 'users#welcome', :as => :welcome
+	match 'article/pick_date' => 'articles#pick_date', :as => :pick_date
 	match 'user/:id/change_password' => 'users#change_password', :as => :change_password
 	
 	# Change root path

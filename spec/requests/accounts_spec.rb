@@ -21,27 +21,46 @@ describe "Accounts" do
   
   context "logging in and out" do
     before {
-      visit '/signup'
-      fill_in 'Username', :with => 'username'
-      fill_in 'Password', :with => 'secret'
-      fill_in 'Password confirmation', :with => 'secret'      
-      click_on 'Sign up'
-      visit '/login'
-      fill_in 'Username', :with => 'username'
-      fill_in 'Password', :with => 'secret'
-      click_button 'Log In'
+      make_account
+      login
     }
     
     it "should be at the root page" do
-      save_and_open_page
       current_path.should == '/articles'
+      page.has_xpath?("Welcome")
+    end
+    
+    it "should allow users to see the Welcome page" do
+      click_link "welcome"
+      current_path.should == '/welcome'
     end
     
     it 'should be able to logout' do
       visit '/logout'
       current_path.should == '/articles'
     end
+
+    it "should not allow visitors to see the Welcome page" do
+      visit '/logout'
+      visit '/welcome'
+      current_path.should == '/articles'
+      page.should have_content("You cannot go here")
+    end
   end
   
+  def make_account
+    visit '/signup'
+    fill_in 'Username', :with => 'username'
+    fill_in 'Password', :with => 'secret'
+    fill_in 'Password confirmation', :with => 'secret'
+    click_on 'Sign up'
+  end
+  
+  def login
+    visit '/login'
+    fill_in 'Username', :with => 'username'
+    fill_in 'Password', :with => 'secret'
+    click_button 'Log In'
+  end
   
 end

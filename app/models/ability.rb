@@ -25,6 +25,7 @@ class Ability
 		 	can :create, User
   		can :show, User
   		can :welcome, User
+  		can :upvotes, User
   		can :update, User do |u|
   		  user == u
   		end

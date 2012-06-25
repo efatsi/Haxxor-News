@@ -24,6 +24,7 @@ HaxxorNews::Application.routes.draw do
 	match 'logout' => 'sessions#destroy', :as => :logout
 	match 'login' => 'sessions#new', :as => :login
 	match 'welcome' => 'users#welcome', :as => :welcome
+	match 'user/:id/upvotes' => 'users#upvotes', :as => :upvotes
 	
 	# Change root path
 	# This does normal load

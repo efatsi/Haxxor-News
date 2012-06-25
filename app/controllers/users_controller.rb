@@ -15,6 +15,11 @@ class UsersController < ApplicationController
   def index
     @users = User.all
   end
+  
+  def upvotes
+    @articles = @user.upvoted("Article")
+    @comments = @user.upvoted("Comment")
+  end
 
   def show
   end

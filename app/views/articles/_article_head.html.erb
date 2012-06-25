@@ -4,7 +4,7 @@
 	<%= button_to "^", upvote_article_path(article) %><%= button_to "v", downvote_article_path(article) %> 
 <% end %>
 <%= link_to article.title, article.link %> <%= "(" + article.short_link + ")" %></h4>
-<%= article.points.to_s + " points by " %> <%= link_to article.username, user_path(article.user) %> <%="posted " + time_ago_in_words(article.created_at) + " ago" %>
+<%= pluralize(article.points, "point") %><%= " by " %> <%= link_to article.username, user_path(article.user) %> <%="posted " + time_ago_in_words(article.created_at) + " ago" %>
 <%= " | " %>
 <%= link_to pluralize(article.comment_count, "comment"), article_path(article) %>
 <% if logged_in? && article.user_id == current_user.id %>

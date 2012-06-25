@@ -16,6 +16,7 @@
 		<% end %>
 	</tbody>
 </table>
+<%= will_paginate @articles %>
 <% if @articles.empty? %>
   <h4><%= "#{@user.username} has not upvoted any articles yet."%></h4>
 <% end %>

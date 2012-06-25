@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   
+  require 'will_paginate/array'
   before_filter :require_user, :except => [:new, :create, :welcome]
   skip_before_filter :store_location, :only => [:new, :create, :edit, :update, :destroy, :welcome]
 
@@ -17,7 +18,7 @@ class UsersController < ApplicationController
   end
   
   def upvotes
-    @articles = @user.upvoted("Article")
+    @articles = @user.upvoted("Article").paginate(:page => params[:page])
     @comments = @user.upvoted("Comment")
   end
 

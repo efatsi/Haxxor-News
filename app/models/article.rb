@@ -1,12 +1,14 @@
 class Article < ActiveRecord::Base
   
   URI_REGEX = /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]+*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
-  
+  YEARS = (Time.now.year-5..Time.now.year).map{|y| y}.reverse
+  MONTHS = Hash[["January", "Fubruary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].zip [1,2,3,4,5,6,7,8,9,10,11,12]]
+  DAYS = (1..31).map{|a| a}
   delegate :username, :to => :user
   
   before_validation :adjust_link
   
-  attr_accessible :link, :points, :title, :user_id
+  attr_accessible :link, :points, :title, :user_id, :created_at
   
   # Relationships
   belongs_to :user
@@ -38,6 +40,14 @@ class Article < ActiveRecord::Base
   end
   
   # Scopes
-  scope :chronological, :order => 'created_at DESC'
+  scope :chronological, order('created_at DESC')
+  scope :by_user, lambda { |user_id| where("user_id = ?", user_id) }
+  scope :by_rating, order('points DESC, created_at DESC')
+  scope :this_day, where('created_at > ?', Time.now - 1*60*60*24)
+  scope :this_month, where('created_at > ?', Time.now - 1*60*60*24*31)
+  scope :this_year, where('created_at > ?', Time.now - 1*60*60*24*366)
+  scope :day, lambda { |day, month, year| where("created_at >= ? and created_at < ?", Time.new(year, month, day), Time.new(year, month, day) + 60*60*24) }
+  scope :month, lambda { |month, year| where("created_at >= ? and created_at < ?", Time.new(year, month), Time.new(year, month) + 60*60*24*31) }
+  scope :year, lambda { |year| where("created_at >= ? and created_at < ?", Time.new(year), Time.new(year+1)) }
   
 end

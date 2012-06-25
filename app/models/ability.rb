@@ -34,6 +34,7 @@ class Ability
 		 	can :read, Article
 		 	can :create, User
   		can :read, User
+  		can :upvotes, User
   		can :read, Comment
 		end
 		

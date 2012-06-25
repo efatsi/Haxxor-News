@@ -29,7 +29,7 @@ class Article < ActiveRecord::Base
   end
   
   def adjust_link
-    if self.link.match(URI_REGEX).nil? and !self.link.nil?
+    if !self.link.nil? and self.link.match(URI_REGEX).nil?
       self.link = "http://" + self.link
     end    
   end

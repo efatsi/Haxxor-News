@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 	validates_presence_of :password, :password_confirmation, :role, :on => :create
 	validates_presence_of :username
 	validates_uniqueness_of :username
+	validates_inclusion_of :role, :in => ["admin", "member"]
 	
 	# Methods
   

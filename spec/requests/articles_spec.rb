@@ -12,8 +12,6 @@ describe "Articles" do
       visit '/articles/new'
       make_article
       page.should have_content("Article was successfully created")
-      expected_path = "/articles/#{Article.count}"
-      current_path.should == expected_path
     end
     
     it 'should redirect a visitor to login screen if there is a create attempt' do

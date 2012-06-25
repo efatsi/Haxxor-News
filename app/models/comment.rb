@@ -11,7 +11,7 @@ class Comment < ActiveRecord::Base
   has_many :votes, :as => :votable, :dependent => :destroy
   
   # Validations
-  validates_presence_of :content, :user
+  validates_presence_of :content, :user_id, :commentable_id, :commentable_type
   
   # Methods
   def update_count

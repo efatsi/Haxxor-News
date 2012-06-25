@@ -22,4 +22,5 @@ class Comment < ActiveRecord::Base
   
   # Scope
   scope :rev_chronological, :order => 'created_at ASC'
+  scope :upvoted_by_user, lambda { |user_id| where("user_id = ?", user_id) }
 end

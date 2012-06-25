@@ -18,6 +18,7 @@ group :test do
   gem 'shoulda'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
+  gem 'simplecov'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'tconsole', '1.1.1'

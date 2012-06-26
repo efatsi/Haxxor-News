@@ -17,7 +17,6 @@ module HaxxorNews
     end
     def require_user
       unless current_user
-        # store_location
         redirect_to login_path, alert: "You need to log in to view this page."
         return false
       end

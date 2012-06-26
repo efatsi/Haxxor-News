@@ -2,8 +2,19 @@ require 'spec_helper'
 
 describe Article do
   
-  alpha = User.create(:username => "article_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
-  google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => alpha.id)
+  before :all do
+    @alpha = User.create(:username => "member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+    @google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => @alpha.id)
+    @walmart = Article.new(:link => "walmart.com", :title => "Walmart", :user_id => @alpha.id)
+    @target = Article.new(:link => "www.target.com", :title => "Target", :user_id => @alpha.id)
+  end
+  
+  after :all do
+    @alpha.destroy
+    @google.destroy
+    @walmart.destroy
+    @target.destroy
+  end
   
   it "should validate a bunch of stuff" do
     
@@ -31,28 +42,26 @@ describe Article do
   end  
   
   it "shows the article's attributes" do
-    assert google.save
-    assert_equal google.link, "http://www.google.com"
-    assert_equal google.title, "Google, Fake Article"
+    assert @google.save
+    assert_equal @google.link, "http://www.google.com"
+    assert_equal @google.title, "Google, Fake Article"
   end
   
   it "should add http:// to link if necessary" do
-    walmart = Article.new(:link => "walmart.com", :title => "Walmart", :user_id => alpha.id)
-    target = Article.new(:link => "www.target.com", :title => "Target", :user_id => alpha.id)
-    assert walmart.save
-    assert target.save
-    assert_equal walmart.link, "http://walmart.com"
-    assert_equal target.link, "http://www.target.com"
+    assert @walmart.save
+    assert @target.save
+    assert_equal @walmart.link, "http://walmart.com"
+    assert_equal @target.link, "http://www.target.com"
   end
   
   it "should show the short link" do
-    assert_equal google.short_link, "google.com"
+    assert_equal @google.short_link, "google.com"
   end
   
   it "should increase the count by 1" do
-    current_count = google.comment_count
-    google.update_count
-    assert_equal google.comment_count, current_count+1
+    current_count = @google.comment_count
+    @google.update_count
+    assert_equal @google.comment_count, current_count+1
   end
   
 end

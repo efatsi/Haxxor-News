@@ -33,9 +33,9 @@ class Ability
 		else 
 		 	can :read, Article
 		 	can :create, User
-  		can :read, User
+  		can :show, User
   		can :upvotes, User
-  		can :read, Comment
+  		can :show, Comment
 		end
 		
   end

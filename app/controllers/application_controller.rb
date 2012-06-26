@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = "You cannot go here. Since you are not authorized. This is a haiku."
-  redirect_back_or_default(root_url)
+  redirect_to root_url
   end
   
   

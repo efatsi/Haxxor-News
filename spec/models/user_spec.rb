@@ -2,7 +2,27 @@ require 'spec_helper'
 
 describe User do
   
-  alpha = User.create(:username => "user_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+  before :all do
+    @alpha = User.create(:username => "member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+    @beta = User.new(:username => "member", :password => "secret", :password_confirmation => "secret", :role => "member")
+    @gamma = User.new(:username => "member2", :password => "secret", :password_confirmation => "notasecret", :role => "member")
+    @delta = User.create(:username => "member3", :password => "secret", :password_confirmation => "secret", :role => "member")
+    @google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => @alpha.id)
+    @c1 = Comment.create(:content => "1st Comment", :commentable_type => "Article", :commentable_id => @google.id, :user_id => @alpha.id)
+    @article_vote = Vote.create(:direction => "up", :votable_type => "Article", :votable_id => @google.id, :user_id => @alpha.id)
+    @comment_vote = Vote.create(:direction => "up", :votable_type => "Comment", :votable_id => @c1.id, :user_id => @alpha.id)
+  end
+  
+  after do
+    @alpha.destroy
+    @beta.destroy
+    @gamma.destroy
+    @delta.destroy
+    @google.destroy
+    @c1.destroy
+    @article_vote.destroy
+    @comment_vote.destroy
+  end
   
   it "should validate a bunch of stuff" do
     
@@ -18,7 +38,7 @@ describe User do
     
     should allow_value("member2").for(:username)
     should_not allow_value(nil).for(:username)
-    should_not allow_value("user_member").for(:username)
+    should_not allow_value("member").for(:username)
     
     should allow_value("secret").for(:password)
     should_not allow_value(nil).for(:password)
@@ -33,41 +53,32 @@ describe User do
   end  
   
   it "shows the user's attributes" do
-    assert_equal alpha.username, "user_member"
-    assert_equal alpha.role, "admin"
+    assert_equal @alpha.username, "member"
+    assert_equal @alpha.role, "admin"
   end
   
   it "should not allow repeat username" do
-    beta = User.new(:username => "user_member", :password => "secret", :password_confirmation => "secret", :role => "member")
-    assert !beta.save, "Repeat username"
+    assert !@beta.save, "Repeat username"
   end
   
   it "should not allow different password and confirmation" do
-    gamma = User.new(:username => "member2", :password => "secret", :password_confirmation => "notasecret", :role => "member")
-    assert !gamma.save, "Confirmation of password doesn't match"
+    assert !@gamma.save, "Confirmation of password doesn't match"
   end
 
     it "should authenticate a user" do
-      assert User.authenticate("user_member", "secret")
-      assert alpha.authenticate("secret")
+      assert User.authenticate("member", "secret")
+      assert @alpha.authenticate("secret")
     end
   
   it "should be able to get role of user" do
-    assert alpha.role?(:admin)
+    assert @alpha.role?(:admin)
   end
   
-  it "should know if you've voted on something or not" do
-    delta = User.create(:username => "member3", :password => "secret", :password_confirmation => "secret", :role => "member")
-    
-    google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => alpha.id)
-    c1 = Comment.create(:content => "1st Comment", :commentable_type => "Article", :commentable_id => google.id, :user_id => alpha.id)
-    article_vote = Vote.create(:direction => "up", :votable_type => "Article", :votable_id => google.id, :user_id => alpha.id)
-    comment_vote = Vote.create(:direction => "up", :votable_type => "Comment", :votable_id => c1.id, :user_id => alpha.id)
-    
-    assert_equal alpha.voted_on(google), true
-    assert_equal alpha.voted_on(c1), true
-    assert_equal delta.voted_on(google), false
-    assert_equal delta.voted_on(c1), false
+  it "should know if you've voted on something or not" do    
+    assert_equal @alpha.voted_on(@google), true
+    assert_equal @alpha.voted_on(@c1), true
+    assert_equal @delta.voted_on(@google), false
+    assert_equal @delta.voted_on(@c1), false
   end
   
 end

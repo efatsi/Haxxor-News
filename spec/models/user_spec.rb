@@ -3,8 +3,8 @@ require 'spec_helper'
 describe User do
   
   before :all do
-    @alpha = User.create(:username => "member", :password => "secret", :password_confirmation => "secret", :role => "admin")
-    @beta = User.new(:username => "member", :password => "secret", :password_confirmation => "secret", :role => "member")
+    @alpha = User.create(:username => "alpha_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+    @beta = User.new(:username => "alpha_member", :password => "secret", :password_confirmation => "secret", :role => "member")
     @gamma = User.new(:username => "member2", :password => "secret", :password_confirmation => "notasecret", :role => "member")
     @delta = User.create(:username => "member3", :password => "secret", :password_confirmation => "secret", :role => "member")
     @google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => @alpha.id)
@@ -38,7 +38,7 @@ describe User do
     
     should allow_value("member2").for(:username)
     should_not allow_value(nil).for(:username)
-    should_not allow_value("member").for(:username)
+    should_not allow_value("alpha_member").for(:username)
     
     should allow_value("secret").for(:password)
     should_not allow_value(nil).for(:password)
@@ -53,32 +53,32 @@ describe User do
   end  
   
   it "shows the user's attributes" do
-    assert_equal @alpha.username, "member"
-    assert_equal @alpha.role, "admin"
+    @alpha.username.should == "alpha_member"
+    @alpha.role.should == "admin"
   end
   
   it "should not allow repeat username" do
-    assert !@beta.save, "Repeat username"
+    @beta.save.should == false
   end
   
   it "should not allow different password and confirmation" do
-    assert !@gamma.save, "Confirmation of password doesn't match"
+    @gamma.save.should == false
   end
 
-    it "should authenticate a user" do
-      assert User.authenticate("member", "secret")
-      assert @alpha.authenticate("secret")
-    end
+  it "should authenticate a user" do
+    User.authenticate("alpha_member", "secret").should == @alpha
+    @alpha.authenticate("secret").should == @alpha
+  end
   
   it "should be able to get role of user" do
-    assert @alpha.role?(:admin)
+    @alpha.role?(:admin).should == true
   end
   
   it "should know if you've voted on something or not" do    
-    assert_equal @alpha.voted_on(@google), true
-    assert_equal @alpha.voted_on(@c1), true
-    assert_equal @delta.voted_on(@google), false
-    assert_equal @delta.voted_on(@c1), false
+    @alpha.voted_on(@google).should == true
+    @alpha.voted_on(@c1).should == true
+    @delta.voted_on(@google).should == false
+    @delta.voted_on(@c1).should == false
   end
   
 end

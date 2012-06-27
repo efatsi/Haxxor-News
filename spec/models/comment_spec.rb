@@ -41,21 +41,28 @@ describe Comment do
   end  
   
   it "should show the comment's attributes/parent" do
-    assert_equal @c1.content, "1st Comment"
-    assert_equal @c1.commentable_type, "Article"
-    assert_equal @c1.commentable_id, @google.id
-    assert_equal @c1.user_id, @alpha.id
-    assert_equal @c1.commentable, @google
+    @c1.content.should == "1st Comment"
+    @c1.commentable_type.should == "Article"
+    @c1.commentable_id.should == @google.id
+    @c1.user_id.should == @alpha.id
+    @c1.commentable.should == @google
   end
-  
-  it "should increase count of itself and it's parent" do
-    current_c_count = @c1.comment_count
-    current_p_count = @c1.commentable.comment_count
-    @c1.update_count(1)
-    assert_equal current_c_count + 1, @c1.comment_count
-    assert_equal current_p_count + 1, @c1.commentable.comment_count
+
+  it "should increase count of itself" do
+    expect { @c1.update_count(1) }.to change{ @c1.comment_count }.by(1)
   end
-  
-  
+
+  it "should increase the count of i's parent" do
+    expect { @c1.update_count(1) }.to change{ @c1.commentable.comment_count }.by(1)
+  end
+
+
+  it "should decrease count of itself" do
+    expect { @c1.update_count(-1) }.to change{ @c1.comment_count }.by(-1)
+  end
+
+  it "should decrease the count of i's parent" do
+    expect { @c1.update_count(-1) }.to change{ @c1.commentable.comment_count }.by(-1)
+  end
   
 end

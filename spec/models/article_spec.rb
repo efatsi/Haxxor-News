@@ -42,26 +42,28 @@ describe Article do
   end  
   
   it "shows the article's attributes" do
-    assert @google.save
-    assert_equal @google.link, "http://www.google.com"
-    assert_equal @google.title, "Google, Fake Article"
+    @google.save.should == true
+    @google.link.should == "http://www.google.com"
+    @google.title.should == "Google, Fake Article"
   end
   
   it "should add http:// to link if necessary" do
-    assert @walmart.save
-    assert @target.save
-    assert_equal @walmart.link, "http://walmart.com"
-    assert_equal @target.link, "http://www.target.com"
+    @walmart.save.should == true
+    @target.save.should == true
+    @walmart.link.should == "http://walmart.com"
+    @target.link.should == "http://www.target.com"
   end
   
   it "should show the short link" do
-    assert_equal @google.short_link, "google.com"
+    @google.short_link.should == "google.com"
   end
   
   it "should increase the count by 1" do
-    current_count = @google.comment_count
-    @google.update_count(1)
-    assert_equal @google.comment_count, current_count+1
+    expect { @google.update_count(1) }.to change{ @google.comment_count }.by(1)
+  end
+  
+  it "should decrease the count by 1" do
+    expect { @google.update_count(-1) }.to change{ @google.comment_count }.by(-1)
   end
   
 end

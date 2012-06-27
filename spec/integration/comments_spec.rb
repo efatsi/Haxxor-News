@@ -9,7 +9,7 @@ describe "Comments" do
   context "creating a comment" do
     
     before do
-      comment_1.update_count
+      comment_1.update_count(1)
       visit '/login'
       login_with("comment_user", "password")
     end
@@ -44,13 +44,13 @@ describe "Comments" do
   context "editing and deleting comments" do
     
     before do
-      comment_1.update_count
+      comment_1.update_count(1)
       visit '/login'
       login_with("comment_user", "password")
+      visit comment_path(comment_1)
     end
     
     it "should allow a user to edit their own comment" do
-      visit comment_path(comment_1)
       click_link "edit"
       page.should have_content "Current content:"
       fill_in 'Content', :with => "This is Article 1's edited comment"
@@ -59,15 +59,21 @@ describe "Comments" do
     end
     
     it "should allow a user to delete their own comment" do
-      
-    end
+      expect { click_link "delete" }.to change{ Comment.count }.by(-1)
+    end    
     
     it "should not allow a non-owner to edit a comment" do
-      
+      click_link "Logout"
+      visit comment_path(comment_1)
+      page.should_not have_link "edit"    
+      expect { visit current_path + "/edit?" }.to change{ current_path }.from(current_path).to("/articles") 
+      page.should have_content "You cannot go here"
     end
     
     it "should not allow a non-owner to delete a comment" do
-      
+      click_link "Logout"
+      visit comment_path(comment_1)
+      page.should_not have_link "delete"    
     end
     
   end
@@ -77,8 +83,8 @@ describe "Comments" do
     let!(:comment_2) { FactoryGirl.create(:comment, :content => "Deep comment", :commentable_type => "Comment", :commentable_id => comment_1.id, :user_id => comment_user.id)}
 
     before do
-      comment_1.update_count
-      comment_2.update_count
+      comment_1.update_count(1)
+      comment_2.update_count(1)
       visit '/'
     end
     

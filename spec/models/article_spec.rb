@@ -60,7 +60,7 @@ describe Article do
   
   it "should increase the count by 1" do
     current_count = @google.comment_count
-    @google.update_count
+    @google.update_count(1)
     assert_equal @google.comment_count, current_count+1
   end
   

@@ -14,10 +14,10 @@ class Comment < ActiveRecord::Base
   validates_presence_of :content, :user_id, :commentable_id, :commentable_type
   
   # Methods
-  def update_count
-    self.comment_count += 1
+  def update_count(amount)
+    self.comment_count += amount
     self.save!
-    self.commentable.update_count
+    self.commentable.update_count(amount)
   end
   
   # Scope

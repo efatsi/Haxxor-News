@@ -49,7 +49,7 @@ end
 end
 
 Comment.all.each do |c|
-  c.update_count
+  c.update_count(1)
 end
 
 Article.all.each do |a|

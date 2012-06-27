@@ -51,7 +51,7 @@ describe Comment do
   it "should increase count of itself and it's parent" do
     current_c_count = @c1.comment_count
     current_p_count = @c1.commentable.comment_count
-    @c1.update_count
+    @c1.update_count(1)
     assert_equal current_c_count + 1, @c1.comment_count
     assert_equal current_p_count + 1, @c1.commentable.comment_count
   end

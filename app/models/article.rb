@@ -23,8 +23,8 @@ class Article < ActiveRecord::Base
 	  paginate :per_page => 20, :page => page, :conditions => ['title || link like ? or user_id IN (?)', "%#{search}%", user_ids]
 	end
 	
-	def update_count
-	  self.comment_count += 1
+	def update_count(amount)
+	  self.comment_count += amount
 	  self.save!
   end
   

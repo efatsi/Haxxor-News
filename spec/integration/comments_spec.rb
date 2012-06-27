@@ -15,7 +15,7 @@ describe "Comments" do
     end
     
     it "should allow a user to create a comment" do
-      click_on_article("Article #1", "1 comment")      
+      click_on_article("Article #1", "1 comment")            
       fill_in 'Content', :with => "This is a primary comment"
       expect { click_on 'Add Comment' }.to change { Comment.count }.by(1)
     end

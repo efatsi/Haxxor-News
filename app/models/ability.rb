@@ -13,6 +13,9 @@ class Ability
   		can :show, Comment
   		can :upvote, Comment
   		can :downvote, Comment
+  		can :manage, Comment do |c|
+  		  user.id == c.user_id
+		  end
   		
   		can :create, Article
   		can :read, Article
@@ -25,7 +28,6 @@ class Ability
 		 	can :create, User
   		can :show, User
   		can :welcome, User
-  		can :upvotes, User
   		can :update, User do |u|
   		  user == u
   		end
@@ -34,7 +36,6 @@ class Ability
 		 	can :read, Article
 		 	can :create, User
   		can :show, User
-  		can :upvotes, User
   		can :show, Comment
 		end
 		

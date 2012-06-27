@@ -1,4 +1,4 @@
-<%= simple_form_for(@comment) do |f| %>
+<%= simple_form_for [@commentable, Comment.new], :html => { :class => 'form-horizontal' } do |f| %>
 	<fieldset>
 		<%= f.input :content %><br /><br />
       	<%= f.submit "Edit Comment", :class => 'btn btn-primary' %>

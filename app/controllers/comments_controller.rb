@@ -2,8 +2,7 @@ class CommentsController < ApplicationController
 
   include HaxxorNews::Voting
   
-  # before_filter :assign_comment, :only => [:show, :destroy]
-  before_filter :assign_commentable, :only => [:index, :create]
+  before_filter :assign_commentable, :only => [:index, :create, :edit]
   skip_before_filter :store_location, :except => [:show]
 
   
@@ -15,6 +14,9 @@ class CommentsController < ApplicationController
     else
       @comments = @commentable.comments.rev_chronological
     end
+  end
+  
+  def edit
   end
   
   def show
@@ -33,6 +35,14 @@ class CommentsController < ApplicationController
     end
   end
   
+  def update
+    if @comment.update_attributes(params[:comment])
+      redirect_back_or_default(@comment)
+    else
+      render :edit
+    end
+  end
+  
   # open this up to users who made them eventually
   def destroy
     @comment.destroy
@@ -40,9 +50,6 @@ class CommentsController < ApplicationController
   end
   
   private
-  def assign_comment
-    @comment = Comment.find(params[:id])
-  end
   
   def assign_commentable
     @commentable = find_commentable

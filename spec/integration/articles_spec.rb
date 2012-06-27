@@ -2,10 +2,15 @@ require 'spec_helper'
 
 describe "Articles" do
   
+  let!(:article_user) { FactoryGirl.create(:user, :username => "article_user", :password => "password", :password_confirmation => "password") }
+  
   describe "creating an article" do
+        
+    before { visit '/' }
     
-    it "should allow a user to post an article" do   
-      make_account   
+    it "should allow a user to post an article" do
+      # click_link "Login"
+      login_with("article_user", "password")
       click_link "submit"
       
       fill_in 'Title', :with => 'Example Page'
@@ -23,16 +28,15 @@ describe "Articles" do
     end
     
     it "redirects the user to the new article form after login" do
-      make_account
-      click_on "Logout"
-      visit '/articles/new'
-      login
+      click_on 'submit'
+      login_with("article_user", "password")
       current_path.should == '/articles/new'
     end
      
   end
   
   describe "viewing an article" do
+    
     let!(:article_1) { FactoryGirl.create(:article, :title => 'Article #1') }
     let!(:article_2) { FactoryGirl.create(:article, :title => 'Article #2') }
     
@@ -56,7 +60,7 @@ describe "Articles" do
     
     context "as a registered user" do
       
-      before { make_account }
+      before { login_with("article_user", "password") }
       
       it "should allow me to view the index" do
         page.should have_content "Article #1"
@@ -79,7 +83,7 @@ describe "Articles" do
     
     before do
       article_1 = FactoryGirl.create(:article, :title => 'Article #1')
-      make_account
+      login_with("article_user", "password")
       click_on "submit"
       make_article
     end

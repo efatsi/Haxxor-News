@@ -1,101 +1,108 @@
 require 'spec_helper'
 
 describe "Voting" do
-  
-  context "voting on an article" do
     
-    it "should allow a user to vote on an article and a comment" do
-      make_account
+  Article.delete_all
+  let!(:voting_user) { FactoryGirl.create(:user, :username => "voting_user", :password => "password", :password_confirmation => "password") }
+  let!(:other_user) { FactoryGirl.create(:user, :username => "other_user", :password => "password", :password_confirmation => "password") }
+  let!(:article_1) { FactoryGirl.create(:article, :title => 'Article #1', :user_id => voting_user.id) }
+  let!(:comment_1) { FactoryGirl.create(:comment, :content => 'Comment #1', :commentable_type => "Article", :commentable_id => article_1.id, :user_id => voting_user.id) }
+
+  context "voting on things" do
+
+    before do
+      comment_1.update_count(1)
       visit '/login'
-      login
-      
-      visit '/articles/new'
-      make_article
-      page.should have_content('0 points by')
-      click_on '^'
+      login_with("voting_user", "password")
+      visit '/'
+    end
+
+    it "should allow a user to upvote an article" do
+      upvote_an_article("Article #1")
       page.should_not have_button('^')
       page.should have_content('1 point by')
-      make_comment
-      click_on '^'
+    end
+
+    it "should allow a user to downvote an article" do
+      downvote_an_article("Article #1")
+      page.should_not have_button('^')
+      page.should have_content('-1 points by')
+    end
+    
+    it 'should allow a user to vote on a comment' do
+      click_on_article("Article #1", "1 comment")
+      click_on_comment("Comment #1")
+      upvote_a_comment("Comment #1")
       page.should_not have_button('^')
     end
 
-    it "should see upvoted articles and comments for a user" do
-      make_account
-      visit '/login'
-      login
+    it "should not allow a guest to vote on an article" do
+      click_on "Logout"
+      page.should_not have_button('^')
+    end
 
-      visit '/articles/new'
-      make_article
-      click_on '^'
-      make_comment
-      click_on '^'
-      click_on 'username'
+    it "should not allow a guest to vote on a comment" do
+      click_on "Logout"
+      click_on_article("Article #1", "1 comment")
+      click_on_comment("Comment #1")
+      page.should_not have_button('^')
+    end
+    
+  end
+  
+  context "seeing upvoted things" do
+    
+    before do
+      # have voting_user vote on an article and a comment, direct to root
+      comment_1.update_count(1)
+      visit '/login'
+      login_with("voting_user", "password")
+      click_on_article("Article #1", "1 comment")
+      upvote_an_article("Article #1")
+      upvote_a_comment("Comment #1")
+      visit '/'
+    end
+
+    it "should see upvoted articles and comments for yourself" do
+      click_on 'voting_user'
       click_on 'Upvoted'
-      page.should have_link('Example Page')
-      page.should have_content('This is a comment on Example Page')
+      page.should have_content "Article #1"
+      page.should have_content "Comment #1"
+    end
+
+    it "should see upvoted articles and comments for another user" do
+      visit '/login'
+      login_with("other_user", "password")
+      click_on 'voting_user'
+      click_on 'Upvoted'
+      page.should have_content "Article #1"
+      page.should have_content "Comment #1"
     end
 
     it "guest should see upvoted articles and comments for a user" do
-      make_account
-      visit '/login'
-      login
-
-      visit '/articles/new'
-      make_article
-      click_on '^'
-      make_comment
-      click_on '^'
-      click_on 'username'
+      click_on 'Logout'
+      click_on 'voting_user'
       click_on 'Upvoted'
-      upvoted_path = current_path
-      click_on 'welcome'
-      visit upvoted_path
-      page.should have_link('Example Page')
-      page.should have_content('This is a comment on Example Page')
+      page.should have_content "Article #1"
+      page.should have_content "Comment #1"
     end
     
-    it "should not allow a guest to vote" do
-      make_account
-      visit '/login'
-      login
-      
-      visit '/articles/new'
-      make_article
-      article_path = current_path
-      visit '/'
-      page.should have_button('^')
-      click_on 'Logout'
-      page.should_not have_button('^')
-      visit article_path
-      page.should_not have_button('^')
-    end
+  end
      
-  end  
   
-  def make_account
-    visit '/signup'
-    fill_in 'Username', :with => 'username'
-    fill_in 'Password', :with => 'secret'
-    fill_in 'Password confirmation', :with => 'secret'
-    click_on 'Sign up'
+  def upvote_an_article(article_name)
+    article_node = all('div article').detect {|n| n.text.include?(article_name) }
+    article_node.click_on '^'
+  end
+
+  def downvote_an_article(article_name)
+    article_node = all('div article').detect {|n| n.text.include?(article_name) }
+    article_node.click_on 'v'
   end
   
-  def login
-    fill_in 'Username', :with => 'username'
-    fill_in 'Password', :with => 'secret'
-    click_button 'Log In'
-  end
-  
-  def make_article
-    fill_in 'Title', :with => 'Example Page'
-    fill_in 'Link', :with => 'example.com'
-    expect { click_on 'Create Article' }.to change { Article.count }.by(1)
-  end
-  
-  def make_comment
-    fill_in 'Content', :with => "This is a comment on Example Page"
-    click_on 'Add Comment'
+  def upvote_a_comment(content)
+    comment_node = all('div comment').detect {|n| n.text.include?(content) }
+    comment_node.click_on '^'
   end
   
 end

@@ -115,14 +115,4 @@ describe "Articles" do
     end
   end
   
-  def make_article
-    fill_in 'Title', :with => 'Example Page'
-    fill_in 'Link', :with => 'example.com'
-    click_on 'Create Article'
-  end
-  
-  def click_on_article(article_name)
-    article_node = all('table tbody tr td').detect {|n| n.text.include?(article_name) }
-    article_node.click_link '0 comments'
-  end
 end

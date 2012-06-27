@@ -128,19 +128,5 @@ describe "Comments" do
     
   end  
   
-  def click_on_article(article_name, link)
-    article_node = all('table tbody tr td').detect {|n| n.text.include?(article_name) && n.text.include?(link)}
-    article_node.click_link "#{link}"
-  end
   
-  def click_on_comment(context)
-    comment_node = all('div comment').detect { |n| n.text.include?(context) }
-    # raise comment_node.inspect
-    comment_node.click_link "link"
-  end
-  
-  def make_comment
-    fill_in 'Content', :with => "This is a primary comment"
-    click_on 'Add Comment'
-  end
 end

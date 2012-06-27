@@ -14,7 +14,7 @@ describe "Comments" do
       login_with("comment_user", "password")
     end
     
-    it "should allow a user to create a comment" do
+    it "should allow a user to create a comment on an article" do
       click_on_article("Article #1", "1 comment")            
       fill_in 'Content', :with => "This is a primary comment"
       expect { click_on 'Add Comment' }.to change { Comment.count }.by(1)

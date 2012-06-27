@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   skip_before_filter :store_location, :except => [:show, :upvotes]
 
   load_and_authorize_resource
+  skip_authorize_resource :only => :upvotes
   
 	def new
     @user = User.new

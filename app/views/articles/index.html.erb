@@ -1,13 +1,13 @@
 <table class="table table-striped">
-	<tbody>
-		<% @articles.each do |a| %>
-		  	<tr>
-		    	<td>
-				<%= render "article_head", :object => a %>
-				</td>
-			</tr>
-		<% end %>
-	</tbody>
+  <tbody>
+    <% @articles.each do |a| %>
+      <tr>
+        <td>
+          <%= render "article_head", :object => a %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 <%= will_paginate @articles %>
 

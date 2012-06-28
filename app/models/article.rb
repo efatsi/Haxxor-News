@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
   
-  include HaxxorNews::VoteFinder
+  include HaxxorNews::VoteConnector
   
   URI_REGEX = /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
   

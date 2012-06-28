@@ -1,20 +1,16 @@
 <h2>Upvoted Articles</h2><br />
 <table class="table table-striped">
-	<thead>
-	</thead>
-	<tbody>
-		<% @articles.each do |a| %>
-		  <tr>
-		    <td><h4><%= link_to a.title, a.link %> <%= "(" + a.short_link + ")" %></h4>
-			<%= a.points.to_s + " points by " %> <%= link_to a.username, user_path(a.user) %> <%=", posted " + a.created_at.to_s(:mdy) + " | " %>
-			<% if a.comment_count == 1 %>
-				<%= link_to "1 comment", article_path(a) %></td>			
-			<% else %>
-				<%= link_to "#{a.comment_count} comments", article_path(a) %></td>
-		  	<% end %>
-		</tr>
-		<% end %>
-	</tbody>
+  <thead>
+  </thead>
+  <tbody>
+    <% @articles.each do |a| %>
+      <tr>
+        <td>
+          <%= render "articles/article_head", :object => a %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 <%= will_paginate @articles %>
 <% if @articles.empty? %>
@@ -24,10 +20,10 @@
 
 <h2>Upvoted Comments</h2><br />
 <% for comment in @comments %>
-	<div class="well">
-		<%= render "comments/comment_head", :object => [comment, :link, :parent] %>
-		<%= link_to "reply", comment_path(comment) %><br /><br />
-	</div>
+  <div class="well">
+    <%= render "comments/comment_head", :object => [comment, :link, :parent] %>
+    <%= link_to "reply", comment_path(comment) %><br /><br />
+  </div>
 <% end %>
 <% if @comments.empty? %>
   <h4><%= "#{@user.username} has not upvoted any comments yet."%></h4>

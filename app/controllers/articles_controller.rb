@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @comments = @article.comments.rev_chronological
+    @comments = @article.comments.reverse_chronological
     @commentable = @article
   end
 

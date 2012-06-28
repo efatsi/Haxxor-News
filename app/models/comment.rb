@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
   
-  include HaxxorNews::VoteFinder
+  include HaxxorNews::VoteConnector
   
   delegate :username, :to => :user
   

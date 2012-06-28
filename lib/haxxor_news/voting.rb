@@ -15,16 +15,17 @@ module HaxxorNews
       vote("down")   
     end
     
+    
+    private
+    
     def vote(direction)
-      @object.points += (direction == "up" ? 1 : -1)
-      @object.save
-      Vote.create(:user_id => current_user.id, :votable_type => @class_type, :votable_id => params[:id], :direction => direction)
+      @votable.create_vote_by(current_user, direction)
       redirect_to :back
     end
     
     def assign_object
-      @class_type = controller_name.classify
-      @object = @class_type.constantize.find(params[:id])
+      class_type = controller_name.classify
+      @votable = class_type.constantize.find(params[:id])
     end
     
   end

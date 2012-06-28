@@ -11,16 +11,18 @@ class Ability
 		elsif user.role?(:member) && !user.id.nil?
   		can :create, Comment
   		can :show, Comment
-  		can :upvote, Comment
-  		can :downvote, Comment
+  		can :vote, Comment do |c|
+  		  Vote.does_not_contain?(user, c)
+		  end
   		can :manage, Comment do |c|
   		  user.id == c.user_id && user.just_created(c)
 		  end
   		
   		can :create, Article
   		can :read, Article
-  		can :upvote, Article
-  		can :downvote, Article
+  		can :vote, Article do |a|
+  		  Vote.does_not_contain?(user, a)
+		  end
   		can :manage, Article do |a|
   		  user.id == a.user_id && user.just_created(a)
 		  end

@@ -18,8 +18,8 @@ class UsersController < ApplicationController
   end
   
   def upvotes
-    @articles = @user.upvoted("Article").paginate(:page => params[:page])
-    @comments = @user.upvoted("Comment")
+    @articles = Article.upvoted_by(@user).paginate(:page => params[:page])
+    @comments = Comment.upvoted_by(@user)
   end
 
   def show

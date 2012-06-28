@@ -37,6 +37,14 @@ class Article < ActiveRecord::Base
 	def short_link
 	  link.gsub(/\Ahttps?:\/\/(www.)?/, '').gsub(/\/.*/, '')
   end
+
+  def self.voted_on_by(user)
+    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id}")
+  end
+
+  def self.upvoted_by(user)
+    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id} AND votes.direction = 'up'")
+  end
   
   # Scopes
   scope :chronological, :order => 'created_at DESC'

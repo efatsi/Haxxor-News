@@ -1,5 +1,7 @@
 class Comment < ActiveRecord::Base
   
+  include HaxxorNews::VoteFinder
+  
   delegate :username, :to => :user
   
   attr_accessible :commentable_id, :commentable_type, :content, :user_id
@@ -19,14 +21,7 @@ class Comment < ActiveRecord::Base
     self.save!
     self.commentable.update_count(amount)
   end
-  
-  def self.voted_on_by(user)
-    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id}")
-  end
-  
-  def self.upvoted_by(user)
-    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id} AND votes.direction = 'up'")
-  end
+
   
   # Scope
   scope :reverse_chronological, :order => 'created_at ASC'

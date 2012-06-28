@@ -20,7 +20,14 @@ class Comment < ActiveRecord::Base
     self.commentable.update_count(amount)
   end
   
+  def self.voted_on_by(user)
+    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id}")
+  end
+  
+  def self.upvoted_by(user)
+    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id} AND votes.direction = 'up'")
+  end
+  
   # Scope
   scope :reverse_chronological, :order => 'created_at ASC'
-  scope :upvoted_by_user, lambda { |user_id| where("user_id = ?", user_id) }
 end

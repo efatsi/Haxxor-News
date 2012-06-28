@@ -26,10 +26,6 @@ class User < ActiveRecord::Base
     voted_on_indexes = Vote.find(:all, :conditions => ['user_id = ? and votable_type = ?', self.id, votable.class.to_s]).collect { |vote| vote.votable_id }
     voted_on_indexes.include?(votable.id)
   end
-  
-  def upvoted(type)
-    upvoted = Vote.find(:all, :conditions => ['user_id = ? and votable_type = ? and direction = ?', self.id, type, "up"]).collect { |vote| vote.votable }
-  end
 	
 	def role?(authorized_role)
 		return false if role.nil?

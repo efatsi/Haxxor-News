@@ -14,7 +14,7 @@ class Ability
   		can :upvote, Comment
   		can :downvote, Comment
   		can :manage, Comment do |c|
-  		  user.id == c.user_id && (c.created_at > Time.now - 60*5)
+  		  user.id == c.user_id && user.just_created(c)
 		  end
   		
   		can :create, Article
@@ -22,7 +22,7 @@ class Ability
   		can :upvote, Article
   		can :downvote, Article
   		can :manage, Article do |a|
-  		  user.id == a.user_id && (a.created_at > Time.now - 60*5)
+  		  user.id == a.user_id && user.just_created(a)
 		  end
 		  
 		 	can :create, User

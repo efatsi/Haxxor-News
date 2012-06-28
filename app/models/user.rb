@@ -35,5 +35,9 @@ class User < ActiveRecord::Base
 		return false if role.nil?
 		role.to_sym == authorized_role
 	end
+	
+	def just_created(thing)
+	  thing.created_at > Time.now - 5*60
+  end
   
 end

@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
     if @commentable.nil?
       @comments = Comment.all
     else
-      @comments = @commentable.comments.rev_chronological
+      @comments = @commentable.comments.reverse_chronological
     end
   end
   
@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
   
   def show
     @commentable = @comment
-    @comments = @commentable.comments.rev_chronological
+    @comments = @commentable.comments.reverse_chronological
   end
   
   def create

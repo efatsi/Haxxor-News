@@ -3,7 +3,7 @@
 		<%= render "comments/comment_head", :object => [comment, :link] %>
 		<%= link_to "reply", comment_path(comment) %><br /><br />
 		<% if !comment.comments.blank? %>
-			<%= render "comments/list", :object => comment.comments.rev_chronological %>
+			<%= render "comments/list", :object => comment.comments.reverse_chronological %>
 		<% end %>
 	</div>
 <% end %>

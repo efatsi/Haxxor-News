@@ -1,5 +1,7 @@
 class Article < ActiveRecord::Base
   
+  include HaxxorNews::VoteFinder
+  
   URI_REGEX = /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
   
   delegate :username, :to => :user
@@ -38,13 +40,6 @@ class Article < ActiveRecord::Base
 	  link.gsub(/\Ahttps?:\/\/(www.)?/, '').gsub(/\/.*/, '')
   end
 
-  def self.voted_on_by(user)
-    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id}")
-  end
-
-  def self.upvoted_by(user)
-    self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.to_s.downcase}s.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id} AND votes.direction = 'up'")
-  end
   
   # Scopes
   scope :chronological, :order => 'created_at DESC'

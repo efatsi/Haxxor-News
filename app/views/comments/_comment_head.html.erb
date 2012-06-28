@@ -1,6 +1,6 @@
 <% comment = object[0] %>
 <comment>
-  <% if logged_in? && !Vote.contains?(current_user, comment) %>
+  <% if can? :vote, comment %>
   	<%= button_to "^", upvote_comment_path(comment) %><%= button_to "v", downvote_comment_path(comment) %> 
   <% end %>
   <strong><%= link_to comment.username, user_path(comment.user) %></strong>

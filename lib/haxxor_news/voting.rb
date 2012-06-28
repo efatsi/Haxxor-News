@@ -5,6 +5,7 @@ module HaxxorNews
 
     included do
       before_filter :assign_object, :only => [:upvote, :downvote]
+      skip_authorize_resource :only => [:upvote, :downvote]
     end
     
     def upvote

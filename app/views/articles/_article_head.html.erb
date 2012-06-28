@@ -1,6 +1,6 @@
 <% article = object %>
 <article>
-  <% if logged_in? && !Vote.contains?(current_user, article) %>
+  <% if can? :vote, article %>
     <%= button_to "^", upvote_article_path(article) %><%= button_to "v", downvote_article_path(article) %> 
   <% end %>
   <h4>

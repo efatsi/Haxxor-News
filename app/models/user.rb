@@ -22,18 +22,13 @@ class User < ActiveRecord::Base
 		find_by_username(username).try(:authenticate, password)
 	end
 
-  def voted_on(votable)
-    voted_on_indexes = Vote.find(:all, :conditions => ['user_id = ? and votable_type = ?', self.id, votable.class.to_s]).collect { |vote| vote.votable_id }
-    voted_on_indexes.include?(votable.id)
-  end
-	
 	def role?(authorized_role)
 		return false if role.nil?
 		role.to_sym == authorized_role
 	end
 	
-	def just_created(thing)
-	  thing.created_at > Time.now - 5*60
+	def just_created(creatable)
+	  creatable.created_at > Time.now - 5*60
   end
   
 end

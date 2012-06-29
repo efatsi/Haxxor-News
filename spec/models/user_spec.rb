@@ -74,11 +74,5 @@ describe User do
     @alpha.role?(:admin).should == true
   end
   
-  it "should know if you've voted on something or not" do    
-    @alpha.voted_on(@google).should == true
-    @alpha.voted_on(@c1).should == true
-    @delta.voted_on(@google).should == false
-    @delta.voted_on(@c1).should == false
-  end
   
 end

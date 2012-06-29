@@ -18,7 +18,7 @@ describe "Voting" do
     end
 
     it "should allow a user to upvote an article" do
-      upvote_an_article("Article #1")
+      upvote_an_article("Article #1")      
       page.should_not have_button('^')
       page.should have_content('1 point by')
     end

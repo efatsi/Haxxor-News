@@ -10,8 +10,8 @@ class Vote < ActiveRecord::Base
   
   # Methods
   
-  def self.does_not_contain?(user, votable)
-    user.votes.where("votable_type = ? AND votable_id = ?", votable.class.to_s, votable.id).count == 0
+  def self.contains?(user, votable)
+    user.votes.where("votable_type = ? AND votable_id = ?", votable.class.to_s, votable.id).count != 0
   end
   
 end

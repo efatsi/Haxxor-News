@@ -56,4 +56,9 @@ describe Vote do
     assert_equal @comment_vote.votable, @c1
   end
   
+  it "should know what votes exist or not" do
+    Vote.contains?(@alpha, @google).should == true
+    Vote.contains?(@alpha, @c1).should == true
+  end
+  
 end

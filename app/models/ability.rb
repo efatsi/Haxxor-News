@@ -41,16 +41,10 @@ class Ability
  
 		else 
 		 	can :read, Article
-<<<<<<< HEAD
-		 	can :create, User
-  		can :show, User
-  		can :show, Comment
-=======
 		 	can :pick_date, Article
 		  can :create, User
   		can :read, User
   		can :read, Comment
->>>>>>> stufftopush
 		end
 		
   end

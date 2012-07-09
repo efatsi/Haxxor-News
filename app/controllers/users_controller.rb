@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
-  require 'will_paginate/array'
-  skip_before_filter :store_location, :except => [:show, :upvotes]
+  # require 'will_paginate/array'
+  skip_before_filter :store_location, :only => [:new, :create, :update]
 
   load_and_authorize_resource
   skip_authorize_resource :only => :upvotes
@@ -29,7 +29,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
     	session[:user_id] = @user.id
-      redirect_to(articles_path, :notice => 'User was successfully created.')
+    	cookies[:auth_token] = @user.auth_token
+      redirect_to(@user, :notice => 'Welcome to Haxxor News, we recommend you fill in the following information. i.e. email for password retrieval.')
     else
       render :action => "new"
     end
@@ -37,10 +38,29 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(params[:user])
-      redirect_to(@user, :notice => 'User was successfully updated.')
+      redirect_to(@user, :notice => "You've successfully updated your information!")
     else
       render :action => "edit"
     end
+  end
+  
+  def change_password 
+    @user = User.find(params[:id]) 
+    if request.post? 
+      if User.authenticate(@user.username, params[:password][:old_password]) == @user 
+        @user.password = params[:password][:new_password] 
+        @user.password_confirmation = params[:password][:new_password_confirmation] 
+        if @user.save  
+          redirect_to @user, :notice => 'Your password has been changed.'
+        elsif params[:password][:new_password] != params[:password][:new_password_confirmation]
+          redirect_to change_password_path, :alert => 'New password and confirmation were not the same.'
+        else 
+          redirect_to change_password_path, :alert => 'Unable to change your password.' 
+        end 
+      else 
+        redirect_to change_password_path, :alert => 'Old password incorrect.' 
+      end 
+    end 
   end
   
   def destroy

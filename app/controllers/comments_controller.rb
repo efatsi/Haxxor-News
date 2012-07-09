@@ -5,14 +5,18 @@ class CommentsController < ApplicationController
   before_filter :assign_commentable, :only => [:index, :create, :edit]
   skip_before_filter :store_location, :except => [:show]
 
-  
   load_and_authorize_resource
   
   def index
+
     if @commentable.nil?
-      @comments = Comment.all
-    else
-      @comments = @commentable.comments.reverse_chronological
+      if params[:by_user]
+        @comments = Comment.by_user(params[:by_user]).chronological.paginate(:page => params[:page], :per_page => 10)
+      else
+        @comments = Comment.chronological.paginate(:page => params[:page], :per_page => 20)
+      end
+    else  
+      @comments = @commentable.comments
     end
   end
   

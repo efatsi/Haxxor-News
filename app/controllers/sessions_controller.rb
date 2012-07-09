@@ -6,18 +6,23 @@ class SessionsController < ApplicationController
   end
   
   def create
-    if User.authenticate(params[:username], params[:password])
-    	session[:user_id] = User.find_by_username(params[:username]).id
-    	flash[:notice] = "Logged In!"
+    user = User.authenticate(params[:username], params[:password])
+    if user
+      if params[:remember_me]
+        cookies.permanent[:auth_token] = user.auth_token
+      else
+        cookies[:auth_token] = user.auth_token
+      end
+    	flash[:notice] = "Welcome, #{current_user.username}!"
   	  redirect_back_or_default(articles_path)
     else
     	flash.now.alert = "Email or password is invalid."
       render :action => "new"
-    end
+    end    
   end
 
   def destroy
-  	session[:user_id] = nil
+    cookies.delete(:auth_token)
   	redirect_to articles_path, notice: "Logged out!"
   end
 	

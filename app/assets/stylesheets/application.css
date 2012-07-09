@@ -11,3 +11,8 @@
  *= require_self
  *= require_tree .
  */
+
+
+.btn-group { display: inline; }
+
+html, head, body title > a { color: #000000; }

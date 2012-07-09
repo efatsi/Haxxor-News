@@ -25,4 +25,9 @@ class Comment < ActiveRecord::Base
   
   # Scope
   scope :reverse_chronological, :order => 'created_at ASC'
+  scope :chronological, :order => 'created_at DESC'
+  scope :by_user, (lambda do |user_id| 
+    {:conditions => ['user_id = ?', user_id]}
+  end)
+  
 end

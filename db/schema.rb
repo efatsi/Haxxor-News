@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120620202006) do
-=======
 ActiveRecord::Schema.define(:version => 20120621210023) do
->>>>>>> stufftopush
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -40,23 +36,6 @@ ActiveRecord::Schema.define(:version => 20120621210023) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
-<<<<<<< HEAD
-    t.string   "role",            :default => "member"
-    t.string   "about"
-    t.string   "email"
-    t.string   "password_digest"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-  end
-
-  create_table "votes", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "votable_type"
-    t.integer  "votable_id"
-    t.string   "direction"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-=======
     t.string   "role",                   :default => "member"
     t.string   "about"
     t.string   "email"
@@ -66,7 +45,15 @@ ActiveRecord::Schema.define(:version => 20120621210023) do
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
->>>>>>> stufftopush
+  end
+
+  create_table "votes", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.string   "direction"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
 end

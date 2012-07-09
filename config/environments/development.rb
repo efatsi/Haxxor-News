@@ -33,9 +33,6 @@ HaxxorNews::Application.configure do
   config.assets.compress = false
   
   # Expands the lines which load the assets
-<<<<<<< HEAD
-  config.assets.debug = false
-=======
   # This needs to be false for bootstrap to work in development
   config.assets.debug = false
   
@@ -46,5 +43,4 @@ HaxxorNews::Application.configure do
   # Action mailer for reset passwords
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
 
->>>>>>> stufftopush
 end

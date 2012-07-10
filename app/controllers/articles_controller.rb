@@ -73,11 +73,11 @@ class ArticlesController < ApplicationController
       if Time.local(year, month, day) > Time.now
         redirect_to pick_date_path, :alert => "You must select a time the past"
       elsif params[:day].present?
-        redirect_to root_url(:day => day, :month => month, :year => year)
+        redirect_to articles_path(:day => day, :month => month, :year => year)
       elsif params[:month].present?
-        redirect_to root_url(:month => month, :year => year)
+        redirect_to articles_path(:month => month, :year => year)
       elsif params[:year].present?
-        redirect_to root_url(:year => year)
+        redirect_to articles_path(:year => year)
       else
         redirect_to root_url
       end

@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   def just_created?(resource)
-    resource.created_at > Time.now - 5*60
+    resource.created_at > 5.minutes.ago
   end
   
 end

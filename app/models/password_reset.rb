@@ -1,5 +1,4 @@
 class PasswordReset 
-  # extend ActiveModel::Naming
   include ActiveModel::Validations
   include ActiveModel::Conversion
   
@@ -46,6 +45,7 @@ class PasswordReset
     else
       @user.password = params[:password]
       @user.password_confirmation = params[:password_confirmation]
+      @user.password_reset_token = nil
       @user.save
     end
   end

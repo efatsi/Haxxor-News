@@ -104,8 +104,9 @@ describe PasswordReset do
   end
   
   describe "#update" do
-    let!(:user) { FactoryGirl.create(:user, :username => 'eli', :email => 'eli@viget.com', :password_reset_token => "fake_reset_token") }
-    subject     { described_class.new(:user => user) }
+    let!(:user)  { FactoryGirl.create(:user, :username => 'eli', :email => 'eli@viget.com', :password_reset_token => "fake_reset_token") }
+    subject      { described_class.new(:user => user) }
+    let(:params) { {:password => "new_password", :password_confirmation => "new_password"} }
     
     it "should return true for expired password_resets" do
       user.update_attributes(:password_reset_sent_at => 3.hours.ago)
@@ -122,28 +123,23 @@ describe PasswordReset do
     end
 
     it "returns true if request is valid" do
-      params = {}
-      params[:password] = "secret"
-      params[:password_confirmation] = "secret"
       subject.update(params).should == true
     end
 
-    it "returns false if request is invalid" do
-      params = {}
-      params[:password] = "secret"
+    it "returns false if confirmation does not match" do
       params[:password_confirmation] = "not_a_match"
       subject.update(params).should == false
     end
     
     it "actually updates the user" do
-      params = {}
-      params[:password] = "new_password"
-      params[:password_confirmation] = "new_password"
       subject.update(params)
       user.reload.authenticate("new_password").should == user
     end
     
-    
+    it "should reset the password_reset_token to nil if success" do
+      subject.update(params)
+      user.password_reset_token.should == nil
+    end
   end
   
 end

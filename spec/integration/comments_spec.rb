@@ -9,7 +9,6 @@ describe "Comments" do
   context "creating a comment" do
     
     before do
-      comment_1.update_count(1)
       visit '/login'
       login_with("comment_user", "password")
     end
@@ -44,7 +43,6 @@ describe "Comments" do
   context "editing and deleting comments" do
     
     before do
-      comment_1.update_count(1)
       visit '/login'
       login_with("comment_user", "password")
       visit comment_path(comment_1)
@@ -83,8 +81,6 @@ describe "Comments" do
     let!(:comment_2) { FactoryGirl.create(:comment, :content => "Deep comment", :commentable_type => "Comment", :commentable_id => comment_1.id, :user_id => comment_user.id)}
 
     before do
-      comment_1.update_count(1)
-      comment_2.update_count(1)
       visit '/'
     end
     

@@ -11,7 +11,6 @@ describe "Voting" do
   context "voting on things" do
 
     before do
-      comment_1.update_count(1)
       visit '/login'
       login_with("voting_user", "password")
       visit '/'
@@ -54,7 +53,6 @@ describe "Voting" do
     
     before do
       # have voting_user vote on an article and a comment, direct to root
-      comment_1.update_count(1)
       visit '/login'
       login_with("voting_user", "password")
       click_on_article("Article #1", "1 comment")

@@ -2,6 +2,8 @@ class Comment < ActiveRecord::Base
   
   include HaxxorNews::VoteConnector
   
+  after_create :increment_parent_count
+  after_destroy :decrement_parent_count
   delegate :username, :to => :user
   
   attr_accessible :commentable_id, :commentable_type, :content, :user_id
@@ -21,7 +23,6 @@ class Comment < ActiveRecord::Base
     self.save!
     self.commentable.update_count(amount)
   end
-
   
   # Scope
   scope :reverse_chronological, :order => 'created_at ASC'
@@ -29,5 +30,17 @@ class Comment < ActiveRecord::Base
   scope :by_user, (lambda do |user_id| 
     {:conditions => ['user_id = ?', user_id]}
   end)
+  
+  private
+  def increment_parent_count
+    parent = self.commentable
+    parent.update_count(1)
+  end
+  
+  def decrement_parent_count
+    parent = self.commentable
+    parent.update_count(-1)
+  end
+  
   
 end

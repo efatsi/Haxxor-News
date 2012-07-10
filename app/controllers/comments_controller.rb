@@ -31,8 +31,6 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(params[:comment].merge(:user_id => current_user.id))
     if @comment.save
-      parent = @comment.commentable
-      parent.update_count(1)
       redirect_to :back
     else
       render :action => 'new'
@@ -50,7 +48,6 @@ class CommentsController < ApplicationController
   def destroy
     parent = @comment.commentable
     @comment.destroy
-    parent.update_count(-1)
     redirect_to parent
   end
   

@@ -33,13 +33,16 @@ class Comment < ActiveRecord::Base
   
   private
   def increment_parent_count
-    parent = self.commentable
-    parent.update_count(1)
+    update_parent_count(1)
   end
   
   def decrement_parent_count
+    update_parent_count(-1)
+  end
+  
+  def update_parent_count(amount)
     parent = self.commentable
-    parent.update_count(-1)
+    parent.update_count(amount)
   end
   
   

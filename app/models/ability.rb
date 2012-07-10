@@ -13,7 +13,7 @@ class Ability
   		can :show, Comment
   		can :vote, Comment
   		can :manage, Comment do |c|
-  		  user.id == c.user_id && user.just_created(c)
+  		  user.can_manage?(c)
 		  end
 		  cannot :vote, Comment do |c|
   		  Vote.contains?(user, c)
@@ -23,7 +23,7 @@ class Ability
   		can :read, Article
   		can :vote, Article
   		can :manage, Article do |a|
-  		  user.id == a.user_id && user.just_created(a)
+  		  user.can_manage?(a)
 		  end
 		  cannot :vote, Article do |a|
   		  Vote.contains?(user, a)

@@ -2,7 +2,6 @@ class ArticlesController < ApplicationController
   
   include HaxxorNews::Voting
   
-  before_filter :assign_article, :only => [:show, :edit, :update, :destroy]
   before_filter :require_user, :only => [:new, :edit]
 
   load_and_authorize_resource

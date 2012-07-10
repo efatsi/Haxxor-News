@@ -1,7 +1,7 @@
 class Article < ActiveRecord::Base
   
   include HaxxorNews::VoteConnector
-  URI_REGEX = /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]+*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
+  URI_REGEX = /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
   YEARS = (Time.now.year-5..Time.now.year).map{|y| y}.reverse
   MONTHS = Hash[["January", "Fubruary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].zip [1,2,3,4,5,6,7,8,9,10,11,12]]
   DAYS = (1..31).map{|a| a}

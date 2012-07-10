@@ -19,8 +19,7 @@ describe "Accounts" do
     
       expect { click_on 'Sign up' }.to change { User.count }.by(1)
     
-      page.should have_content("User was successfully created")
-      current_path.should == '/articles'
+      current_path.include?('/users/').should == true
     end
   end
   

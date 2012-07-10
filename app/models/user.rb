@@ -41,9 +41,13 @@ class User < ActiveRecord::Base
 		return false if role.nil?
 		role.to_sym == authorized_role
 	end
-	
-	def just_created(creatable)
-	  creatable.created_at > Time.now - 5*60
+  
+  def can_manage?(resource)
+    self.id == resource.user_id && user.just_created?(resource)
+  end
+
+  def just_created?(resource)
+    resource.created_at > Time.now - 5*60
   end
   
 end

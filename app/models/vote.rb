@@ -1,5 +1,5 @@
 class Vote < ActiveRecord::Base
-  attr_accessible :direction, :user_id, :votable_id, :votable_type
+  attr_accessible :direction, :user_id, :votable_id, :votable_type, :votable
   
   validates_presence_of :direction, :user_id, :votable_id, :votable_type
   validates_inclusion_of :direction, :in => ["up", "down"]

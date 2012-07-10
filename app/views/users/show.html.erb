@@ -4,10 +4,10 @@ Created: <%= @user.created_at.to_s(:mdy) %><br />
 <% if @user == current_user %>
 	<%= render 'edit_form' %>
 <% else %>
-	<% unless @user.about.nil? || @user.about.empty? %>
+	<% if @user.about %>
 		About: <%= @user.about %><br />
 	<% end %>
-	<% unless @user.email.nil? || @user.email.empty? %>
+	<% if @user.email %>
 		Email: <%= @user.email.empty? %><br />
 	<% end %>
 <% end %>

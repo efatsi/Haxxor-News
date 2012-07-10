@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   
   
   has_secure_password
-  attr_accessible :username, :password, :password_confirmation, :role, :about, :email
+  attr_accessible :username, :password, :password_confirmation, :about, :email, :password_reset_sent_at
   
   # Relationships
   has_many :articles, :dependent => :destroy

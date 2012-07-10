@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   
-  # require 'will_paginate/array'
   skip_before_filter :store_location, :only => [:new, :create, :update]
 
   load_and_authorize_resource

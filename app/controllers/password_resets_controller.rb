@@ -3,13 +3,16 @@ class PasswordResetsController < ApplicationController
   skip_before_filter :store_location
   
   def new
+    @password_reset = PasswordReset.new
   end
   
   def create
-    user = User.find_by_email(params[:email]) unless params[:email].blank?
-    user = User.find_by_username(params[:username]) unless params[:username].blank?
-    user.send_password_reset if user
-    redirect_to root_url, :notice => "Email sent with password reset instructions."
+    @password_reset = PasswordReset.new(params[:password_reset])
+    if @password_reset.save
+      redirect_to root_url, :notice => "Email sent with password reset instructions."
+    else
+      render :new
+    end
   end
 
   def edit

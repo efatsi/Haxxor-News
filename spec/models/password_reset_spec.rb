@@ -90,4 +90,60 @@ describe PasswordReset do
     
   end
   
+  describe "#edit" do
+    
+    context "when there is a valid user" do
+      let!(:user) { FactoryGirl.create(:user, :username => 'eli', :email => 'eli@viget.com', :password_reset_token => "fake_reset_token") }
+      subject     { described_class.new(:user => user) }
+      
+      it "should know who the user is" do
+        subject.user.should == user
+      end
+    end
+        
+  end
+  
+  describe "#update" do
+    let!(:user) { FactoryGirl.create(:user, :username => 'eli', :email => 'eli@viget.com', :password_reset_token => "fake_reset_token") }
+    subject     { described_class.new(:user => user) }
+    
+    it "should return true for expired password_resets" do
+      user.update_attributes(:password_reset_sent_at => 3.hours.ago)
+      subject.expired?.should == true
+    end
+    
+    it "should return false for a 'fresh' password_reset" do
+      user.update_attributes(:password_reset_sent_at => 1.hour.ago)
+      subject.expired?.should == false
+    end
+    
+    it "returns false if request is blank" do
+      subject.update.should == false
+    end
+
+    it "returns true if request is valid" do
+      params = {}
+      params[:password] = "secret"
+      params[:password_confirmation] = "secret"
+      subject.update(params).should == true
+    end
+
+    it "returns false if request is invalid" do
+      params = {}
+      params[:password] = "secret"
+      params[:password_confirmation] = "not_a_match"
+      subject.update(params).should == false
+    end
+    
+    it "actually updates the user" do
+      params = {}
+      params[:password] = "new_password"
+      params[:password_confirmation] = "new_password"
+      subject.update(params)
+      user.reload.authenticate("new_password").should == user
+    end
+    
+    
+  end
+  
 end

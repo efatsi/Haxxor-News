@@ -3,7 +3,7 @@ class PasswordReset
   include ActiveModel::Validations
   include ActiveModel::Conversion
   
-  attr_accessor :identifier
+  attr_accessor :identifier, :user
   
   validates_presence_of :identifier
   validate :user_exists
@@ -27,18 +27,29 @@ class PasswordReset
     user.present?
   end
   
+  def expired?
+    user.password_reset_sent_at < 2.hours.ago
+  end
+  
   def save
     if valid? 
-      # user.generate_token(:password_reset_token)
-      # user.password_reset_sent_at = Time.zone.now
-      # user.save!
-      # UserMailer.password_reset(user).deliver
       user.send_password_reset
       true
     else
       false
     end
   end
+  
+  def update(params = {})
+    if (params.values.include?("") || params.blank?)
+      false
+    else
+      @user.password = params[:password]
+      @user.password_confirmation = params[:password_confirmation]
+      @user.save
+    end
+  end
+  
 
   private
   

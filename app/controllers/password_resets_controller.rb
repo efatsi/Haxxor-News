@@ -32,7 +32,7 @@ class PasswordResetsController < ApplicationController
     if @password_reset.update(params[:password_reset])
       redirect_to root_url, :notice => "Password has been reset, hurray!"
     else
-      flash.now.alert = "Pleaser enter a new Password and Confirmation"
+      @password_reset.load_on_the_errors(params[:password_reset])
       render :edit
     end
     

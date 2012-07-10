@@ -61,4 +61,13 @@ class PasswordReset
     errors.add(:user, "must have an email address") if user && user.email.blank?
   end
   
+  public
+  def load_on_the_errors(params)
+    p = params[:password]
+    p_c = params[:password_confirmation]
+    errors.add(:password, "can't be blank") if p.blank?
+    errors.add(:password_confirmation, "can't be blank") if p_c.blank?
+    errors.add(:password_confirmation, "confirmation did not match") if p_c != p
+  end
+  
 end

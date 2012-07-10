@@ -2,14 +2,24 @@ class PasswordReset
   include ActiveModel::Validations
   include ActiveModel::Conversion
   
-  attr_accessor :identifier, :user
+  attr_accessor :existing_user, :identifier, :password, :password_confirmation
   
-  validates_presence_of :identifier
-  validate :user_exists
-  validate :user_has_email_address
+  validates_presence_of :identifier, :unless => :persisted? 
+  validates_presence_of :password, :if => :persisted?
+  validates_confirmation_of :password, :if => :password?
+  validate :user_exists, :unless => :persisted?
+  validate :user_has_email_address, :unless => :persisted?
+  
+  def self.find(id)
+    new(:existing_user => User.find_by_password_reset_token(id))
+  end
+  
+  def password?
+    password.present?
+  end
   
   def initialize(attributes = {})
-    (attributes || {}).each {|k,v| send("#{k}=", v) }
+    self.attributes = attributes
   end
   
   def user
@@ -17,17 +27,17 @@ class PasswordReset
       User.where(['username = :identifier OR email = :identifier', :identifier => identifier]).first
     end
   end
-  
+
   def id
-    user.password_reset_token
+    existing_user.try(:password_reset_token)
   end
   
   def persisted?
-    user.present?
+    id.present?
   end
   
   def expired?
-    user.password_reset_sent_at < 2.hours.ago
+    existing_user.password_reset_sent_at < 2.hours.ago
   end
   
   def save
@@ -39,14 +49,19 @@ class PasswordReset
     end
   end
   
-  def update(params = {})
-    if (params.values.include?("") || params.blank?)
-      false
+  def attributes=(attributes)
+    (attributes || {}).each {|k,v| send("#{k}=", v) }
+  end
+  
+  def update_attributes(attributes = {})
+    self.attributes = attributes
+    if valid?
+      existing_user.password = attributes[:password]
+      existing_user.password_confirmation = attributes[:password_confirmation]
+      existing_user.password_reset_token = nil
+      existing_user.save
     else
-      @user.password = params[:password]
-      @user.password_confirmation = params[:password_confirmation]
-      @user.password_reset_token = nil
-      @user.save
+      false
     end
   end
   
@@ -59,15 +74,6 @@ class PasswordReset
 
   def user_has_email_address
     errors.add(:user, "must have an email address") if user && user.email.blank?
-  end
-  
-  public
-  def load_on_the_errors(params)
-    p = params[:password]
-    p_c = params[:password_confirmation]
-    errors.add(:password, "can't be blank") if p.blank?
-    errors.add(:password_confirmation, "can't be blank") if p_c.blank?
-    errors.add(:password_confirmation, "confirmation did not match") if p_c != p
   end
   
 end

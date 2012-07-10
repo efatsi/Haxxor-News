@@ -19,7 +19,6 @@ HaxxorNews::Application.routes.draw do
 	resources :sessions
 	
 	resources :password_resets
-	
 
 	match 'signup' => 'users#new', :as => :signup
 	match 'logout' => 'sessions#destroy', :as => :logout

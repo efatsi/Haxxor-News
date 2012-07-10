@@ -119,25 +119,25 @@ describe PasswordReset do
     end
     
     it "returns false if request is blank" do
-      subject.update.should == false
+      subject.update_attributes.should == false
     end
 
     it "returns true if request is valid" do
-      subject.update(params).should == true
+      subject.update_attributes(params).should == true
     end
 
     it "returns false if confirmation does not match" do
       params[:password_confirmation] = "not_a_match"
-      subject.update(params).should == false
+      subject.update_attributes(params).should == false
     end
     
     it "actually updates the user" do
-      subject.update(params)
+      subject.update_attributes(params)
       user.reload.authenticate("new_password").should == user
     end
     
     it "should reset the password_reset_token to nil if success" do
-      subject.update(params)
+      subject.update_attributes(params)
       user.password_reset_token.should == nil
     end
   end

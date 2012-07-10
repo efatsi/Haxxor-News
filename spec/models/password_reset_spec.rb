@@ -105,40 +105,45 @@ describe PasswordReset do
   
   describe "#update" do
     let!(:user)  { FactoryGirl.create(:user, :username => 'eli', :email => 'eli@viget.com', :password_reset_token => "fake_reset_token") }
-    subject      { described_class.new(:user => user) }
+    subject      { described_class.new(:existing_user => user) }
     let(:params) { {:password => "new_password", :password_confirmation => "new_password"} }
     
-    it "should return true for expired password_resets" do
-      user.update_attributes(:password_reset_sent_at => 3.hours.ago)
-      subject.expired?.should == true
-    end
-    
-    it "should return false for a 'fresh' password_reset" do
-      user.update_attributes(:password_reset_sent_at => 1.hour.ago)
-      subject.expired?.should == false
-    end
-    
-    it "returns false if request is blank" do
-      subject.update_attributes.should == false
-    end
+    context "expired?" do
 
-    it "returns true if request is valid" do
-      subject.update_attributes(params).should == true
-    end
+      it "should return true for expired password_resets" do
+        user.update_attributes(:password_reset_sent_at => 3.hours.ago)
+        subject.expired?.should == true
+      end
 
-    it "returns false if confirmation does not match" do
-      params[:password_confirmation] = "not_a_match"
-      subject.update_attributes(params).should == false
+      it "should return false for a 'fresh' password_reset" do
+        user.update_attributes(:password_reset_sent_at => 1.hour.ago)
+        subject.expired?.should == false
+      end
     end
     
-    it "actually updates the user" do
-      subject.update_attributes(params)
-      user.reload.authenticate("new_password").should == user
-    end
-    
-    it "should reset the password_reset_token to nil if success" do
-      subject.update_attributes(params)
-      user.password_reset_token.should == nil
+    context "update_attributes" do
+      it "returns false if request is blank" do
+        subject.update_attributes.should == false
+      end
+
+      it "returns true if request is valid" do
+        subject.update_attributes(params).should == true
+      end
+
+      it "returns false if confirmation does not match" do
+        params[:password_confirmation] = "not_a_match"
+        subject.update_attributes(params).should == false
+      end
+
+      it "actually updates the user" do
+        subject.update_attributes(params)
+        user.reload.authenticate("new_password").should == user
+      end
+
+      it "should reset the password_reset_token to nil if success" do
+        subject.update_attributes(params)
+        user.password_reset_token.should == nil
+      end
     end
   end
   

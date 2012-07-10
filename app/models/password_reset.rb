@@ -2,7 +2,7 @@ class PasswordReset
   include ActiveModel::Validations
   include ActiveModel::Conversion
   
-  attr_accessor :existing_user, :identifier, :password, :password_confirmation
+  attr_accessor :existing_user, :user, :identifier, :password, :password_confirmation
   
   validates_presence_of :identifier, :unless => :persisted? 
   validates_presence_of :password, :if => :persisted?
@@ -14,30 +14,8 @@ class PasswordReset
     new(:existing_user => User.find_by_password_reset_token(id))
   end
   
-  def password?
-    password.present?
-  end
-  
   def initialize(attributes = {})
     self.attributes = attributes
-  end
-  
-  def user
-    @user ||= if identifier.present?
-      User.where(['username = :identifier OR email = :identifier', :identifier => identifier]).first
-    end
-  end
-
-  def id
-    existing_user.try(:password_reset_token)
-  end
-  
-  def persisted?
-    id.present?
-  end
-  
-  def expired?
-    existing_user.password_reset_sent_at < 2.hours.ago
   end
   
   def save
@@ -47,10 +25,6 @@ class PasswordReset
     else
       false
     end
-  end
-  
-  def attributes=(attributes)
-    (attributes || {}).each {|k,v| send("#{k}=", v) }
   end
   
   def update_attributes(attributes = {})
@@ -64,6 +38,20 @@ class PasswordReset
       false
     end
   end
+
+  def user
+    @user ||= if identifier.present?
+      User.where(['username = :identifier OR email = :identifier', :identifier => identifier]).first
+    end
+  end
+
+  def id
+    existing_user.try(:password_reset_token)
+  end
+
+  def expired?
+    existing_user.password_reset_sent_at < 2.hours.ago
+  end
   
 
   private
@@ -74,6 +62,18 @@ class PasswordReset
 
   def user_has_email_address
     errors.add(:user, "must have an email address") if user && user.email.blank?
+  end
+
+  def persisted?
+    id.present?
+  end
+
+  def password?
+    password.present?
+  end
+
+  def attributes=(attributes)
+    (attributes || {}).each {|k,v| send("#{k}=", v) }
   end
   
 end

@@ -13,6 +13,8 @@
  */
 
 
-.btn-group { display: inline; }
+.btn-group { display:inline }
+
+.button { display:inline }
 
 html, head, body title > a { color: #000000; }

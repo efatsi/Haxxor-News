@@ -1,7 +1,9 @@
 <% article = object %>
 <article>
   <% if can? :vote, article %>
-    <%= button_to "^", upvote_article_path(article) %><%= button_to "v", downvote_article_path(article) %> 
+    <div class="btn-group">
+    <%= button_to "^", upvote_article_path(article), {:class => "button"} %><%= button_to "v", downvote_article_path(article) %> 
+    </div>
   <% end %>
   <h4>
     <%= link_to article.title, article.link %> <%= "(" + article.short_link + ")" %>

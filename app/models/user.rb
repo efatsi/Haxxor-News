@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
 	end
   
   def can_manage?(resource)
-    self.id == resource.user_id && user.just_created?(resource)
+    id == resource.user_id && just_created?(resource)
   end
 
   def just_created?(resource)

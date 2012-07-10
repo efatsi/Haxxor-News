@@ -47,9 +47,9 @@ class Article < ActiveRecord::Base
   scope :chronological, order('created_at DESC')
   scope :by_user, lambda { |user_id| where("user_id = ?", user_id) }
   scope :by_rating, order('points DESC, created_at DESC')
-  scope :this_day, where('created_at > ?', Time.now - 1*60*60*24)
-  scope :this_month, where('created_at > ?', Time.now - 1*60*60*24*31)
-  scope :this_year, where('created_at > ?', Time.now - 1*60*60*24*366)
+  scope :this_day, where('created_at > ?', 1.day.ago)
+  scope :this_month, where('created_at > ?', 1.month.ago)
+  scope :this_year, where('created_at > ?', 1.year.ago)
   scope :day, lambda { |day, month, year| where("created_at >= ? and created_at < ?", Time.new(year, month, day), Time.new(year, month, day) + 60*60*24) }
   scope :month, lambda { |month, year| where("created_at >= ? and created_at < ?", Time.new(year, month), Time.new(year, month) + 60*60*24*31) }
   scope :year, lambda { |year| where("created_at >= ? and created_at < ?", Time.new(year), Time.new(year+1)) }

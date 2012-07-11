@@ -44,12 +44,12 @@ class Article < ActiveRecord::Base
 
   
   # Scopes
-  scope :chronological, order('created_at DESC')
+  scope :chronological, lambda { order('created_at DESC') }
   scope :by_user, lambda { |user_id| where("user_id = ?", user_id) }
-  scope :by_rating, order('points DESC, created_at DESC')
-  scope :this_day, where('created_at > ?', 1.day.ago)
-  scope :this_month, where('created_at > ?', 1.month.ago)
-  scope :this_year, where('created_at > ?', 1.year.ago)
+  scope :by_rating, lambda { order('points DESC, created_at DESC') }
+  scope :this_day, lambda { where('created_at > ?', 1.day.ago) }
+  scope :this_month, lambda { where('created_at > ?', 1.month.ago) }
+  scope :this_year, lambda { where('created_at > ?', 1.year.ago) }
   scope :day, lambda { |day, month, year| where("created_at >= ? and created_at < ?", Time.new(year, month, day), 1.day.from_now) }
   scope :month, lambda { |month, year| where("created_at >= ? and created_at < ?", Time.new(year, month), 1.month.from_now) }
   scope :year, lambda { |year| where("created_at >= ? and created_at < ?", Time.new(year), 1.year.from_now) }

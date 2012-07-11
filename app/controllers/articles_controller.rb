@@ -5,38 +5,8 @@ class ArticlesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    
-    if params[:by_rating]
-      articles = Article.by_rating 
-    else
-      articles = Article.chronological
-    end      
-    
-    if params[:by_user]
-      articles = articles.by_user(params[:by_user])
-    end 
-
-    if params[:this_day]  
-      articles = articles.this_day
-    elsif params[:this_month]  
-      articles = articles.this_month
-    elsif params[:this_year]  
-      articles = articles.this_year
-    end
-    
-    if params[:day]  
-      articles = articles.day(params[:day].to_i, params[:month], params[:year])
-    elsif params[:month]  
-      articles = articles.month(params[:month].to_i, params[:year])
-    elsif params[:year]  
-      articles = articles.year(params[:year].to_i)
-    end
-    
-    @articles = articles.search(params[:search], params[:page])
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @articles }
-    end
+    @articles = Search.new(params).results    
+    @articles = @articles.search(params[:search], params[:page])
   end
 
   def show

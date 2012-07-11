@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Article do
   
   before :all do
-    @alpha = User.create(:username => "member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+    @alpha = FactoryGirl.create(:user, :username => "member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+    # @alpha = User.create(:username => "member", :password => "secret", :password_confirmation => "secret", :role => "admin")
     @google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => @alpha.id)
     @walmart = Article.new(:link => "walmart.com", :title => "Walmart", :user_id => @alpha.id)
     @target = Article.new(:link => "www.target.com", :title => "Target", :user_id => @alpha.id)

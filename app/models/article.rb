@@ -50,8 +50,8 @@ class Article < ActiveRecord::Base
   scope :this_day, lambda { where('created_at > ?', 1.day.ago) }
   scope :this_month, lambda { where('created_at > ?', 1.month.ago) }
   scope :this_year, lambda { where('created_at > ?', 1.year.ago) }
-  scope :day, lambda { |day, month, year| where("created_at >= ? and created_at < ?", Time.new(year, month, day), 1.day.from_now) }
-  scope :month, lambda { |month, year| where("created_at >= ? and created_at < ?", Time.new(year, month), 1.month.from_now) }
-  scope :year, lambda { |year| where("created_at >= ? and created_at < ?", Time.new(year), 1.year.from_now) }
+  scope :day, lambda { |day, month, year| where("created_at >= ? and created_at < ?", Time.new(year, month, day), Time.new(year, month, day) + 1.day) }
+  scope :month, lambda { |month, year| where("created_at >= ? and created_at < ?", Time.new(year, month), Time.new(year, month) + 1.month) }
+  scope :year, lambda { |year| where("created_at >= ? and created_at < ?", Time.new(year), Time.new(year) + 1.year) }
   
 end

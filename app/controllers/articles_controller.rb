@@ -34,7 +34,6 @@ class ArticlesController < ApplicationController
   end
   
   def pick_date
-    # Fill in blanks if any exist (won't affect scope chosen in later if/else section)
     year = ( params[:year].blank? ? Time.now.year : params[:year] )
     month = ( params[:month].blank? ? Time.now.month : params[:month] )
     day = ( params[:day].blank? ? Time.now.day : params[:day] )

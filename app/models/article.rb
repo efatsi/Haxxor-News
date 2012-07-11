@@ -2,7 +2,7 @@ class Article < ActiveRecord::Base
   
   include HaxxorNews::VoteConnector
   URI_REGEX = /\A(http|https):\/\/([a-z0-9]*[\-\.])?([a-z0-9]*\.[a-z]{2,5})(:[0-9]{1,5})?(\/.*)?\z/
-  YEARS = (Time.now.year-5..Time.now.year).map{|y| y}.reverse
+  YEARS = (Time.now.year-5..Time.now.year).to_a.reverse
   MONTHS = Hash[["January", "Fubruary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].zip [1,2,3,4,5,6,7,8,9,10,11,12]]
   DAYS = (1..31).to_a
 
@@ -44,14 +44,14 @@ class Article < ActiveRecord::Base
 
   
   # Scopes
-  scope :chronological, order('created_at DESC')
+  scope :chronological, lambda { order('created_at DESC') }
   scope :by_user, lambda { |user_id| where("user_id = ?", user_id) }
-  scope :by_rating, order('points DESC, created_at DESC')
-  scope :this_day, where('created_at > ?', 1.day.ago)
-  scope :this_month, where('created_at > ?', 1.month.ago)
-  scope :this_year, where('created_at > ?', 1.year.ago)
-  scope :day, lambda { |day, month, year| where("created_at >= ? and created_at < ?", Time.new(year, month, day), Time.new(year, month, day) + 60*60*24) }
-  scope :month, lambda { |month, year| where("created_at >= ? and created_at < ?", Time.new(year, month), Time.new(year, month) + 60*60*24*31) }
-  scope :year, lambda { |year| where("created_at >= ? and created_at < ?", Time.new(year), Time.new(year+1)) }
+  scope :by_rating, lambda { order('points DESC, created_at DESC') }
+  scope :this_day, lambda { where('created_at > ?', 1.day.ago) }
+  scope :this_month, lambda { where('created_at > ?', 1.month.ago) }
+  scope :this_year, lambda { where('created_at > ?', 1.year.ago) }
+  scope :day, lambda { |day, month, year| where("created_at >= ? and created_at < ?", Time.new(year, month, day), Time.new(year, month, day) + 1.day) }
+  scope :month, lambda { |month, year| where("created_at >= ? and created_at < ?", Time.new(year, month), Time.new(year, month) + 1.month) }
+  scope :year, lambda { |year| where("created_at >= ? and created_at < ?", Time.new(year), Time.new(year) + 1.year) }
   
 end

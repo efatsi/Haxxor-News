@@ -13,6 +13,19 @@ describe VotesController do
       it { should respond_with(:redirect) }
       it { should redirect_to(login_path) }
     end
+    
+    describe 'get #index' do
+      let!(:article){ FactoryGirl.create(:article) }
+      let!(:user){ FactoryGirl.create(:user) }
+      
+      before do
+        article.create_vote_by(user, "up")
+        get :index, :user_id => user.id, :direction => 'up'
+      end
+      
+      it { should respond_with(:success) }
+      it { should render_template(:index) }
+    end
   end
 
   context 'logged in' do

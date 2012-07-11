@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :votes, :dependent => :destroy
 	
 	# Validations
-	validates_presence_of :password, :password_confirmation, :if => :password_present
+	validates_presence_of :password, :password_confirmation, :if => :password?
 	validates_presence_of :role, :on => :create
 	validates_presence_of :username
 	validates_uniqueness_of :username
@@ -67,8 +67,8 @@ class User < ActiveRecord::Base
     end  
   end
   
-  def password_present
-    true
+  def password?
+    password.present?
   end
   
 end

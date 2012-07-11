@@ -1,0 +1,13 @@
+We'll narrow our search as much as you narrow yours.<br />
+- select Year = 2011, we'll show you everything from 2011.<br />
+- select Year = 2011 and Month = June we'll show you everything from June in 2011.<br />
+- select Year = 2011, Month = June, Day = 25 ... I think you get the idea.<br /><br />
+<%= simple_form_for @pick_date do |f| %> 
+  <%= f.input :year, :collection => Article::YEARS %>
+  <%= f.input :month, :collection => Article::MONTHS %>
+  <%= f.input :day, :collection => Article::DAYS %>
+  <label>Month:</label> 
+	<div class="actions">
+		<%= submit_tag 'Submit Range' %>
+	</div>
+<% end %>

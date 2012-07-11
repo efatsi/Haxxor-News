@@ -31,26 +31,26 @@ class ArticlesController < ApplicationController
     end
   end
   
-  def pick_date
-    year = ( params[:year].blank? ? Time.now.year : params[:year] )
-    month = ( params[:month].blank? ? Time.now.month : params[:month] )
-    day = ( params[:day].blank? ? Time.now.day : params[:day] )
-  
-    if request.post?
-      if Time.local(year, month, day) > Time.now
-        redirect_to pick_date_path, :alert => "You must select a time the past"
-      elsif params[:day].present?
-        redirect_to articles_path(:day => day, :month => month, :year => year)
-      elsif params[:month].present?
-        redirect_to articles_path(:month => month, :year => year)
-      elsif params[:year].present?
-        redirect_to articles_path(:year => year)
-      else
-        redirect_to root_url
-      end
-    end
-    
-  end
+  # def pick_date
+  #   year = ( params[:year].blank? ? Time.now.year : params[:year] )
+  #   month = ( params[:month].blank? ? Time.now.month : params[:month] )
+  #   day = ( params[:day].blank? ? Time.now.day : params[:day] )
+  # 
+  #   if request.post?
+  #     if Time.local(year, month, day) > Time.now
+  #       redirect_to pick_date_path, :alert => "You must select a time the past"
+  #     elsif params[:day].present?
+  #       redirect_to articles_path(:day => day, :month => month, :year => year)
+  #     elsif params[:month].present?
+  #       redirect_to articles_path(:month => month, :year => year)
+  #     elsif params[:year].present?
+  #       redirect_to articles_path(:year => year)
+  #     else
+  #       redirect_to root_url
+  #     end
+  #   end
+  #   
+  # end
 
   def update
     if @article.update_attributes(params[:article])

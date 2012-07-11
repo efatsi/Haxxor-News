@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe User do
   
-  before :all do
-    @alpha = User.create(:username => "alpha_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
-    @beta = User.new(:username => "alpha_member", :password => "secret", :password_confirmation => "secret", :role => "member")
-    @gamma = User.new(:username => "member2", :password => "secret", :password_confirmation => "notasecret", :role => "member")
-    @delta = User.create(:username => "member3", :password => "secret", :password_confirmation => "secret", :role => "member")
+  before do
+    @alpha = FactoryGirl.create(:user, :username => "alpha_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+    @beta = User.create(:username => "alpha_member", :password => "secret", :password_confirmation => "secret")
+    @gamma = User.create(:username => "member2", :password => "secret", :password_confirmation => "notasecret")
+    @delta = User.create(:username => "member3", :password => "secret", :password_confirmation => "secret")
     @google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => @alpha.id)
     @c1 = Comment.create(:content => "1st Comment", :commentable_type => "Article", :commentable_id => @google.id, :user_id => @alpha.id)
     @article_vote = Vote.create(:direction => "up", :votable_type => "Article", :votable_id => @google.id, :user_id => @alpha.id)
@@ -28,7 +28,7 @@ describe User do
     
     should validate_presence_of(:username)
     should validate_presence_of(:password)
-    should validate_presence_of(:password_confirmation)
+    should validate_confirmation_of(:password)
     should validate_presence_of(:role)
     should validate_uniqueness_of(:username)
     
@@ -44,7 +44,6 @@ describe User do
     should_not allow_value(nil).for(:password)
     
     should allow_value("secret").for(:password_confirmation)
-    should_not allow_value(nil).for(:password_confirmation)
     
     should allow_value("member").for(:role)
     should allow_value("admin").for(:role)

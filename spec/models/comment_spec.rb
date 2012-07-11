@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Comment do
   
   before :all do
-    @alpha = User.create(:username => "comment_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+    @alpha = FactoryGirl.create(:user, :username => "comment_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
     @google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => @alpha.id)
     @c1 = Comment.create(:content => "1st Comment", :commentable_type => "Article", :commentable_id => @google.id, :user_id => @alpha.id)
   end

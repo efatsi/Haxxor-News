@@ -2,7 +2,7 @@
 <article>
   <% if can? :vote, article %>
     <div class="btn-group">
-    <%= button_to "^", upvote_article_path(article), {:class => "button"} %><%= button_to "v", downvote_article_path(article) %> 
+    <%= button_to "^", article_upvote_path(article), {:class => "button"} %><%= button_to "v", article_downvote_path(article) %> 
     </div>
   <% end %>
   <h4>

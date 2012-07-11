@@ -11,11 +11,11 @@ module HaxxorNews
     
     module ClassMethods
       def voted_on_by(user)
-        self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.table_name}.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id}")
+        self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.table_name}.id AND votes.votable_type = '#{self.to_s}'").where("votes.user_id = #{user.id}")
       end
 
       def upvoted_by(user)
-        self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.table_name}.id WHERE votes.votable_type = '#{self.to_s}' AND votes.user_id = #{user.id} AND votes.direction = 'up'")
+        self.joins("LEFT OUTER JOIN votes ON votes.votable_id = #{self.table_name}.id AND votes.votable_type = '#{self.to_s}'").where("votes.user_id = ? AND votes.direction = 'up'", user.id)
       end
     end
 

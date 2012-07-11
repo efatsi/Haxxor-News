@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
 
-  include HaxxorNews::Voting
   
   before_filter :assign_commentable, :only => [:index, :create, :edit]
   skip_before_filter :store_location, :except => [:show]
@@ -54,16 +53,7 @@ class CommentsController < ApplicationController
   private
   
   def assign_commentable
-    @commentable = find_commentable
+    @commentable = find_parent_resource
   end
-  
-  def find_commentable
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
-    end
-    nil
-  end  
   
 end

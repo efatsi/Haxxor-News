@@ -9,5 +9,14 @@ class ApplicationController < ActionController::Base
   redirect_to "/articles"
   end
   
+  private
+  def find_parent_resource
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
+    end
+    nil
+  end
   
 end

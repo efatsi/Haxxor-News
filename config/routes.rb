@@ -5,14 +5,14 @@ HaxxorNews::Application.routes.draw do
   
 	resources :articles do
     resources :comments
-  	post :upvote, :on => :member
-  	post :downvote, :on => :member
+    post 'upvote' => 'votes#create', :direction => 'up'
+    post 'downvote' => 'votes#create', :direction => 'down'
 	end
 	
   resources :comments do
     resources :comments
-  	post :upvote, :on => :member
-  	post :downvote, :on => :member
+    post 'upvote' => 'votes#create', :direction => 'up'
+    post 'downvote' => 'votes#create', :direction => 'down'
   end
 
 	resources :users

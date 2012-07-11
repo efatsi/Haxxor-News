@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe ArticlesController do
   
-  def login_as(user)
-    controller.stub(:current_user).and_return(user)
-  end
-  
   describe "A DELETE to :destroy" do
     it "does not delete the article when initiated by a guest" do
       article = FactoryGirl.create(:article)

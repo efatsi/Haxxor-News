@@ -15,11 +15,6 @@ class UsersController < ApplicationController
   def index
     @users = User.all
   end
-  
-  def upvotes
-    @articles = Article.upvoted_by(@user).paginate(:page => params[:page])
-    @comments = Comment.upvoted_by(@user)
-  end
 
   def show
   end

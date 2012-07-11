@@ -1,21 +1,21 @@
 HaxxorNews::Application.routes.draw do
 
-  resources :articles
-  resources :comments
-  
 	resources :articles do
     resources :comments
-  	post :upvote, :on => :member
-  	post :downvote, :on => :member
+    post 'upvote' => 'votes#create', :direction => 'up'
+    post 'downvote' => 'votes#create', :direction => 'down'
 	end
 	
   resources :comments do
     resources :comments
-  	post :upvote, :on => :member
-  	post :downvote, :on => :member
+    post 'upvote' => 'votes#create', :direction => 'up'
+    post 'downvote' => 'votes#create', :direction => 'down'
   end
 
-	resources :users
+	resources :users do
+	  get 'upvotes' => 'votes#index', :direction => "up"
+  end
+  
 	resources :sessions
 	
 	resources :password_resets
@@ -25,7 +25,6 @@ HaxxorNews::Application.routes.draw do
 	match 'logout' => 'sessions#destroy', :as => :logout
 	match 'login' => 'sessions#new', :as => :login
 	match 'welcome' => 'users#welcome', :as => :welcome
-	match 'user/:id/upvotes' => 'users#upvotes', :as => :upvotes
 	match 'article/pick_date' => 'articles#pick_date', :as => :pick_date
 	match 'user/:id/change_password' => 'users#change_password', :as => :change_password
 	

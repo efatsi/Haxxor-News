@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe "Voting" do
-    
-  Article.delete_all
+
+  before :all do
+    Article.delete_all
+  end
+
   let!(:voting_user) { FactoryGirl.create(:user, :username => "voting_user", :password => "password", :password_confirmation => "password") }
   let!(:other_user) { FactoryGirl.create(:user, :username => "other_user", :password => "password", :password_confirmation => "password") }
   let!(:article_1) { FactoryGirl.create(:article, :title => 'Article #1', :user_id => voting_user.id) }

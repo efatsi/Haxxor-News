@@ -1,30 +1,38 @@
 class PasswordResetsController < ApplicationController
   
   skip_before_filter :store_location
+  before_filter :assign_password_reset, :only => [:edit, :update]
   
   def new
+    @password_reset = PasswordReset.new
   end
   
   def create
-    user = User.find_by_email(params[:email]) unless params[:email].blank?
-    user = User.find_by_username(params[:username]) unless params[:username].blank?
-    user.send_password_reset if user
-    redirect_to root_url, :notice => "Email sent with password reset instructions."
+    @password_reset = PasswordReset.new(params[:password_reset])
+    if @password_reset.save
+      redirect_to root_url, :notice => "Email sent with password reset instructions."
+    else
+      render :new
+    end
   end
 
   def edit
-    @user = User.find_by_password_reset_token!(params[:id])
+    if @password_reset.expired?
+      redirect_to new_password_reset_path, :alert => "Password reset has expired"
+    end
   end
 
   def update
-    @user = User.find_by_password_reset_token!(params[:id])
-    if @user.password_reset_sent_at < 2.hours.ago
-      redirect_to new_password_reset_path, :alert => "Password reset has expired."
-    elsif @user.update_attributes(params[:user])
-      redirect_to root_url, :notice => "Password has been reset!"
+    if @password_reset.update_attributes(params[:password_reset])
+      redirect_to root_url, :notice => "Password has been reset, hurray!"
     else
       render :edit
     end
+  end
+  
+  private
+  def assign_password_reset
+    @password_reset = PasswordReset.find(params[:id])
   end
   
 end

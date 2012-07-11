@@ -7,6 +7,12 @@ class Ability
 		
 		if user.role?(:admin)
 			can :manage, :all
+		  cannot :vote, Article do |a|
+  		  Vote.contains?(user, a)
+		  end
+      cannot :vote, Comment do |c|
+        Vote.contains?(user, c)
+      end
 			
 		elsif user.role?(:member) && !user.id.nil?
   		can :create, Comment

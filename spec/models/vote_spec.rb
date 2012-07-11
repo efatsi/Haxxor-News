@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe Vote do
   
-  before :all do
-    @alpha = User.create(:username => "vote_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
+  before do
+    @alpha = FactoryGirl.create(:user, :username => "vote_member", :password => "secret", :password_confirmation => "secret", :role => "admin")
     @google = Article.create(:link => "http://www.google.com", :title => "Google, Fake Article", :user_id => @alpha.id)
     @c1 = Comment.create(:content => "1st Comment", :commentable_type => "Article", :commentable_id => @google.id, :user_id => @alpha.id)
     @article_vote = Vote.create(:direction => "up", :votable_type => "Article", :votable_id => @google.id, :user_id => @alpha.id)
     @comment_vote = Vote.create(:direction => "up", :votable_type => "Comment", :votable_id => @c1.id, :user_id => @alpha.id)
   end
   
-  after :all do
+  after do
     @alpha.destroy
     @google.destroy
     @c1.destroy

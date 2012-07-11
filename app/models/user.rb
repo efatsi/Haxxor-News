@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   ROLES = [['Member', 'member'],['Administrator', 'admin']]
   before_create { generate_token(:auth_token) }
   
-  
   has_secure_password
   attr_accessible :username, :password, :password_confirmation, :role, :about, :email
   
@@ -13,7 +12,9 @@ class User < ActiveRecord::Base
   has_many :votes, :dependent => :destroy
 	
 	# Validations
-	validates_presence_of :password, :password_confirmation, :if => :password?
+	validates_presence_of :password, :on => :create
+	validates_confirmation_of :password, :if => :password?
+	
 	validates_presence_of :role, :on => :create
 	validates_presence_of :username
 	validates_uniqueness_of :username
@@ -53,11 +54,14 @@ class User < ActiveRecord::Base
   
   def attempt_password_change(params)
     if User.authenticate(self.username, params[:password][:old_password]) == self 
+      
       self.password = params[:password][:new_password] 
       self.password_confirmation = params[:password][:new_password_confirmation] 
-      if self.save  
+      if password == ""
+        :blank
+      elsif self.save  
         :success
-      elsif params[:password][:new_password] != params[:password][:new_password_confirmation]
+      elsif password != password_confirmation
         :mismatch
       else 
         :failed

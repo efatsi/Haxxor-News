@@ -49,6 +49,8 @@ class UsersController < ApplicationController
       case @user.attempt_password_change(params)
       when :success
         redirect_to @user, :notice => 'Your password has been changed.'
+      when :blank
+        redirect_to change_password_path, :alert => 'Must enter a new password'
       when :mismatch
         redirect_to change_password_path, :alert => 'New password and confirmation were not the same.'
       when :failed

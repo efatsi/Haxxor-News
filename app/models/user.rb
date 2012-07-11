@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
   has_many :votes, :dependent => :destroy
 	
 	# Validations
-	validates_presence_of :password, :password_confirmation, :role, :on => :create
+	validates_presence_of :password, :password_confirmation, :if => :password_present
+	validates_presence_of :role, :on => :create
 	validates_presence_of :username
 	validates_uniqueness_of :username
 	validates_inclusion_of :role, :in => ["admin", "member"]
@@ -48,6 +49,26 @@ class User < ActiveRecord::Base
 
   def just_created?(resource)
     resource.created_at > 5.minutes.ago
+  end
+  
+  def attempt_password_change(params)
+    if User.authenticate(self.username, params[:password][:old_password]) == self 
+      self.password = params[:password][:new_password] 
+      self.password_confirmation = params[:password][:new_password_confirmation] 
+      if self.save  
+        :success
+      elsif params[:password][:new_password] != params[:password][:new_password_confirmation]
+        :mismatch
+      else 
+        :failed
+      end 
+    else 
+      :old_password_incorrect 
+    end  
+  end
+  
+  def password_present
+    true
   end
   
 end

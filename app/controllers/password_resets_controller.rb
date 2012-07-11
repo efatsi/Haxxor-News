@@ -1,6 +1,7 @@
 class PasswordResetsController < ApplicationController
   
   skip_before_filter :store_location
+  before_filter :assign_password_reset, :only => [:edit, :update]
   
   def new
     @password_reset = PasswordReset.new
@@ -16,19 +17,22 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    @password_reset = PasswordReset.find(params[:id])
     if @password_reset.expired?
       redirect_to new_password_reset_path, :alert => "Password reset has expired"
     end
   end
 
   def update
-    @password_reset = PasswordReset.find(params[:id])
     if @password_reset.update_attributes(params[:password_reset])
       redirect_to root_url, :notice => "Password has been reset, hurray!"
     else
       render :edit
     end
-    
   end
+  
+  private
+  def assign_password_reset
+    @password_reset = PasswordReset.find(params[:id])
+  end
+  
 end

@@ -52,6 +52,10 @@ class PasswordReset
   def expired?
     existing_user.password_reset_sent_at < 2.hours.ago
   end
+
+  def persisted?
+    id.present?
+  end
   
 
   private
@@ -62,10 +66,6 @@ class PasswordReset
 
   def user_has_email_address
     errors.add(:user, "must have an email address") if user && user.email.blank?
-  end
-
-  def persisted?
-    id.present?
   end
 
   def password?

@@ -24,6 +24,7 @@ class PasswordResetsController < ApplicationController
 
   def update
     if @password_reset.update_attributes(params[:password_reset])
+      cookies[:auth_token] = @password_reset.existing_user.auth_token
       redirect_to root_url, :notice => "Password has been reset, hurray!"
     else
       render :edit

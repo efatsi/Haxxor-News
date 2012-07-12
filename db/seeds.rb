@@ -61,10 +61,6 @@ end
   end
 end
 
-Comment.all.each do |c|
-  c.update_count(1)
-end
-
 Article.all.each do |a|
   if rand < 0.5
     Vote.create!(user_id: User.first.id + rand.round, votable_type: "Article", votable_id: a.id, direction: "up")

@@ -1,4 +1,4 @@
-class Search
+class ArticleSearch
   
   attr_reader :params
   

@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @articles = Search.new(params).results    
+    @articles = ArticleSearch.new(params).results    
     @articles = @articles.search(params[:search], params[:page])
   end
 

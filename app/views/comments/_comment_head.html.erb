@@ -1,10 +1,13 @@
 <% comment = object[0] %>
-<comment>
+<comment class="votable">
   <% if can? :vote, comment %>
-  	<%= button_to "^", comment_upvote_path(comment) %><%= button_to "v", comment_downvote_path(comment) %> 
+    <div class="btn-group">
+      <%= voting_button :up, comment %>
+      <%= voting_button :down, comment %>
+  	</div>
   <% end %>
   <strong><%= link_to comment.username, user_path(comment.user) %></strong>
-  on <%= comment.created_at.to_s(:mdyt) %><%= " | "%><%= comment.points.to_s + " points" %>
+  on <%= comment.created_at.to_s(:mdyt) %><%= " | "%> <span class="points"><%= pluralize(comment.points, "point") %></span>
   <% if object.include?(:link) %>
   	<%= " | "%><%= link_to "link", comment_path(comment) %>
   <% end %>

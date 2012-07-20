@@ -1,15 +1,16 @@
 <% article = object %>
-<article>
+<article class="votable">
   <% if can? :vote, article %>
     <div class="btn-group">
-    <%= button_to "^", article_upvote_path(article), {:class => "button"} %><%= button_to "v", article_downvote_path(article) %> 
+      <%= voting_button  :up, article %>
+      <%= voting_button :down, article %>
     </div>
   <% end %>
   <h4>
     <%= link_to article.title, article.link %> <%= "(" + article.short_link + ")" %>
   </h4>
 
-  <%= pluralize(article.points, "point") %><%= " by " %> <%= link_to article.username, user_path(article.user) %> <%="posted " + time_ago_in_words(article.created_at) + " ago" %>
+  <span class="points"><%= pluralize(article.points, "point") %></span><%= " by " %> <%= link_to article.username, user_path(article.user) %> <%="posted " + time_ago_in_words(article.created_at) + " ago" %>
   <%= " | " %>
   <%= link_to pluralize(article.comment_count, "comment"), article_path(article) %>
   <% if can? :manage, article %>

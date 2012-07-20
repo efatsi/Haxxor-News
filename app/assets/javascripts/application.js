@@ -12,5 +12,26 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
 //= require_tree .
+
+;(function( window, document ) {
+  var HaxxorNews = {
+    voting: {
+      updatePoints: function($votable, newPoints){
+        $votable.find('.points').text(newPoints);
+      },
+  
+      removeVotingForms: function($votable){
+        $votable.find('.btn-group').remove();
+      }
+    }
+  };
+
+  $(document).ready(function(){
+    $('form.voting').on("ajax:success", function(event, data){
+      var $votable = $(this).closest('.votable');
+      HaxxorNews.voting.removeVotingForms($votable);
+      HaxxorNews.voting.updatePoints($votable, data.points);
+    });
+  });
+})(window, document);

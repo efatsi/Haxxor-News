@@ -11,7 +11,12 @@ class VotesController < ApplicationController
   def create
     @votable = find_parent_resource
     @votable.create_vote_by(current_user, params[:direction])
-    redirect_to :back
+    respond_to do |format|
+      format.json
+      format.html {
+        redirect :back
+      }
+    end
   end
 
 end

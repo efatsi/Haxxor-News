@@ -18,7 +18,7 @@ development:
   database: haxxor_news_development
   host: localhost
   pool: 5
-  username: haxxor_news
+  username: efatsi
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -44,7 +44,7 @@ test:
   encoding: unicode
   database: haxxor_news_test
   pool: 5
-  username: haxxor_news
+  username: efatsi
   password:
 
 production:

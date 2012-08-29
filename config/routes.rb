@@ -18,7 +18,6 @@ HaxxorNews::Application.routes.draw do
   
 	resources :sessions
 	
-	resources :password_resets
 	resources :pick_dates
 	
 	match 'signup' => 'users#new'

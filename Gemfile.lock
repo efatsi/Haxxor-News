@@ -85,6 +85,7 @@ GEM
     minitest (2.11.4)
     multi_json (1.3.6)
     nokogiri (1.5.4)
+    password_resetter (0.0.1)
     pg (0.13.2)
     polyglot (0.3.3)
     rack (1.4.1)
@@ -184,6 +185,7 @@ DEPENDENCIES
   faker
   jquery-rails
   launchy
+  password_resetter
   pg
   rails (= 3.2.5)
   rspec-rails (~> 2.4)

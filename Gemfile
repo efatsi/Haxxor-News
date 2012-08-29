@@ -1,5 +1,7 @@
+
 source 'https://rubygems.org'
 
+gem 'password_resetter'
 gem 'rails', '3.2.5'
 gem 'bootstrap-will_paginate'
 gem 'simple_form'
